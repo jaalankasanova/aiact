@@ -115,7 +115,8 @@ def vaadi_tilaus(f):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    paivat_jaljella = (datetime(2026, 8, 2) - datetime.now()).days
+    return render_template("index.html", paivat_jaljella=paivat_jaljella)
 
 
 @app.route("/rekisteri", methods=["GET", "POST"])
