@@ -233,6 +233,70 @@ body {
 }
 .hero-note { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
 
+/* ── Mitä on ─────────────────────────────────────────────────────────────── */
+.mita-on { padding: 96px 24px; background: #fff; }
+.mita-on-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.section-tag {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+.mita-on-teksti h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+.mita-on-teksti p {
+  color: var(--teksti-harmaa);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+.mita-on-teksti strong { color: var(--teksti); }
+.mita-on-esimerkit {
+  background: var(--bg);
+  border: 1px solid var(--reunaviiva);
+  border-radius: 16px;
+  padding: 28px;
+}
+.esimerkki-otsikko { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--teksti-harmaa); margin-bottom: 16px; }
+.esimerkki-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-left: 3px solid;
+}
+.esimerkki-korkea { background: #fff5f5; border-color: var(--vaara); }
+.esimerkki-rajattu { background: var(--varoitus-light); border-color: var(--varoitus); }
+.esimerkki-ok { background: var(--ok-light); border-color: var(--ok); }
+.esimerkki-ikoni { font-size: 1.4rem; flex-shrink: 0; }
+.esimerkki-item strong { font-size: 0.9rem; }
+.esimerkki-item small { color: var(--teksti-harmaa); font-size: 0.8rem; }
+.esimerkki-selite { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--teksti-harmaa); margin-top: 16px; flex-wrap: wrap; }
+.piste { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.piste-korkea { background: var(--vaara); }
+.piste-rajattu { background: var(--varoitus); }
+.piste-ok { background: var(--ok); }
+
 /* ── Urgency ──────────────────────────────────────────────────────────────── */
 .urgency {
   background: var(--tumma2);
@@ -663,4 +727,5 @@ body {
   .tulos-header-inner { flex-direction: column; }
   .tulos-body { padding: 24px; }
   .tulos-header { padding: 28px 24px; }
+  .mita-on-grid { grid-template-columns: 1fr; gap: 32px; }
 }
