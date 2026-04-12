@@ -11,7 +11,7 @@
   <div class="nav-inner">
     <a href="{{ url_for('index') }}" class="logo">ComplianceAI</a>
     <div class="nav-links">
-      {% if kirjautunut() %}
+      {% if kirjautunut %}
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>
         <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out">Kirjaudu ulos</a>

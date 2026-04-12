@@ -80,6 +80,11 @@ def kirjautunut():
     return session.get("kayttaja_id") is not None
 
 
+@app.context_processor
+def inject_kirjautunut():
+    return {"kirjautunut": kirjautunut()}
+
+
 def vaadi_kirjautuminen(f):
     from functools import wraps
     @wraps(f)
@@ -110,7 +115,7 @@ def vaadi_tilaus(f):
 
 @app.route("/")
 def index():
-    return render_template("index.html", kirjautunut=kirjautunut())
+    return render_template("index.html")
 
 
 @app.route("/rekisteri", methods=["GET", "POST"])
