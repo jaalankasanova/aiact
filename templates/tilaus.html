@@ -15,6 +15,7 @@
   <div class="hinta-iso">49€ <span>/ kuukausi</span></div>
   <p>ALV 0%. Peruuta milloin tahansa.</p>
   <form method="post" action="{{ url_for('checkout') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <button type="submit" class="btn btn-primary btn-full btn-lg">Aktivoi Pro-tilaus — 49€/kk</button>
   </form>
   <p class="form-footer"><a href="{{ url_for('dashboard') }}">← Takaisin</a></p>

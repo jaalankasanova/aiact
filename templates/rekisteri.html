@@ -5,6 +5,7 @@
   <h1>Aloita ilmainen kartoitus</h1>
   <p class="form-sub">Ei luottokorttia. Ensimmäinen kartoitus on ilmainen.</p>
   <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
       <label>Yrityksen nimi *</label>
       <input type="text" name="yritys" required placeholder="Esim. Acme Oy">

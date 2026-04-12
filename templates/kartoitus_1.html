@@ -12,15 +12,16 @@
   <p class="kartoitus-ohje">Voit kartoittaa kerrallaan yhden järjestelmän. Lisää useita järjestelmiä erikseen dashboardilta.</p>
 
   <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
       <label>Järjestelmän nimi *</label>
-      <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli">
+      <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli" value="{{ muokkaus.get('nimi', '') }}">
       <small>Anna tunnistettava nimi — näkyy dashboardilla</small>
     </div>
 
     <div class="form-group">
       <label>Lyhyt kuvaus (vapaaehtoinen)</label>
-      <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?"></textarea>
+      <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?">{{ muokkaus.get('kuvaus', '') }}</textarea>
     </div>
 
     <div class="form-group">

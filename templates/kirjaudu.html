@@ -8,6 +8,7 @@
     <p class="form-sub">Kirjaudu ComplianceAI-tilillesi</p>
   </div>
   <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
       <label>Sähköposti</label>
       <input type="email" name="email" required placeholder="nimi@yritys.fi" autofocus>

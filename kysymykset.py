@@ -110,6 +110,70 @@ VAATIMUKSET_RAJATTU = [
 ]
 
 
+TOIMENPITEET = {
+    "tekninen_dok": {
+        "otsikko": "Laadi tekninen dokumentaatio",
+        "ohje": "Dokumentoi järjestelmän tarkoitus, toimintaperiaate, koulutusdata, suorituskykyarviot ja rajoitukset. EU AI Act -asetus määrittelee tarkemman sisällön Liitteessä IV.",
+        "aika": "2–4 viikkoa",
+        "vastuu": "Tekninen tiimi + johto",
+    },
+    "lokit": {
+        "otsikko": "Ota käyttöön automaattinen lokitus",
+        "ohje": "Järjestelmän tulee tallentaa lokeja vähintään 6 kuukautta. Lokeista tulee käydä ilmi päätökset, syötteet ja ajoitukset. Pilvipalveluissa voi hyödyntää valmiita lokituspalveluja.",
+        "aika": "1–2 viikkoa",
+        "vastuu": "Tekninen tiimi",
+    },
+    "ihmisvalvonta": {
+        "otsikko": "Nimeä vastuuhenkilö valvontaan",
+        "ohje": "Nimeä koulutettu henkilö joka seuraa järjestelmän toimintaa ja voi tarvittaessa puuttua tai keskeyttää sen. Dokumentoi valvontaprosessi kirjallisesti.",
+        "aika": "1 viikko",
+        "vastuu": "Johto",
+    },
+    "qms": {
+        "otsikko": "Luo laadunhallintajärjestelmä",
+        "ohje": "QMS voi olla yksinkertainen kirjallinen prosessikuvaus: miten AI-järjestelmiä hankitaan, otetaan käyttöön, seurataan ja päivitetään. Ei tarvita ISO-sertifiointia.",
+        "aika": "2–3 viikkoa",
+        "vastuu": "Johto + compliance-vastaava",
+    },
+    "riskiarvio": {
+        "otsikko": "Tee kirjallinen riskinarviointi",
+        "ohje": "Dokumentoi järjestelmään liittyvät riskit, niiden todennäköisyys ja vakavuus sekä toimenpiteet riskien hallitsemiseksi. Päivitä arviointi säännöllisesti.",
+        "aika": "1–2 viikkoa",
+        "vastuu": "Johto + tekninen tiimi",
+    },
+    "vaatimustenmukaisuus": {
+        "otsikko": "Tee vaatimustenmukaisuusarviointi",
+        "ohje": "Arvioi järjestelmä EU AI Act:n vaatimuksia vasten. Voit käyttää tätä kartoitustyökalua pohjana. Korkean riskin järjestelmille saattaa olla tarpeen ulkopuolinen auditoija.",
+        "aika": "1–3 viikkoa",
+        "vastuu": "Compliance-vastaava + lakimies",
+    },
+    "eu_rekisteri": {
+        "otsikko": "Rekisteröi järjestelmä EU:n tietokantaan",
+        "ohje": "Korkean riskin järjestelmät rekisteröidään EU:n AI-tietokantaan (ai-act.eu). Rekisteröinti avautuu virallisesti ennen deadline-päivää. Valmistaudu keräämällä tarvittavat tekniset tiedot.",
+        "aika": "1–2 päivää",
+        "vastuu": "Compliance-vastaava",
+    },
+    "datalaatu": {
+        "otsikko": "Dokumentoi käytetty data",
+        "ohje": "Kuvaa mistä koulutusdata on peräisin, miten se on kerätty, mitä esikäsittelyä sille on tehty ja miten sen laatu on varmistettu. Huomioi mahdolliset vinoumat.",
+        "aika": "1–2 viikkoa",
+        "vastuu": "Data-tiimi",
+    },
+    "avoimuusmerkinta": {
+        "otsikko": "Lisää AI-ilmoitus käyttöliittymään",
+        "ohje": "Lisää selkeä ilmoitus siitä, että käyttäjä on vuorovaikutuksessa tekoälyn kanssa. Ilmoituksen tulee olla näkyvissä ennen tai heti vuorovaikutuksen alkaessa.",
+        "aika": "1–3 päivää",
+        "vastuu": "Kehitystiimi",
+    },
+    "ai_sisalto_merkinta": {
+        "otsikko": "Merkitse AI-generoitu sisältö",
+        "ohje": "Tekoälyn tuottama sisältö (tekstit, kuvat, videot) tulee merkitä koneellisesti tunnistettavalla tavalla. Käytännössä riittää metatietomerkintä tai vesileima.",
+        "aika": "1 viikko",
+        "vastuu": "Kehitystiimi",
+    },
+}
+
+
 def luokittele_riski(vastaukset: dict) -> dict:
     """
     Analysoi yksittäisen AI-järjestelmän vastaukset ja palauttaa riskitason + puuttuvat vaatimukset.

@@ -29,6 +29,7 @@
       <h2>Puuttuvat vaatimukset ({{ riski.puuttuvat|length }})</h2>
       <div class="puuttuvat-lista">
         {% for v in riski.puuttuvat %}
+        {% set tp = toimenpiteet.get(v.id, {}) %}
         <div class="puuttuva-kortti prio-kortti-{{ v.prioriteetti }}">
           <div class="puuttuva-otsikko">
             <span>{{ v.otsikko }}</span>
@@ -36,6 +37,16 @@
             <span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span>
           </div>
           <p>{{ v.kuvaus }}</p>
+          {% if tp %}
+          <div class="toimenpide-box">
+            <div class="toimenpide-otsikko">Mitä tehdä:</div>
+            <p>{{ tp.ohje }}</p>
+            <div class="toimenpide-meta">
+              <span>⏱ {{ tp.aika }}</span>
+              <span>👤 {{ tp.vastuu }}</span>
+            </div>
+          </div>
+          {% endif %}
           <p class="puuttuva-deadline">Deadline: {{ v.deadline }}</p>
         </div>
         {% endfor %}

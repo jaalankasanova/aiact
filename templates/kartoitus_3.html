@@ -29,6 +29,7 @@
   {% endif %}
 
   <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     {% if riski_esikatselu.taso == "korkea" %}
     <p class="section-otsikko">Korkean riskin vaatimukset — mitkä ovat jo käytössä?</p>
     {% for v in vaatimukset %}

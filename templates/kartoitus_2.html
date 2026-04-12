@@ -12,10 +12,11 @@
   <p class="kartoitus-ohje">Vastaa järjestelmän teknisiin ominaisuuksiin. Nämä määrittävät riskiluokituksen.</p>
 
   <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input type="checkbox" name="autonominen">
+        <input type="checkbox" name="autonominen" {% if kartoitus.get('autonominen') %}checked{% endif %}>
         <span>
           <strong>Tekee automaattisia päätöksiä</strong><br>
           <small>Järjestelmä tekee tai ehdottaa päätöksiä ilman, että ihminen tarkistaa jokaisen erikseen (esim. CV:n automaattinen hylkäys, luottopäätös)</small>
@@ -25,7 +26,7 @@
 
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input type="checkbox" name="kohdistuu_henkiloihin">
+        <input type="checkbox" name="kohdistuu_henkiloihin" {% if kartoitus.get('kohdistuu_henkiloihin') %}checked{% endif %}>
         <span>
           <strong>Kohdistuu suoraan luonnollisiin henkilöihin</strong><br>
           <small>Järjestelmän päätökset tai arviot vaikuttavat suoraan ihmisten elämään (esim. rekrytointi, vakuutus, lainahakemus)</small>
@@ -35,7 +36,7 @@
 
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input type="checkbox" name="biometria">
+        <input type="checkbox" name="biometria" {% if kartoitus.get('biometria') %}checked{% endif %}>
         <span>
           <strong>Käsittelee biometrisiä tietoja</strong><br>
           <small>Kasvojentunnistus, sormenjälki, äänianalyysi tai muu biometrinen tunnistaminen</small>
@@ -45,7 +46,7 @@
 
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input type="checkbox" name="chatbot">
+        <input type="checkbox" name="chatbot" {% if kartoitus.get('chatbot') %}checked{% endif %}>
         <span>
           <strong>Chatbot tai AI-assistentti</strong><br>
           <small>Järjestelmä kommunikoi suoraan ihmisten kanssa luonnollisella kielellä</small>
@@ -55,7 +56,7 @@
 
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input type="checkbox" name="generoi_sisaltoa">
+        <input type="checkbox" name="generoi_sisaltoa" {% if kartoitus.get('generoi_sisaltoa') %}checked{% endif %}>
         <span>
           <strong>Generoi tekstiä, kuvia tai muuta sisältöä</strong><br>
           <small>Järjestelmä tuottaa tekoälyavusteista sisältöä joka jaetaan ulospäin</small>
@@ -65,7 +66,7 @@
 
     <div class="checkbox-group checkbox-group-warning">
       <label class="checkbox-label">
-        <input type="checkbox" name="kielletty">
+        <input type="checkbox" name="kielletty" {% if kartoitus.get('kielletty') %}checked{% endif %}>
         <span>
           <strong>Sosiaalinen pisteytys tai manipulointi</strong><br>
           <small>Järjestelmä pisteyttää ihmisiä käyttäytymisen perusteella tai vaikuttaa alitajuisesti päätöksiin (EU AI Act Art. 5 kielletty)</small>

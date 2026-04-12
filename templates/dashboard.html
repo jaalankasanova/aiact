@@ -71,8 +71,10 @@
         {% if tilaaja %}
         <a href="{{ url_for('pdf_raportti', jid=j.id) }}" class="btn btn-sm btn-outline">PDF</a>
         {% endif %}
+        <a href="{{ url_for('muokkaa_jarjestelma', jid=j.id) }}" class="btn btn-sm btn-outline">Muokkaa</a>
         <form method="post" action="{{ url_for('poista_jarjestelma', jid=j.id) }}" style="display:inline"
               onsubmit="return confirm('Poistetaanko järjestelmä?')">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <button type="submit" class="btn btn-sm btn-danger">Poista</button>
         </form>
       </div>

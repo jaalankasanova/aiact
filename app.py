@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, Response
+from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import sqlite3
 import os
 import json
@@ -6,7 +9,7 @@ import uuid
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
-from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_RAJATTU
+from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_RAJATTU, TOIMENPITEET
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -25,7 +28,17 @@ app = Flask(__name__,
             static_folder=os.path.join(BASE_DIR, "static"))
 
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-vaihda-tuotannossa")
+app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-vaihda-tuotannossa")
 app.permanent_session_lifetime = timedelta(hours=8)
+
+csrf = CSRFProtect(app)
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=[],
+    storage_uri="memory://"
+)
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
@@ -123,11 +136,11 @@ def index():
 @app.route("/rekisteri", methods=["GET", "POST"])
 def rekisteri():
     if request.method == "POST":
-        email   = request.form.get("email", "").strip().lower()
+        email    = request.form.get("email", "").strip().lower()
         salasana = request.form.get("salasana", "")
-        yritys  = request.form.get("yritys", "").strip()
-        ytunnus = request.form.get("ytunnus", "").strip()
-        koko    = request.form.get("koko", "")
+        yritys   = request.form.get("yritys", "").strip()
+        ytunnus  = request.form.get("ytunnus", "").strip()
+        koko     = request.form.get("koko", "")
 
         if not email or not salasana or not yritys:
             flash("Täytä kaikki pakolliset kentät.", "error")
@@ -155,6 +168,7 @@ def rekisteri():
 
 
 @app.route("/kirjaudu", methods=["GET", "POST"])
+@limiter.limit("10 per minute", methods=["POST"])
 def kirjaudu():
     if request.method == "POST":
         email    = request.form.get("email", "").strip().lower()
@@ -195,7 +209,6 @@ def dashboard():
             "SELECT * FROM jarjestelmat WHERE kayttaja_id=? ORDER BY luotu DESC", [kid]
         ).fetchall()
 
-    # Rakenna jarjestelmat-lista riskidatoineen
     js_lista = []
     for j in jarjestelmat:
         riski_data = json.loads(j["riski_data"]) if j["riski_data"] else {}
@@ -218,23 +231,46 @@ def dashboard():
 @vaadi_kirjautuminen
 def uusi_jarjestelma():
     if request.method == "POST":
-        nimi    = request.form.get("nimi", "").strip()
-        kuvaus  = request.form.get("kuvaus", "").strip()
+        nimi     = request.form.get("nimi", "").strip()
+        kuvaus   = request.form.get("kuvaus", "").strip()
         toimiala = request.form.get("toimiala", "muu")
 
         if not nimi:
             flash("Anna järjestelmälle nimi.", "error")
-            return render_template("kartoitus_1.html", toimialat=TOIMIALAT)
+            muokkaus = session.get("kartoitus", {})
+            return render_template("kartoitus_1.html", toimialat=TOIMIALAT, muokkaus=muokkaus)
 
-        # Tallenna väliaikaisesti sessioon
+        k = session.get("kartoitus", {})
+        muokkaa_id = k.get("muokkaa_id")
         session["kartoitus"] = {
             "nimi": nimi,
             "kuvaus": kuvaus,
             "toimiala": toimiala,
         }
+        if muokkaa_id:
+            session["kartoitus"]["muokkaa_id"] = muokkaa_id
         return redirect(url_for("kartoitus_2"))
 
-    return render_template("kartoitus_1.html", toimialat=TOIMIALAT)
+    muokkaus = session.get("kartoitus", {})
+    return render_template("kartoitus_1.html", toimialat=TOIMIALAT, muokkaus=muokkaus)
+
+
+@app.route("/kartoitus/<jid>/muokkaa")
+@vaadi_kirjautuminen
+def muokkaa_jarjestelma(jid):
+    with get_db() as db:
+        j = db.execute(
+            "SELECT * FROM jarjestelmat WHERE id=? AND kayttaja_id=?",
+            [jid, session["kayttaja_id"]]
+        ).fetchone()
+    if not j:
+        flash("Järjestelmää ei löydy.", "error")
+        return redirect(url_for("dashboard"))
+
+    vastaukset = json.loads(j["vastaukset"]) if j["vastaukset"] else {}
+    vastaukset["muokkaa_id"] = jid
+    session["kartoitus"] = vastaukset
+    return redirect(url_for("uusi_jarjestelma"))
 
 
 @app.route("/kartoitus/ominaisuudet", methods=["GET", "POST"])
@@ -246,12 +282,12 @@ def kartoitus_2():
     if request.method == "POST":
         k = session["kartoitus"]
         k.update({
-            "autonominen":       request.form.get("autonominen") == "on",
-            "biometria":         request.form.get("biometria") == "on",
+            "autonominen":           request.form.get("autonominen") == "on",
+            "biometria":             request.form.get("biometria") == "on",
             "kohdistuu_henkiloihin": request.form.get("kohdistuu_henkiloihin") == "on",
-            "chatbot":           request.form.get("chatbot") == "on",
-            "generoi_sisaltoa":  request.form.get("generoi_sisaltoa") == "on",
-            "kielletty":         request.form.get("kielletty") == "on",
+            "chatbot":               request.form.get("chatbot") == "on",
+            "generoi_sisaltoa":      request.form.get("generoi_sisaltoa") == "on",
+            "kielletty":             request.form.get("kielletty") == "on",
         })
         session["kartoitus"] = k
         return redirect(url_for("kartoitus_3"))
@@ -267,30 +303,38 @@ def kartoitus_3():
 
     if request.method == "POST":
         k = session["kartoitus"]
-        # Compliance-nykytila
         for v in VAATIMUKSET + VAATIMUKSET_RAJATTU:
             k[v["id"]] = request.form.get(v["id"]) == "on"
         session["kartoitus"] = k
 
-        # Laske riski
         riski = luokittele_riski(k)
+        muokkaa_id = k.get("muokkaa_id")
 
-        # Tallenna tietokantaan
-        jid = str(uuid.uuid4())
         with get_db() as db:
-            db.execute(
-                """INSERT INTO jarjestelmat
-                   (id, kayttaja_id, nimi, kuvaus, vastaukset, riski_taso, riski_data)
-                   VALUES (?,?,?,?,?,?,?)""",
-                [jid, session["kayttaja_id"], k["nimi"], k.get("kuvaus", ""),
-                 json.dumps(k), riski["taso"], json.dumps(riski)]
-            )
+            if muokkaa_id:
+                db.execute(
+                    """UPDATE jarjestelmat
+                       SET nimi=?, kuvaus=?, vastaukset=?, riski_taso=?, riski_data=?
+                       WHERE id=? AND kayttaja_id=?""",
+                    [k["nimi"], k.get("kuvaus", ""), json.dumps(k),
+                     riski["taso"], json.dumps(riski),
+                     muokkaa_id, session["kayttaja_id"]]
+                )
+                jid = muokkaa_id
+            else:
+                jid = str(uuid.uuid4())
+                db.execute(
+                    """INSERT INTO jarjestelmat
+                       (id, kayttaja_id, nimi, kuvaus, vastaukset, riski_taso, riski_data)
+                       VALUES (?,?,?,?,?,?,?)""",
+                    [jid, session["kayttaja_id"], k["nimi"], k.get("kuvaus", ""),
+                     json.dumps(k), riski["taso"], json.dumps(riski)]
+                )
 
         session.pop("kartoitus", None)
-        flash("Järjestelmä kartoitettu onnistuneesti.", "success")
+        flash("Järjestelmä tallennettu.", "success")
         return redirect(url_for("tulos", jid=jid))
 
-    # Näytä vain relevantit vaatimukset esikatselmuksen perusteella
     k = session["kartoitus"]
     riski_esikatselu = luokittele_riski(k)
     return render_template("kartoitus_3.html",
@@ -324,7 +368,8 @@ def tulos(jid):
                            riski=riski,
                            vastaukset=vastaukset,
                            paivat_jaljella=paivat_jaljella,
-                           tilaaja=k["tilaaja"] if k else False)
+                           tilaaja=k["tilaaja"] if k else False,
+                           toimenpiteet=TOIMENPITEET)
 
 
 @app.route("/jarjestelma/<jid>/poista", methods=["POST"])
@@ -369,7 +414,7 @@ def checkout():
             metadata={"kayttaja_id": kid},
         )
         return redirect(checkout_session.url)
-    except Exception as e:
+    except Exception:
         flash("Maksun käynnistäminen epäonnistui.", "error")
         return redirect(url_for("tilaus"))
 
@@ -393,6 +438,7 @@ def tilaus_success():
 
 
 @app.route("/stripe/webhook", methods=["POST"])
+@csrf.exempt
 def stripe_webhook():
     payload = request.get_data()
     sig = request.headers.get("Stripe-Signature", "")
@@ -438,20 +484,43 @@ def pdf_raportti(jid):
                            kayttaja=kayttaja,
                            pvm=datetime.now().strftime("%d.%m.%Y"))
 
-    from flask import Response
     pdf = HTML(string=html).write_pdf()
     return Response(pdf, mimetype="application/pdf",
                     headers={"Content-Disposition": f"attachment; filename=aiact-raportti-{j['nimi']}.pdf"})
 
+
+# ── Muut sivut ─────────────────────────────────────────────────────────────────
 
 @app.route("/tietosuoja")
 def tietosuoja():
     return render_template("tietosuoja.html")
 
 
+@app.route("/sitemap.xml")
+def sitemap():
+    pages = [
+        ("https://aiact.onrender.com/", "weekly", "1.0"),
+        ("https://aiact.onrender.com/rekisteri", "monthly", "0.9"),
+        ("https://aiact.onrender.com/kirjaudu", "monthly", "0.7"),
+        ("https://aiact.onrender.com/tietosuoja", "monthly", "0.3"),
+    ]
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for url, freq, prio in pages:
+        xml += f"  <url><loc>{url}</loc><changefreq>{freq}</changefreq><priority>{prio}</priority></url>\n"
+    xml += "</urlset>"
+    return Response(xml, mimetype="application/xml")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
+
+
+@app.errorhandler(429)
+def rate_limit_exceeded(e):
+    flash("Liian monta kirjautumisyritystä. Odota hetki.", "error")
+    return render_template("kirjaudu.html"), 429
 
 
 # ── Käynnistys ─────────────────────────────────────────────────────────────────

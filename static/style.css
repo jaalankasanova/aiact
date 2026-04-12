@@ -725,7 +725,11 @@ body {
 .prio-kortti-korkea { background: var(--varoitus-light); border-color: var(--varoitus); }
 .prio-kortti-normaali { background: var(--bg); border-color: var(--reunaviiva); }
 .puuttuva-otsikko { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; flex-wrap: wrap; }
-.puuttuva-deadline { font-size: 0.8rem; color: var(--teksti-harmaa); margin-top: 6px; }
+.puuttuva-deadline { font-size: 0.8rem; color: var(--teksti-harmaa); margin-top: 8px; }
+.toimenpide-box { background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.15); border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+.toimenpide-otsikko { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); margin-bottom: 6px; }
+.toimenpide-box p { font-size: 0.86rem; color: var(--teksti-harmaa); margin: 0 0 8px; }
+.toimenpide-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--teksti-harmaa); font-weight: 600; }
 .vaaditut-osio { margin-bottom: 36px; }
 .vaatimus-taulukko { width: 100%; border-collapse: collapse; font-size: 0.88rem; border-radius: 10px; overflow: hidden; }
 .vaatimus-taulukko th { background: var(--tumma); color: #fff; padding: 11px 16px; text-align: left; font-size: 0.82rem; letter-spacing: 0.3px; }
