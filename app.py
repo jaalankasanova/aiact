@@ -312,11 +312,14 @@ def tulos(jid):
     vastaukset = json.loads(j["vastaukset"]) if j["vastaukset"] else {}
     paivat_jaljella = (datetime(2026, 8, 2) - datetime.now()).days
 
+    with get_db() as db:
+        k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=?", [session["kayttaja_id"]]).fetchone()
     return render_template("tulos.html",
                            jarjestelma=j,
                            riski=riski,
                            vastaukset=vastaukset,
-                           paivat_jaljella=paivat_jaljella)
+                           paivat_jaljella=paivat_jaljella,
+                           tilaaja=k["tilaaja"] if k else False)
 
 
 @app.route("/jarjestelma/<jid>/poista", methods=["POST"])
@@ -434,6 +437,11 @@ def pdf_raportti(jid):
     pdf = HTML(string=html).write_pdf()
     return Response(pdf, mimetype="application/pdf",
                     headers={"Content-Disposition": f"attachment; filename=aiact-raportti-{j['nimi']}.pdf"})
+
+
+@app.route("/tietosuoja")
+def tietosuoja():
+    return render_template("tietosuoja.html")
 
 
 # ── Käynnistys ─────────────────────────────────────────────────────────────────

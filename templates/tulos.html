@@ -73,7 +73,11 @@
     <div class="tulos-toiminnot">
       <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">← Takaisin dashboardille</a>
       <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-outline">+ Kartoita seuraava järjestelmä</a>
+      {% if tilaaja %}
       <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" class="btn btn-primary">Lataa PDF-raportti</a>
+      {% else %}
+      <a href="{{ url_for('tilaus') }}" class="btn btn-primary">PDF-raportti — päivitä Pro</a>
+      {% endif %}
     </div>
     <p class="disclaimer">Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.</p>
   </div>

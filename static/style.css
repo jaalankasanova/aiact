@@ -251,6 +251,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 .hinta-iso { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 8px; }
 .hinta-iso span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
 
+/* ── FAQ ─────────────────────────────────────────────────────────────────────── */
+.faq { padding: 80px 24px; }
+.faq h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
+.faq-lista { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { border: 1px solid var(--reunaviiva); border-radius: 10px; overflow: hidden; }
+.faq-kysymys { padding: 18px 20px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+.faq-kysymys:hover { background: var(--taustavalkoinen); }
+.faq-kysymys span { font-size: 1.3rem; color: var(--sininen); transition: transform 0.2s; }
+.faq-kysymys.auki span { transform: rotate(45deg); }
+.faq-vastaus { display: none; padding: 0 20px 18px; color: var(--teksti-harmaa); font-size: 0.95rem; line-height: 1.7; }
+.faq-vastaus a { color: var(--sininen); }
+
 @media (max-width: 768px) {
   .hero h1 { font-size: 2rem; }
   .steps { grid-template-columns: 1fr 1fr; }

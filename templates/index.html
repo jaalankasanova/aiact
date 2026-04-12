@@ -62,6 +62,38 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="container">
+    <h2>Usein kysytyt kysymykset</h2>
+    <div class="faq-lista">
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Koskeeko EU AI Act minun yritystäni? <span>+</span></div>
+        <div class="faq-vastaus">Kyllä, jos yrityksesi käyttää tai tarjoaa tekoälyjärjestelmiä EU:ssa. Tämä koskee myös pk-yrityksiä jotka käyttävät esim. ChatGPT:tä rekrytoinnissa, AI-chatbottia asiakaspalvelussa tai automaattista päätöksentekoa. Laki tuli voimaan 2024 ja ensimmäiset velvoitteet astuivat voimaan helmikuussa 2025.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Mitä tapahtuu jos en tee mitään? <span>+</span></div>
+        <div class="faq-vastaus">Vaatimustenvastaisuudesta voi seurata sakko joka on jopa 3% vuotuisesta liikevaihdosta tai 15 miljoonaa euroa — sen mukaan kumpi on suurempi. Valvontaviranomainen Suomessa on Liikenne- ja viestintävirasto Traficom.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Käytämme vain ChatGPT:tä — koskeeko tämä meitä? <span>+</span></div>
+        <div class="faq-vastaus">Se riippuu mihin käytätte sitä. Jos ChatGPT on integroitu asiakaspalvelubottiin tai sen avulla tehdään päätöksiä jotka vaikuttavat ihmisiin (esim. rekrytointi), avoimuusvaatimukset koskevat teitä. Pelkkä sisäinen käyttö tekstien kirjoittamiseen on yleensä minimiriskiluokassa.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Kuinka kauan kartoitus kestää? <span>+</span></div>
+        <div class="faq-vastaus">Yhden AI-järjestelmän kartoitus vie noin 10–15 minuuttia. Saat heti riskiluokituksen ja listan puuttuvista vaatimuksista. Kartoituksia voi tehdä niin monta kuin yrityksellä on AI-järjestelmiä.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Korvataanko tällä lakimies? <span>+</span></div>
+        <div class="faq-vastaus">Ei. ComplianceAI auttaa tunnistamaan riskit ja tekemään pohjatyön, mutta ennen viranomaisdokumentointia suosittelemme tarkistuttamaan materiaalit lakimiehellä. Työkalu säästää huomattavasti aikaa ja rahaa koska pohjatyö on jo tehty.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-kysymys" onclick="toggleFaq(this)">Onko data turvassa? <span>+</span></div>
+        <div class="faq-vastaus">Kartoitustietoja ei jaeta kolmansille osapuolille. Data tallennetaan suojatusti ja sitä käytetään vain compliance-analyysin tuottamiseen. Lue lisää <a href="/tietosuoja">tietosuojaselosteestamme</a>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="hinnoittelu" id="hinnoittelu">
   <div class="container">
     <h2>Hinnoittelu</h2>
@@ -91,7 +123,7 @@
           <li>Deadline-seuranta ja muistutukset</li>
           <li>Dokumenttipohjat suomeksi</li>
         </ul>
-        <a href="{{ url_for('rekisteri') }}" class="btn btn-primary">Kokeile 14 pv ilmaiseksi</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-primary">Aloita — 49€/kk</a>
       </div>
     </div>
     <p class="hinta-note">ALV 0%. Peruuta milloin tahansa. Ei sitoutumisaikaa.</p>
@@ -105,4 +137,18 @@
   </div>
 </section>
 
+{% endblock %}
+{% block scripts %}
+<script>
+function toggleFaq(el) {
+  const vastaus = el.nextElementSibling;
+  const auki = vastaus.style.display === 'block';
+  document.querySelectorAll('.faq-vastaus').forEach(v => v.style.display = 'none');
+  document.querySelectorAll('.faq-kysymys').forEach(k => k.classList.remove('auki'));
+  if (!auki) {
+    vastaus.style.display = 'block';
+    el.classList.add('auki');
+  }
+}
+</script>
 {% endblock %}
