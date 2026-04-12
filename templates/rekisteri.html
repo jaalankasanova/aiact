@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Rekisteröidy{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Aloita ilmainen kartoitus</h1>
+  <p class="form-sub">Ei luottokorttia. Ensimmäinen kartoitus on ilmainen.</p>
+  <form method="post" class="form-card">
+    <div class="form-group">
+      <label>Yrityksen nimi *</label>
+      <input type="text" name="yritys" required placeholder="Esim. Acme Oy">
+    </div>
+    <div class="form-group">
+      <label>Y-tunnus</label>
+      <input type="text" name="ytunnus" placeholder="1234567-8">
+    </div>
+    <div class="form-group">
+      <label>Yrityksen koko</label>
+      <select name="koko">
+        <option value="">Valitse...</option>
+        <option value="mikro">Mikroyritys (alle 10 hlö)</option>
+        <option value="pieni">Pieni yritys (10–49 hlö)</option>
+        <option value="keski">Keskisuuri yritys (50–249 hlö)</option>
+        <option value="suuri">Suuri yritys (250+ hlö)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Sähköposti *</label>
+      <input type="email" name="email" required placeholder="nimi@yritys.fi">
+    </div>
+    <div class="form-group">
+      <label>Salasana *</label>
+      <input type="password" name="salasana" required minlength="8" placeholder="Vähintään 8 merkkiä">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Luo tili ja aloita</button>
+  </form>
+  <p class="form-footer">Jo tili? <a href="{{ url_for('kirjaudu') }}">Kirjaudu sisään</a></p>
+</div>
+{% endblock %}

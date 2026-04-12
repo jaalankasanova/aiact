@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Kartoitus — Vaihe 1/3{% endblock %}
+{% block content %}
+<div class="kartoitus-page">
+  <div class="kartoitus-progress">
+    <div class="progress-step active">1. Perustiedot</div>
+    <div class="progress-step">2. Ominaisuudet</div>
+    <div class="progress-step">3. Nykytila</div>
+  </div>
+
+  <h1>Mikä AI-järjestelmä?</h1>
+  <p class="kartoitus-ohje">Voit kartoittaa kerrallaan yhden järjestelmän. Lisää useita järjestelmiä erikseen dashboardilta.</p>
+
+  <form method="post" class="form-card">
+    <div class="form-group">
+      <label>Järjestelmän nimi *</label>
+      <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli">
+      <small>Anna tunnistettava nimi — näkyy dashboardilla</small>
+    </div>
+
+    <div class="form-group">
+      <label>Lyhyt kuvaus (vapaaehtoinen)</label>
+      <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Missä toiminnossa järjestelmää käytetään? *</label>
+      <select name="toimiala" required>
+        <option value="">Valitse toiminto...</option>
+        {% for arvo, teksti in toimialat %}
+        <option value="{{ arvo }}">{{ teksti }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Peruuta</a>
+      <button type="submit" class="btn btn-primary">Seuraava →</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

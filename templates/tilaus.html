@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Päivitä Pro{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Päivitä Pro-tilaus</h1>
+  <div class="tilaus-edut">
+    <ul>
+      <li>Rajoittamattomat AI-järjestelmien kartoitukset</li>
+      <li>PDF-raportit viranomaisille ja johtoryhmälle</li>
+      <li>Deadline-seuranta ja muistutukset sähköpostiin</li>
+      <li>Dokumenttipohjat suomeksi (tekninen dok, QMS, riskinarviointi)</li>
+      <li>Peruuta milloin tahansa</li>
+    </ul>
+  </div>
+  <div class="hinta-iso">49€ <span>/ kuukausi</span></div>
+  <p>ALV 0%. 14 päivän ilmainen kokeilu.</p>
+  <form method="post" action="{{ url_for('checkout') }}">
+    <button type="submit" class="btn btn-primary btn-full btn-lg">Aloita 14 pv ilmainen kokeilu</button>
+  </form>
+  <p class="form-footer"><a href="{{ url_for('dashboard') }}">← Takaisin</a></p>
+</div>
+{% endblock %}

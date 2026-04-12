@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Kartoitus — Vaihe 3/3{% endblock %}
+{% block content %}
+<div class="kartoitus-page">
+  <div class="kartoitus-progress">
+    <div class="progress-step done">1. Perustiedot</div>
+    <div class="progress-step done">2. Ominaisuudet</div>
+    <div class="progress-step active">3. Nykytila</div>
+  </div>
+
+  <h1>{{ kartoitus.nimi }} — nykytila</h1>
+
+  {% if riski_esikatselu.taso == "kielletty" %}
+  <div class="alert alert-danger">
+    <strong>Varoitus:</strong> Järjestelmä saattaa kuulua EU AI Act:n kiellettyihin järjestelmiin (Art. 5). Ota välittömästi yhteyttä lakimieheen ennen käytön jatkamista.
+  </div>
+  {% elif riski_esikatselu.taso == "korkea" %}
+  <div class="alert alert-warning">
+    <strong>Korkea riski tunnistettu.</strong> Tämä järjestelmä kuuluu todennäköisesti korkean riskin luokkaan (Annex III). Merkitse alta mitkä vaatimukset ovat jo täytetty.
+  </div>
+  {% elif riski_esikatselu.taso == "rajattu" %}
+  <div class="alert alert-info">
+    <strong>Rajattu riski.</strong> Avoimuusvaatimukset (Art. 50) voimassa 2.8.2026. Merkitse alla mitkä on hoidettu.
+  </div>
+  {% else %}
+  <div class="alert alert-success">
+    <strong>Minimiriski.</strong> Erityisiä lakisääteisiä vaatimuksia ei tunnistettu. Hyvät käytännöt suositeltavia.
+  </div>
+  {% endif %}
+
+  <form method="post" class="form-card">
+    {% if riski_esikatselu.taso == "korkea" %}
+    <p class="section-otsikko">Korkean riskin vaatimukset — mitkä ovat jo käytössä?</p>
+    {% for v in vaatimukset %}
+    <div class="checkbox-group checkbox-group-req">
+      <label class="checkbox-label">
+        <input type="checkbox" name="{{ v.id }}">
+        <span>
+          <strong>{{ v.otsikko }}</strong>
+          <span class="req-artikkeli">{{ v.artikkeli }}</span>
+          <span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span><br>
+          <small>{{ v.kuvaus }}</small>
+        </span>
+      </label>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if riski_esikatselu.taso in ["rajattu", "korkea"] %}
+    <p class="section-otsikko">Avoimuusvaatimukset</p>
+    {% for v in vaatimukset_rajattu %}
+    <div class="checkbox-group checkbox-group-req">
+      <label class="checkbox-label">
+        <input type="checkbox" name="{{ v.id }}">
+        <span>
+          <strong>{{ v.otsikko }}</strong>
+          <span class="req-artikkeli">{{ v.artikkeli }}</span><br>
+          <small>{{ v.kuvaus }}</small>
+        </span>
+      </label>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if riski_esikatselu.taso == "minimaalinen" %}
+    <p class="kartoitus-ohje">Ei pakollisia vaatimuksia tunnistettu. Jatka tallentamaan tulos.</p>
+    {% endif %}
+
+    <div class="form-actions">
+      <a href="{{ url_for('kartoitus_2') }}" class="btn btn-ghost">← Takaisin</a>
+      <button type="submit" class="btn btn-primary">Analysoi ja tallenna</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

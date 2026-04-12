@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: Arial, sans-serif; font-size: 11pt; color: #222; margin: 0; padding: 40px; }
+  h1 { font-size: 20pt; color: #1a1a2e; border-bottom: 3px solid #2563eb; padding-bottom: 8px; }
+  h2 { font-size: 14pt; color: #1a1a2e; margin-top: 24px; }
+  .header-info { background: #f8fafc; padding: 16px; border-radius: 6px; margin-bottom: 24px; }
+  .riski-korkea { color: #dc2626; font-weight: bold; }
+  .riski-kielletty { color: #7c3aed; font-weight: bold; }
+  .riski-rajattu { color: #d97706; font-weight: bold; }
+  .riski-minimaalinen { color: #16a34a; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th { background: #1a1a2e; color: white; padding: 8px 12px; text-align: left; font-size: 10pt; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; font-size: 10pt; }
+  .ok { color: #16a34a; }
+  .puuttuu { color: #dc2626; }
+  .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 9pt; color: #6b7280; }
+  .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 10pt; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>EU AI Act Compliance -raportti</h1>
+<div class="header-info">
+  <strong>Yritys:</strong> {{ kayttaja.yritys }}<br>
+  {% if kayttaja.ytunnus %}<strong>Y-tunnus:</strong> {{ kayttaja.ytunnus }}<br>{% endif %}
+  <strong>Järjestelmä:</strong> {{ jarjestelma.nimi }}<br>
+  <strong>Raportin päiväys:</strong> {{ pvm }}<br>
+  <strong>Riskiluokitus:</strong>
+  <span class="riski-{{ riski.taso }}">
+    {% if riski.taso == "korkea" %}KORKEA RISKI (Annex III)
+    {% elif riski.taso == "kielletty" %}MAHDOLLISESTI KIELLETTY (Art. 5)
+    {% elif riski.taso == "rajattu" %}RAJATTU RISKI
+    {% else %}MINIMIRISKI{% endif %}
+  </span>
+</div>
+
+<h2>Riskiluokituksen perustelu</h2>
+<p>{{ riski.selitys }}</p>
+
+{% if riski.vaaditut %}
+<h2>Vaatimusten täyttyminen</h2>
+<table>
+  <thead>
+    <tr><th>Vaatimus</th><th>Artikkeli</th><th>Prioriteetti</th><th>Tila</th></tr>
+  </thead>
+  <tbody>
+    {% for v in riski.vaaditut %}
+    {% set puuttuu = v in riski.puuttuvat %}
+    <tr>
+      <td>{{ v.otsikko }}<br><small style="color:#6b7280">{{ v.kuvaus }}</small></td>
+      <td>{{ v.artikkeli }}</td>
+      <td>{{ v.prioriteetti }}</td>
+      <td class="{{ 'puuttuu' if puuttuu else 'ok' }}">{{ '✗ Puuttuu' if puuttuu else '✓ Hoidettu' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if riski.puuttuvat %}
+<h2>Välittömät toimenpiteet</h2>
+<ol>
+  {% for v in riski.puuttuvat %}
+  <li><strong>{{ v.otsikko }}</strong> ({{ v.artikkeli }}) — Deadline: {{ v.deadline }}<br>{{ v.kuvaus }}</li>
+  {% endfor %}
+</ol>
+{% endif %}
+
+<div class="footer">
+  Raportti generoitu ComplianceAI-työkalulla (complianceai.fi) | {{ pvm }}<br>
+  Tämä raportti ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.<br>
+  EU AI Act (2024/1689) — Täysi compliance-deadline korkean riskin järjestelmille: 2.8.2026
+</div>
+</body>
+</html>

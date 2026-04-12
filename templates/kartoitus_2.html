@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Kartoitus — Vaihe 2/3{% endblock %}
+{% block content %}
+<div class="kartoitus-page">
+  <div class="kartoitus-progress">
+    <div class="progress-step done">1. Perustiedot</div>
+    <div class="progress-step active">2. Ominaisuudet</div>
+    <div class="progress-step">3. Nykytila</div>
+  </div>
+
+  <h1>{{ kartoitus.nimi }} — ominaisuudet</h1>
+  <p class="kartoitus-ohje">Vastaa järjestelmän teknisiin ominaisuuksiin. Nämä määrittävät riskiluokituksen.</p>
+
+  <form method="post" class="form-card">
+
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="autonominen">
+        <span>
+          <strong>Tekee automaattisia päätöksiä</strong><br>
+          <small>Järjestelmä tekee tai ehdottaa päätöksiä ilman, että ihminen tarkistaa jokaisen erikseen (esim. CV:n automaattinen hylkäys, luottopäätös)</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="kohdistuu_henkiloihin">
+        <span>
+          <strong>Kohdistuu suoraan luonnollisiin henkilöihin</strong><br>
+          <small>Järjestelmän päätökset tai arviot vaikuttavat suoraan ihmisten elämään (esim. rekrytointi, vakuutus, lainahakemus)</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="biometria">
+        <span>
+          <strong>Käsittelee biometrisiä tietoja</strong><br>
+          <small>Kasvojentunnistus, sormenjälki, äänianalyysi tai muu biometrinen tunnistaminen</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="chatbot">
+        <span>
+          <strong>Chatbot tai AI-assistentti</strong><br>
+          <small>Järjestelmä kommunikoi suoraan ihmisten kanssa luonnollisella kielellä</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="generoi_sisaltoa">
+        <span>
+          <strong>Generoi tekstiä, kuvia tai muuta sisältöä</strong><br>
+          <small>Järjestelmä tuottaa tekoälyavusteista sisältöä joka jaetaan ulospäin</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="checkbox-group checkbox-group-warning">
+      <label class="checkbox-label">
+        <input type="checkbox" name="kielletty">
+        <span>
+          <strong>Sosiaalinen pisteytys tai manipulointi</strong><br>
+          <small>Järjestelmä pisteyttää ihmisiä käyttäytymisen perusteella tai vaikuttaa alitajuisesti päätöksiin (EU AI Act Art. 5 kielletty)</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-ghost">← Takaisin</a>
+      <button type="submit" class="btn btn-primary">Seuraava →</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

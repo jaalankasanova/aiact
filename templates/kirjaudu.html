@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Kirjaudu sisään{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Kirjaudu sisään</h1>
+  <form method="post" class="form-card">
+    <div class="form-group">
+      <label>Sähköposti</label>
+      <input type="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label>Salasana</label>
+      <input type="password" name="salasana" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Kirjaudu</button>
+  </form>
+  <p class="form-footer">Ei tiliä? <a href="{{ url_for('rekisteri') }}">Rekisteröidy ilmaiseksi</a></p>
+</div>
+{% endblock %}

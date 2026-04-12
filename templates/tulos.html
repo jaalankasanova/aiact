@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Tulos — {{ jarjestelma.nimi }}{% endblock %}
+{% block content %}
+<div class="tulos-page">
+  <div class="tulos-header riski-bg-{{ riski.taso }}">
+    <div class="tulos-header-inner">
+      <div>
+        <h1>{{ jarjestelma.nimi }}</h1>
+        <p>{{ jarjestelma.kuvaus or "" }}</p>
+      </div>
+      <div class="riski-iso-badge riski-{{ riski.taso }}">
+        {% if riski.taso == "korkea" %}KORKEA RISKI
+        {% elif riski.taso == "kielletty" %}KIELLETTY
+        {% elif riski.taso == "rajattu" %}RAJATTU RISKI
+        {% else %}MINIMIRISKI{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tulos-body">
+    <div class="tulos-selitys">
+      <h2>Riskiluokitus</h2>
+      <p>{{ riski.selitys }}</p>
+      <p><strong>{{ paivat_jaljella }} päivää</strong> deadlineen (2.8.2026)</p>
+    </div>
+
+    {% if riski.puuttuvat %}
+    <div class="puuttuvat-osio">
+      <h2>Puuttuvat vaatimukset ({{ riski.puuttuvat|length }})</h2>
+      <div class="puuttuvat-lista">
+        {% for v in riski.puuttuvat %}
+        <div class="puuttuva-kortti prio-kortti-{{ v.prioriteetti }}">
+          <div class="puuttuva-otsikko">
+            <span>{{ v.otsikko }}</span>
+            <span class="req-artikkeli">{{ v.artikkeli }}</span>
+            <span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span>
+          </div>
+          <p>{{ v.kuvaus }}</p>
+          <p class="puuttuva-deadline">Deadline: {{ v.deadline }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="kaikki-ok">
+      <h2>Kaikki vaatimukset täytetty</h2>
+      <p>Hyvää työtä! Muista tarkistaa tilanne säännöllisesti lakimuutosten varalta.</p>
+    </div>
+    {% endif %}
+
+    {% if riski.vaaditut %}
+    <div class="vaaditut-osio">
+      <h2>Kaikki vaatimukset</h2>
+      <table class="vaatimus-taulukko">
+        <thead>
+          <tr><th>Vaatimus</th><th>Artikkeli</th><th>Prioriteetti</th><th>Tila</th></tr>
+        </thead>
+        <tbody>
+          {% for v in riski.vaaditut %}
+          {% set tehty = vastaukset.get(v.id, False) %}
+          <tr class="{{ 'rivi-ok' if tehty else 'rivi-puuttuu' }}">
+            <td>{{ v.otsikko }}</td>
+            <td>{{ v.artikkeli }}</td>
+            <td><span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span></td>
+            <td>{% if tehty %}✓ Hoidettu{% else %}✗ Puuttuu{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <div class="tulos-toiminnot">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">← Takaisin dashboardille</a>
+      <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-outline">+ Kartoita seuraava järjestelmä</a>
+      <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" class="btn btn-primary">Lataa PDF-raportti</a>
+    </div>
+    <p class="disclaimer">Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}AI Act Compliance{% endblock %} — ComplianceAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="{{ url_for('index') }}" class="logo">ComplianceAI</a>
+    <div class="nav-links">
+      {% if kirjautunut() %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>
+        <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out">Kirjaudu ulos</a>
+      {% else %}
+        <a href="{{ url_for('kirjaudu') }}">Kirjaudu</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-sm">Aloita ilmaiseksi</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in msgs %}
+      <div class="flash flash-{{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <p>ComplianceAI &copy; 2026 &nbsp;|&nbsp;
+  <a href="#">Tietosuoja</a> &nbsp;|&nbsp;
+  Tämä työkalu ei korvaa juridista neuvontaa. Tarkistuta dokumentit lakimiehellä ennen viranomaisraportointia.</p>
+</footer>
+</body>
+</html>
