@@ -55,18 +55,19 @@ body {
   height: 64px;
 }
 .logo {
-  font-weight: 900;
-  font-size: 1.15rem;
+  font-weight: 600;
+  font-size: 1.05rem;
   color: var(--primary);
   text-decoration: none;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.2px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 .logo::before {
   content: "⚖";
-  font-size: 1.1rem;
+  font-size: 1rem;
+  opacity: 0.8;
 }
 .nav-links { display: flex; align-items: center; gap: 8px; }
 .nav-links a {
@@ -261,13 +262,14 @@ body {
 .urgency-label { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
 /* ── Miten toimii ─────────────────────────────────────────────────────────── */
-.miten { padding: 96px 24px; background: #fff; }
+.miten { padding: 96px 24px; background: #0d1117; color: #fff; }
 .miten h2 {
   text-align: center;
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 56px;
   letter-spacing: -0.8px;
+  color: #fff;
 }
 .steps {
   max-width: 960px;
@@ -280,11 +282,13 @@ body {
   text-align: center;
   padding: 28px 20px;
   border-radius: 16px;
-  border: 1px solid var(--reunaviiva);
-  background: var(--bg);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.step:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(124,58,237,0.2); border-color: rgba(124,58,237,0.3); }
+.step h3 { color: #fff; }
+.step p { color: rgba(255,255,255,0.55); }
 .step-num {
   width: 52px;
   height: 52px;
@@ -344,13 +348,14 @@ body {
 .faq-vastaus a { color: var(--primary); }
 
 /* ── Hinnoittelu ──────────────────────────────────────────────────────────── */
-.hinnoittelu { padding: 96px 24px; background: #fff; }
+.hinnoittelu { padding: 96px 24px; background: #0d1117; color: #fff; }
 .hinnoittelu h2 {
   text-align: center;
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 56px;
   letter-spacing: -0.8px;
+  color: #fff;
 }
 .hinta-grid {
   max-width: 680px;
@@ -360,21 +365,20 @@ body {
   gap: 24px;
 }
 .hinta-kortti {
-  background: var(--bg);
-  border: 1.5px solid var(--reunaviiva);
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
   border-radius: 16px;
   padding: 32px 28px;
   position: relative;
+  color: #fff;
 }
 .hinta-suosittu {
-  background: var(--tumma);
+  background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(109,40,217,0.2));
   border-color: var(--primary);
-  color: #fff;
-  box-shadow: 0 8px 32px rgba(124,58,237,0.25);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.35);
 }
 .hinta-suosittu p, .hinta-suosittu .hinta-nimi { color: rgba(255,255,255,0.7); }
-.hinta-suosittu .hinta-hinta { color: #fff; }
-.hinta-suosittu li { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.1) !important; }
+.hinta-suosittu li { border-color: rgba(255,255,255,0.1) !important; }
 .hinta-badge {
   position: absolute;
   top: -13px;
@@ -393,11 +397,11 @@ body {
 .hinta-hinta { font-size: 2.6rem; font-weight: 900; margin-bottom: 24px; letter-spacing: -1px; }
 .hinta-hinta span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
 .hinta-kortti ul { list-style: none; margin-bottom: 28px; }
-.hinta-kortti li { padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid var(--reunaviiva); display: flex; align-items: center; gap: 8px; }
-.hinta-kortti li::before { content: "✓"; color: var(--ok); font-weight: 800; flex-shrink: 0; }
-.hinta-kortti li.ei::before { content: "–"; color: var(--reunaviiva); }
-.hinta-kortti li.ei { color: var(--teksti-harmaa); opacity: 0.5; }
-.hinta-note { text-align: center; color: var(--teksti-harmaa); font-size: 0.83rem; margin-top: 20px; }
+.hinta-kortti li { padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.8); }
+.hinta-kortti li::before { content: "✓"; color: #34d399; font-weight: 800; flex-shrink: 0; }
+.hinta-kortti li.ei::before { content: "–"; color: rgba(255,255,255,0.2); }
+.hinta-kortti li.ei { color: rgba(255,255,255,0.3); }
+.hinta-note { text-align: center; color: rgba(255,255,255,0.4); font-size: 0.83rem; margin-top: 20px; }
 
 /* ── CTA bottom ───────────────────────────────────────────────────────────── */
 .cta-bottom {
