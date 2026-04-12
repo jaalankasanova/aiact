@@ -44,6 +44,7 @@ def get_db():
 
 
 def init_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True) if os.path.dirname(DB_PATH) else None
     with get_db() as db:
         db.executescript("""
         CREATE TABLE IF NOT EXISTS kayttajat (
@@ -446,6 +447,11 @@ def pdf_raportti(jid):
 @app.route("/tietosuoja")
 def tietosuoja():
     return render_template("tietosuoja.html")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 
 # ── Käynnistys ─────────────────────────────────────────────────────────────────

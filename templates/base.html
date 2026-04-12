@@ -10,14 +10,17 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="{{ url_for('index') }}" class="logo">ComplianceAI</a>
-    <div class="nav-links">
+    <button class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('nav-open')" aria-label="Valikko">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navMenu">
       {% if kirjautunut %}
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>
         <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out">Kirjaudu ulos</a>
       {% else %}
         <a href="{{ url_for('kirjaudu') }}">Kirjaudu</a>
-        <a href="{{ url_for('rekisteri') }}" class="btn btn-sm">Aloita ilmaiseksi</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-sm btn-primary">Aloita ilmaiseksi</a>
       {% endif %}
     </div>
   </div>

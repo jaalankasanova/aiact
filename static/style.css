@@ -81,6 +81,23 @@ body {
 }
 .nav-links a:hover { color: var(--teksti); background: rgba(124,58,237,0.06); }
 .nav-out { color: var(--teksti-harmaa) !important; }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--teksti);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
 
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
 .btn {
@@ -513,6 +530,22 @@ body {
 .form-group small { display: block; color: var(--teksti-harmaa); font-size: 0.78rem; margin-top: 5px; }
 .form-footer { text-align: center; margin-top: 18px; font-size: 0.88rem; color: var(--teksti-harmaa); }
 .form-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 72px; }
+.pw-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 6px;
+}
 
 /* ── Dashboard ────────────────────────────────────────────────────────────── */
 .dashboard { max-width: 1040px; margin: 44px auto; padding: 0 28px; }
@@ -728,4 +761,19 @@ body {
   .tulos-body { padding: 24px; }
   .tulos-header { padding: 28px 24px; }
   .mita-on-grid { grid-template-columns: 1fr; gap: 32px; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0; right: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--reunaviiva);
+    flex-direction: column;
+    padding: 16px 24px;
+    gap: 8px;
+    box-shadow: var(--shadow);
+  }
+  .nav-links.nav-open { display: flex; }
+  .nav-inner { position: relative; }
 }

@@ -2,18 +2,34 @@
 {% block title %}Kirjaudu sisään{% endblock %}
 {% block content %}
 <div class="form-page">
-  <h1>Kirjaudu sisään</h1>
+  <div style="text-align:center;margin-bottom:28px">
+    <div style="font-size:2rem;margin-bottom:8px">⚖️</div>
+    <h1>Tervetuloa takaisin</h1>
+    <p class="form-sub">Kirjaudu ComplianceAI-tilillesi</p>
+  </div>
   <form method="post" class="form-card">
     <div class="form-group">
       <label>Sähköposti</label>
-      <input type="email" name="email" required>
+      <input type="email" name="email" required placeholder="nimi@yritys.fi" autofocus>
     </div>
     <div class="form-group">
       <label>Salasana</label>
-      <input type="password" name="salasana" required>
+      <div class="password-wrap">
+        <input type="password" name="salasana" required placeholder="Salasanasi" id="pw-kirjaudu">
+        <button type="button" class="pw-toggle" onclick="togglePw('pw-kirjaudu', this)">Näytä</button>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-full">Kirjaudu</button>
+    <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">Kirjaudu sisään →</button>
   </form>
-  <p class="form-footer">Ei tiliä? <a href="{{ url_for('rekisteri') }}">Rekisteröidy ilmaiseksi</a></p>
+  <p class="form-footer">Ei tiliä vielä? <a href="{{ url_for('rekisteri') }}">Rekisteröidy ilmaiseksi</a></p>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+function togglePw(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Piilota'; }
+  else { input.type = 'password'; btn.textContent = 'Näytä'; }
+}
+</script>
 {% endblock %}

@@ -29,10 +29,23 @@
     </div>
     <div class="form-group">
       <label>Salasana *</label>
-      <input type="password" name="salasana" required minlength="8" placeholder="Vähintään 8 merkkiä">
+      <div class="password-wrap">
+        <input type="password" name="salasana" required minlength="8" placeholder="Vähintään 8 merkkiä" id="pw-rekisteri">
+        <button type="button" class="pw-toggle" onclick="togglePw('pw-rekisteri', this)">Näytä</button>
+      </div>
+      <small>Vähintään 8 merkkiä</small>
     </div>
-    <button type="submit" class="btn btn-primary btn-full">Luo tili ja aloita</button>
+    <button type="submit" class="btn btn-primary btn-full">Luo tili ja aloita →</button>
   </form>
   <p class="form-footer">Jo tili? <a href="{{ url_for('kirjaudu') }}">Kirjaudu sisään</a></p>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+function togglePw(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Piilota'; }
+  else { input.type = 'password'; btn.textContent = 'Näytä'; }
+}
+</script>
 {% endblock %}
