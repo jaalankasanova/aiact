@@ -32,7 +32,7 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
 STRIPE_WEBHOOK_SECRET  = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRICE_ID        = os.environ.get("STRIPE_PRICE_ID", "")
 
-DB_PATH = os.path.join(BASE_DIR, "aiact.db")
+DB_PATH = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "aiact.db"))
 
 
 # ── Tietokanta ─────────────────────────────────────────────────────────────────
@@ -186,6 +186,10 @@ def dashboard():
     kid = session["kayttaja_id"]
     with get_db() as db:
         kayttaja = db.execute("SELECT * FROM kayttajat WHERE id=?", [kid]).fetchone()
+        if not kayttaja:
+            session.clear()
+            flash("Istunto vanhentunut, kirjaudu uudelleen.", "warning")
+            return redirect(url_for("kirjaudu"))
         jarjestelmat = db.execute(
             "SELECT * FROM jarjestelmat WHERE kayttaja_id=? ORDER BY luotu DESC", [kid]
         ).fetchall()

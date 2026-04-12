@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: aiact
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRICE_ID
+        sync: false
+      - key: DB_PATH
+        value: /data/aiact.db
+    disk:
+      name: aiact-data
+      mountPath: /data
+      sizeGB: 1
