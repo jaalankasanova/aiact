@@ -1,274 +1,662 @@
-/* ComplianceAI — päätyylitiedosto */
+/* ComplianceAI — moderni laillisteknologia-teema */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 :root {
-  --sininen: #2563eb;
-  --sininen-tumma: #1d4ed8;
-  --taustavalkoinen: #f8fafc;
-  --teksti: #1e293b;
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
+  --primary-light: #ede9fe;
+  --accent: #059669;
+  --accent-light: #d1fae5;
+  --bg: #f8f7ff;
+  --teksti: #0f172a;
   --teksti-harmaa: #64748b;
   --reunaviiva: #e2e8f0;
-  --varoitus: #f59e0b;
-  --vaara: #ef4444;
-  --ok: #22c55e;
+  --tumma: #0a0e1a;
+  --tumma2: #111827;
+  --varoitus: #d97706;
+  --varoitus-light: #fef3c7;
+  --vaara: #dc2626;
+  --vaara-light: #fee2e2;
+  --ok: #059669;
+  --ok-light: #d1fae5;
   --violetti: #7c3aed;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-       color: var(--teksti); background: #fff; line-height: 1.6; }
 
-/* Nav */
-.nav { background: #fff; border-bottom: 1px solid var(--reunaviiva); position: sticky; top: 0; z-index: 100; }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px;
-             display: flex; align-items: center; justify-content: space-between; height: 60px; }
-.logo { font-weight: 800; font-size: 1.2rem; color: var(--sininen); text-decoration: none; }
-.nav-links { display: flex; align-items: center; gap: 20px; }
-.nav-links a { text-decoration: none; color: var(--teksti); font-size: 0.9rem; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--teksti);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.nav {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226,232,240,0.8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo::before {
+  content: "⚖";
+  font-size: 1.1rem;
+}
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--teksti-harmaa);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+.nav-links a:hover { color: var(--teksti); background: rgba(124,58,237,0.06); }
 .nav-out { color: var(--teksti-harmaa) !important; }
 
-/* Buttons */
-.btn { display: inline-block; padding: 8px 18px; border-radius: 8px; font-size: 0.9rem;
-       font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.15s; }
-.btn-primary { background: var(--sininen); color: #fff; }
-.btn-primary:hover { background: var(--sininen-tumma); }
-.btn-outline { background: transparent; color: var(--sininen); border: 2px solid var(--sininen); }
-.btn-outline:hover { background: var(--sininen); color: #fff; }
-.btn-ghost { background: transparent; color: var(--teksti-harmaa); }
-.btn-ghost:hover { background: var(--taustavalkoinen); }
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.18s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(124,58,237,0.45);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-outline:hover { background: var(--primary); color: #fff; }
+.btn-ghost {
+  background: transparent;
+  color: var(--teksti-harmaa);
+}
+.btn-ghost:hover { background: rgba(0,0,0,0.05); color: var(--teksti); }
 .btn-danger { background: var(--vaara); color: #fff; }
-.btn-sm { padding: 5px 12px; font-size: 0.82rem; }
-.btn-lg { padding: 12px 28px; font-size: 1rem; }
-.btn-full { width: 100%; text-align: center; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-sm { padding: 5px 12px; font-size: 0.82rem; border-radius: 8px; }
+.btn-lg { padding: 14px 32px; font-size: 1rem; border-radius: 12px; }
+.btn-full { width: 100%; }
 
-/* Flash messages */
-.flash { max-width: 900px; margin: 16px auto; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; }
-.flash-success { background: #dcfce7; color: #166534; }
-.flash-error { background: #fee2e2; color: #991b1b; }
-.flash-warning { background: #fef3c7; color: #92400e; }
-.flash-info { background: #dbeafe; color: #1e40af; }
+/* ── Flash messages ───────────────────────────────────────────────────────── */
+.flash {
+  max-width: 900px;
+  margin: 16px auto;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.flash-success { background: var(--ok-light); color: #065f46; border-left: 4px solid var(--ok); }
+.flash-error { background: var(--vaara-light); color: #991b1b; border-left: 4px solid var(--vaara); }
+.flash-warning { background: var(--varoitus-light); color: #92400e; border-left: 4px solid var(--varoitus); }
+.flash-info { background: var(--primary-light); color: #5b21b6; border-left: 4px solid var(--primary); }
 
-/* Main */
+/* ── Main & Container ─────────────────────────────────────────────────────── */
 .main { min-height: calc(100vh - 120px); }
-.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
 
-/* Footer */
-.footer { background: var(--taustavalkoinen); border-top: 1px solid var(--reunaviiva);
-          padding: 20px 24px; text-align: center; font-size: 0.8rem; color: var(--teksti-harmaa); }
-.footer a { color: var(--sininen); text-decoration: none; }
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer {
+  background: var(--tumma);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+}
+.footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+.footer a:hover { color: #fff; }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
-.hero { background: linear-gradient(135deg, #1e293b 0%, #1d4ed8 100%);
-        color: #fff; padding: 80px 24px; text-align: center; }
-.hero-inner { max-width: 700px; margin: 0 auto; }
-.deadline-badge { display: inline-block; background: rgba(255,255,255,0.15);
-                  border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-                  padding: 6px 16px; font-size: 0.85rem; margin-bottom: 24px; }
-.hero h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
-.hero-sub { font-size: 1.15rem; opacity: 0.85; margin-bottom: 32px; }
-.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
-.btn-ghost.btn-lg { color: #fff; border: 2px solid rgba(255,255,255,0.4); }
-.btn-ghost.btn-lg:hover { background: rgba(255,255,255,0.1); }
-.hero-note { font-size: 0.85rem; opacity: 0.65; }
+.hero {
+  background: var(--tumma);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(109,40,217,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(5,150,105,0.1) 0%, transparent 50%);
+  color: #fff;
+  padding: 100px 24px 90px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.hero-inner { max-width: 740px; margin: 0 auto; position: relative; }
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(124,58,237,0.2);
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 100px;
+  padding: 7px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 28px;
+  color: #c4b5fd;
+  letter-spacing: 0.3px;
+}
+.hero h1 {
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 22px;
+  letter-spacing: -1.5px;
+  background: linear-gradient(135deg, #fff 40%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 36px;
+  line-height: 1.75;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-sub strong { color: #fbbf24; -webkit-text-fill-color: #fbbf24; }
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.btn-ghost.btn-lg {
+  color: rgba(255,255,255,0.75);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+}
+.btn-ghost.btn-lg:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+.hero-note { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
 
-/* Urgency */
-.urgency { background: #1e293b; color: #fff; padding: 40px 24px; }
-.urgency-grid { max-width: 900px; margin: 0 auto; display: grid;
-                grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; }
-.urgency-number { display: block; font-size: 2.5rem; font-weight: 800; color: #60a5fa; }
-.urgency-label { font-size: 0.9rem; opacity: 0.8; }
+/* ── Urgency ──────────────────────────────────────────────────────────────── */
+.urgency {
+  background: var(--tumma2);
+  color: #fff;
+  padding: 50px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.urgency-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+.urgency-number {
+  display: block;
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.urgency-label { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
-/* Miten toimii */
-.miten { padding: 80px 24px; }
-.miten h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
-.steps { max-width: 900px; margin: 0 auto; display: grid;
-         grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.step { text-align: center; }
-.step-num { width: 48px; height: 48px; background: var(--sininen); color: #fff;
-            border-radius: 50%; font-size: 1.3rem; font-weight: 800;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-.step h3 { font-size: 1rem; margin-bottom: 8px; }
-.step p { font-size: 0.88rem; color: var(--teksti-harmaa); }
+/* ── Miten toimii ─────────────────────────────────────────────────────────── */
+.miten { padding: 96px 24px; background: #fff; }
+.miten h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 56px;
+  letter-spacing: -0.8px;
+}
+.steps {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.step {
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--reunaviiva);
+  background: var(--bg);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.step:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.step-num {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #fff;
+  border-radius: 14px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.3);
+}
+.step h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 0.86rem; color: var(--teksti-harmaa); line-height: 1.6; }
 
-/* Hinnoittelu */
-.hinnoittelu { padding: 80px 24px; background: var(--taustavalkoinen); }
-.hinnoittelu h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
-.hinta-grid { max-width: 700px; margin: 0 auto; display: grid;
-              grid-template-columns: 1fr 1fr; gap: 24px; }
-.hinta-kortti { background: #fff; border: 2px solid var(--reunaviiva);
-                border-radius: 12px; padding: 32px 28px; position: relative; }
-.hinta-suosittu { border-color: var(--sininen); }
-.hinta-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-               background: var(--sininen); color: #fff; font-size: 0.8rem; font-weight: 700;
-               padding: 4px 14px; border-radius: 12px; }
-.hinta-nimi { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-.hinta-hinta { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; }
+/* ── FAQ ──────────────────────────────────────────────────────────────────── */
+.faq { padding: 96px 24px; background: var(--bg); }
+.faq h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 56px;
+  letter-spacing: -0.8px;
+}
+.faq-lista { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+  border: 1px solid var(--reunaviiva);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.15s;
+}
+.faq-item:hover { box-shadow: var(--shadow); }
+.faq-kysymys {
+  padding: 18px 22px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.faq-kysymys span { font-size: 1.4rem; color: var(--primary); transition: transform 0.2s; flex-shrink: 0; }
+.faq-kysymys.auki span { transform: rotate(45deg); }
+.faq-vastaus {
+  display: none;
+  padding: 0 22px 18px;
+  color: var(--teksti-harmaa);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  border-top: 1px solid var(--reunaviiva);
+  padding-top: 14px;
+}
+.faq-vastaus a { color: var(--primary); }
+
+/* ── Hinnoittelu ──────────────────────────────────────────────────────────── */
+.hinnoittelu { padding: 96px 24px; background: #fff; }
+.hinnoittelu h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 56px;
+  letter-spacing: -0.8px;
+}
+.hinta-grid {
+  max-width: 680px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.hinta-kortti {
+  background: var(--bg);
+  border: 1.5px solid var(--reunaviiva);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+}
+.hinta-suosittu {
+  background: var(--tumma);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(124,58,237,0.25);
+}
+.hinta-suosittu p, .hinta-suosittu .hinta-nimi { color: rgba(255,255,255,0.7); }
+.hinta-suosittu .hinta-hinta { color: #fff; }
+.hinta-suosittu li { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.1) !important; }
+.hinta-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.4);
+}
+.hinta-nimi { font-size: 0.9rem; font-weight: 600; color: var(--teksti-harmaa); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.hinta-hinta { font-size: 2.6rem; font-weight: 900; margin-bottom: 24px; letter-spacing: -1px; }
 .hinta-hinta span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
-.hinta-kortti ul { list-style: none; margin-bottom: 24px; }
-.hinta-kortti li { padding: 6px 0; font-size: 0.9rem; border-bottom: 1px solid var(--reunaviiva); }
-.hinta-kortti li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
-.hinta-kortti li.ei::before { content: "✗ "; color: var(--reunaviiva); }
-.hinta-kortti li.ei { color: var(--teksti-harmaa); }
-.hinta-note { text-align: center; color: var(--teksti-harmaa); font-size: 0.85rem; margin-top: 16px; }
+.hinta-kortti ul { list-style: none; margin-bottom: 28px; }
+.hinta-kortti li { padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid var(--reunaviiva); display: flex; align-items: center; gap: 8px; }
+.hinta-kortti li::before { content: "✓"; color: var(--ok); font-weight: 800; flex-shrink: 0; }
+.hinta-kortti li.ei::before { content: "–"; color: var(--reunaviiva); }
+.hinta-kortti li.ei { color: var(--teksti-harmaa); opacity: 0.5; }
+.hinta-note { text-align: center; color: var(--teksti-harmaa); font-size: 0.83rem; margin-top: 20px; }
 
-/* CTA bottom */
-.cta-bottom { background: var(--sininen); color: #fff; padding: 80px 24px; text-align: center; }
-.cta-bottom h2 { font-size: 2rem; margin-bottom: 24px; }
+/* ── CTA bottom ───────────────────────────────────────────────────────────── */
+.cta-bottom {
+  background: var(--tumma);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.3) 0%, transparent 60%);
+  color: #fff;
+  padding: 96px 24px;
+  text-align: center;
+}
+.cta-bottom h2 { font-size: 2.4rem; font-weight: 900; margin-bottom: 28px; letter-spacing: -1px; line-height: 1.2; }
 
-/* ── Forms ─────────────────────────────────────────────────────────────────── */
+/* ── Forms ────────────────────────────────────────────────────────────────── */
 .form-page { max-width: 520px; margin: 60px auto; padding: 0 24px; }
-.form-page h1 { margin-bottom: 8px; }
-.form-sub { color: var(--teksti-harmaa); margin-bottom: 24px; }
-.form-card { background: #fff; border: 1px solid var(--reunaviiva); border-radius: 12px; padding: 32px; }
+.form-page h1 { margin-bottom: 8px; font-weight: 800; letter-spacing: -0.5px; }
+.form-sub { color: var(--teksti-harmaa); margin-bottom: 28px; }
+.form-card {
+  background: #fff;
+  border: 1px solid var(--reunaviiva);
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
 .form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; }
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%; padding: 10px 14px; border: 1px solid var(--reunaviiva);
-  border-radius: 8px; font-size: 0.95rem; outline: none; transition: border 0.15s; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: var(--sininen); }
-.form-group small { display: block; color: var(--teksti-harmaa); font-size: 0.8rem; margin-top: 4px; }
-.form-footer { text-align: center; margin-top: 16px; font-size: 0.9rem; color: var(--teksti-harmaa); }
-.form-footer a { color: var(--sininen); text-decoration: none; }
+.form-group label { display: block; font-size: 0.86rem; font-weight: 600; margin-bottom: 6px; color: var(--teksti); }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--reunaviiva);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+  background: var(--bg);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+  background: #fff;
+}
+.form-group small { display: block; color: var(--teksti-harmaa); font-size: 0.78rem; margin-top: 5px; }
+.form-footer { text-align: center; margin-top: 18px; font-size: 0.88rem; color: var(--teksti-harmaa); }
+.form-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
-/* ── Dashboard ─────────────────────────────────────────────────────────────── */
-.dashboard { max-width: 1000px; margin: 40px auto; padding: 0 24px; }
-.dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-.dash-header h1 { font-size: 1.8rem; }
-.dash-sub { color: var(--teksti-harmaa); }
-.dash-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
-.summary-card { background: var(--taustavalkoinen); border: 1px solid var(--reunaviiva);
-                border-radius: 12px; padding: 20px; text-align: center; }
-.summary-big { font-size: 2.5rem; font-weight: 800; color: var(--sininen); }
-.summary-big-text { font-size: 0.95rem; font-weight: 600; }
-.summary-card p { font-size: 0.85rem; color: var(--teksti-harmaa); margin-top: 8px; }
-.score-ring { margin: 0 auto 12px; width: 80px; height: 80px; border-radius: 50%;
-              display: flex; align-items: center; justify-content: center; flex-direction: column; }
-.score-ring.score-heikko { background: #fee2e2; }
-.score-ring.score-kohtalainen { background: #fef3c7; }
-.score-ring.score-hyva { background: #dcfce7; }
-.score-ring.score-kriittinen { background: #f3e8ff; }
-.score-num { font-size: 1.8rem; font-weight: 800; }
-.score-label { font-size: 0.75rem; color: var(--teksti-harmaa); }
+/* ── Dashboard ────────────────────────────────────────────────────────────── */
+.dashboard { max-width: 1040px; margin: 44px auto; padding: 0 28px; }
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+.dash-header h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.5px; }
+.dash-sub { color: var(--teksti-harmaa); font-size: 0.9rem; }
+.dash-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 44px;
+}
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--reunaviiva);
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.summary-big { font-size: 2.6rem; font-weight: 900; color: var(--primary); letter-spacing: -1px; }
+.summary-big-text { font-size: 0.9rem; font-weight: 600; }
+.summary-card p { font-size: 0.82rem; color: var(--teksti-harmaa); margin-top: 8px; line-height: 1.4; }
+.score-ring {
+  margin: 0 auto 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.score-ring.score-heikko { background: var(--vaara-light); }
+.score-ring.score-kohtalainen { background: var(--varoitus-light); }
+.score-ring.score-hyva { background: var(--ok-light); }
+.score-ring.score-kriittinen { background: var(--primary-light); }
+.score-num { font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; }
+.score-label { font-size: 0.72rem; color: var(--teksti-harmaa); }
 .summary-heikko { border-color: var(--vaara); }
 .summary-kohtalainen { border-color: var(--varoitus); }
 .summary-hyva { border-color: var(--ok); }
-.summary-kriittinen { border-color: var(--violetti); }
-.upgrade-banner { background: #fef3c7; border: 1px solid var(--varoitus); border-radius: 8px;
-                  padding: 14px 20px; margin-bottom: 24px; font-size: 0.9rem; }
+.summary-kriittinen { border-color: var(--primary); }
+.upgrade-banner {
+  background: linear-gradient(135deg, #fef3c7, #fef9ee);
+  border: 1px solid #fcd34d;
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin-bottom: 28px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .jarjestelmat-lista { display: flex; flex-direction: column; gap: 12px; }
-.jarjestelma-kortti { background: #fff; border: 1px solid var(--reunaviiva); border-radius: 10px;
-                      padding: 16px 20px; display: flex; align-items: center; gap: 16px;
-                      flex-wrap: wrap; }
+.jarjestelma-kortti {
+  background: #fff;
+  border: 1px solid var(--reunaviiva);
+  border-radius: 12px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  transition: box-shadow 0.15s;
+}
+.jarjestelma-kortti:hover { box-shadow: var(--shadow); }
 .jarjestelma-kortti.riski-korkea { border-left: 4px solid var(--vaara); }
-.jarjestelma-kortti.riski-kielletty { border-left: 4px solid var(--violetti); }
+.jarjestelma-kortti.riski-kielletty { border-left: 4px solid var(--primary); }
 .jarjestelma-kortti.riski-rajattu { border-left: 4px solid var(--varoitus); }
 .jarjestelma-kortti.riski-minimaalinen { border-left: 4px solid var(--ok); }
 .jarjestelma-info { flex: 1; }
-.jarjestelma-nimi { font-weight: 700; font-size: 1rem; }
-.jarjestelma-kuvaus { font-size: 0.85rem; color: var(--teksti-harmaa); }
+.jarjestelma-nimi { font-weight: 700; font-size: 0.98rem; }
+.jarjestelma-kuvaus { font-size: 0.83rem; color: var(--teksti-harmaa); margin-top: 2px; }
 .jarjestelma-riski { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
 .jarjestelma-toiminnot { display: flex; gap: 8px; flex-wrap: wrap; }
-.riski-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-.riski-badge.riski-korkea { background: #fee2e2; color: #991b1b; }
-.riski-badge.riski-kielletty { background: #f3e8ff; color: #6b21a8; }
-.riski-badge.riski-rajattu { background: #fef3c7; color: #92400e; }
-.riski-badge.riski-minimaalinen { background: #dcfce7; color: #14532d; }
-.puuttuu-count { font-size: 0.8rem; color: var(--vaara); font-weight: 600; }
-.puuttuu-ok { font-size: 0.8rem; color: var(--ok); font-weight: 600; }
-.tyhja-tila { text-align: center; padding: 60px 24px; background: var(--taustavalkoinen);
-              border-radius: 12px; border: 2px dashed var(--reunaviiva); }
-.tyhja-tila p { margin-bottom: 16px; color: var(--teksti-harmaa); }
+.riski-badge { padding: 3px 11px; border-radius: 100px; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.3px; }
+.riski-badge.riski-korkea { background: var(--vaara-light); color: #991b1b; }
+.riski-badge.riski-kielletty { background: var(--primary-light); color: #5b21b6; }
+.riski-badge.riski-rajattu { background: var(--varoitus-light); color: #92400e; }
+.riski-badge.riski-minimaalinen { background: var(--ok-light); color: #065f46; }
+.puuttuu-count { font-size: 0.78rem; color: var(--vaara); font-weight: 600; }
+.puuttuu-ok { font-size: 0.78rem; color: var(--ok); font-weight: 600; }
+.tyhja-tila {
+  text-align: center;
+  padding: 64px 24px;
+  background: #fff;
+  border-radius: 16px;
+  border: 2px dashed var(--reunaviiva);
+}
+.tyhja-tila p { margin-bottom: 18px; color: var(--teksti-harmaa); }
 
-/* ── Kartoitus ──────────────────────────────────────────────────────────────── */
-.kartoitus-page { max-width: 680px; margin: 40px auto; padding: 0 24px; }
-.kartoitus-page h1 { margin-bottom: 8px; }
-.kartoitus-ohje { color: var(--teksti-harmaa); margin-bottom: 24px; font-size: 0.95rem; }
-.kartoitus-progress { display: flex; gap: 8px; margin-bottom: 32px; }
-.progress-step { flex: 1; text-align: center; padding: 8px; border-radius: 6px;
-                 font-size: 0.82rem; font-weight: 600; background: var(--taustavalkoinen);
-                 border: 1px solid var(--reunaviiva); color: var(--teksti-harmaa); }
-.progress-step.active { background: var(--sininen); color: #fff; border-color: var(--sininen); }
-.progress-step.done { background: #dcfce7; color: #14532d; border-color: #bbf7d0; }
-.checkbox-group { background: var(--taustavalkoinen); border: 1px solid var(--reunaviiva);
-                  border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+/* ── Kartoitus ────────────────────────────────────────────────────────────── */
+.kartoitus-page { max-width: 680px; margin: 44px auto; padding: 0 24px; }
+.kartoitus-page h1 { margin-bottom: 8px; font-weight: 800; letter-spacing: -0.5px; }
+.kartoitus-ohje { color: var(--teksti-harmaa); margin-bottom: 28px; font-size: 0.93rem; }
+.kartoitus-progress { display: flex; gap: 6px; margin-bottom: 36px; }
+.progress-step {
+  flex: 1;
+  text-align: center;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #fff;
+  border: 1.5px solid var(--reunaviiva);
+  color: var(--teksti-harmaa);
+}
+.progress-step.active {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+.progress-step.done { background: var(--ok-light); color: #065f46; border-color: #a7f3d0; }
+.checkbox-group {
+  background: var(--bg);
+  border: 1.5px solid var(--reunaviiva);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.checkbox-group:hover { border-color: #c4b5fd; box-shadow: 0 0 0 3px rgba(124,58,237,0.06); }
 .checkbox-group-warning { border-color: #fcd34d; background: #fefce8; }
 .checkbox-group-req { padding: 12px 16px; }
 .checkbox-label { display: flex; gap: 14px; cursor: pointer; align-items: flex-start; }
-.checkbox-label input[type=checkbox] { margin-top: 3px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
-.req-artikkeli { background: #dbeafe; color: #1e40af; padding: 1px 8px;
-                 border-radius: 10px; font-size: 0.75rem; font-weight: 600; margin-left: 8px; }
-.req-prioriteetti { padding: 1px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; margin-left: 4px; }
-.prio-kriittinen { background: #fee2e2; color: #991b1b; }
-.prio-korkea { background: #fef3c7; color: #92400e; }
+.checkbox-label input[type=checkbox] { margin-top: 3px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; accent-color: var(--primary); }
+.req-artikkeli {
+  background: var(--primary-light);
+  color: #5b21b6;
+  padding: 1px 8px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 8px;
+}
+.req-prioriteetti { padding: 1px 8px; border-radius: 100px; font-size: 0.72rem; font-weight: 700; margin-left: 4px; }
+.prio-kriittinen { background: var(--vaara-light); color: #991b1b; }
+.prio-korkea { background: var(--varoitus-light); color: #92400e; }
 .prio-normaali { background: #f1f5f9; color: #475569; }
-.section-otsikko { font-weight: 700; font-size: 1rem; margin: 20px 0 12px; }
-.form-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
-.alert { padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; }
-.alert-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
-.alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
-.alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
-.alert-success { background: #dcfce7; color: #14532d; border: 1px solid #86efac; }
+.section-otsikko { font-weight: 700; font-size: 0.95rem; margin: 22px 0 12px; color: var(--teksti); }
+.form-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+.alert { padding: 14px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; font-weight: 500; }
+.alert-danger { background: var(--vaara-light); color: #991b1b; border-left: 4px solid var(--vaara); }
+.alert-warning { background: var(--varoitus-light); color: #92400e; border-left: 4px solid var(--varoitus); }
+.alert-info { background: var(--primary-light); color: #5b21b6; border-left: 4px solid var(--primary); }
+.alert-success { background: var(--ok-light); color: #065f46; border-left: 4px solid var(--ok); }
 
-/* ── Tulos ──────────────────────────────────────────────────────────────────── */
-.tulos-page { max-width: 860px; margin: 0 auto; }
-.tulos-header { padding: 40px 40px 32px; }
+/* ── Tulos ────────────────────────────────────────────────────────────────── */
+.tulos-page { max-width: 880px; margin: 0 auto; }
+.tulos-header { padding: 44px 44px 36px; border-radius: 0; }
 .tulos-header-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
-.riski-bg-korkea { background: #fef2f2; border-bottom: 3px solid var(--vaara); }
-.riski-bg-kielletty { background: #faf5ff; border-bottom: 3px solid var(--violetti); }
-.riski-bg-rajattu { background: #fffbeb; border-bottom: 3px solid var(--varoitus); }
-.riski-bg-minimaalinen { background: #f0fdf4; border-bottom: 3px solid var(--ok); }
-.riski-iso-badge { padding: 10px 20px; border-radius: 8px; font-size: 1rem; font-weight: 800; }
-.riski-iso-badge.riski-korkea { background: #fee2e2; color: #991b1b; }
-.riski-iso-badge.riski-kielletty { background: #f3e8ff; color: #6b21a8; }
-.riski-iso-badge.riski-rajattu { background: #fef3c7; color: #92400e; }
-.riski-iso-badge.riski-minimaalinen { background: #dcfce7; color: #14532d; }
-.tulos-body { padding: 32px 40px; }
-.tulos-selitys { margin-bottom: 32px; }
-.tulos-selitys h2 { margin-bottom: 12px; }
-.puuttuvat-osio { margin-bottom: 32px; }
-.puuttuvat-osio h2 { margin-bottom: 16px; color: var(--vaara); }
-.puuttuvat-lista { display: flex; flex-direction: column; gap: 12px; }
-.puuttuva-kortti { border-radius: 8px; padding: 16px; border-left: 4px solid; }
-.prio-kortti-kriittinen { background: #fef2f2; border-color: var(--vaara); }
-.prio-kortti-korkea { background: #fffbeb; border-color: var(--varoitus); }
-.prio-kortti-normaali { background: var(--taustavalkoinen); border-color: var(--reunaviiva); }
-.puuttuva-otsikko { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; }
-.puuttuva-deadline { font-size: 0.82rem; color: var(--teksti-harmaa); margin-top: 6px; }
-.vaaditut-osio { margin-bottom: 32px; }
-.vaatimus-taulukko { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.vaatimus-taulukko th { background: #1e293b; color: #fff; padding: 10px 14px; text-align: left; }
-.vaatimus-taulukko td { padding: 10px 14px; border-bottom: 1px solid var(--reunaviiva); }
+.riski-bg-korkea { background: #fff5f5; border-bottom: 3px solid var(--vaara); }
+.riski-bg-kielletty { background: var(--primary-light); border-bottom: 3px solid var(--primary); }
+.riski-bg-rajattu { background: var(--varoitus-light); border-bottom: 3px solid var(--varoitus); }
+.riski-bg-minimaalinen { background: var(--ok-light); border-bottom: 3px solid var(--ok); }
+.riski-iso-badge { padding: 10px 22px; border-radius: 100px; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.5px; }
+.riski-iso-badge.riski-korkea { background: var(--vaara-light); color: #991b1b; }
+.riski-iso-badge.riski-kielletty { background: var(--primary-light); color: #5b21b6; }
+.riski-iso-badge.riski-rajattu { background: var(--varoitus-light); color: #92400e; }
+.riski-iso-badge.riski-minimaalinen { background: var(--ok-light); color: #065f46; }
+.tulos-body { padding: 36px 44px; }
+.tulos-selitys { margin-bottom: 36px; }
+.tulos-selitys h2 { margin-bottom: 12px; font-weight: 800; letter-spacing: -0.3px; }
+.puuttuvat-osio { margin-bottom: 36px; }
+.puuttuvat-osio h2 { margin-bottom: 16px; color: var(--vaara); font-weight: 800; }
+.puuttuvat-lista { display: flex; flex-direction: column; gap: 10px; }
+.puuttuva-kortti { border-radius: 10px; padding: 16px; border-left: 4px solid; }
+.prio-kortti-kriittinen { background: #fff5f5; border-color: var(--vaara); }
+.prio-kortti-korkea { background: var(--varoitus-light); border-color: var(--varoitus); }
+.prio-kortti-normaali { background: var(--bg); border-color: var(--reunaviiva); }
+.puuttuva-otsikko { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; flex-wrap: wrap; }
+.puuttuva-deadline { font-size: 0.8rem; color: var(--teksti-harmaa); margin-top: 6px; }
+.vaaditut-osio { margin-bottom: 36px; }
+.vaatimus-taulukko { width: 100%; border-collapse: collapse; font-size: 0.88rem; border-radius: 10px; overflow: hidden; }
+.vaatimus-taulukko th { background: var(--tumma); color: #fff; padding: 11px 16px; text-align: left; font-size: 0.82rem; letter-spacing: 0.3px; }
+.vaatimus-taulukko td { padding: 11px 16px; border-bottom: 1px solid var(--reunaviiva); }
 .rivi-ok { background: #f0fdf4; }
-.rivi-puuttuu { background: #fef2f2; }
-.kaikki-ok { background: #dcfce7; border-radius: 10px; padding: 24px; margin-bottom: 32px; }
-.tulos-toiminnot { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px;
-                   border-top: 1px solid var(--reunaviiva); }
-.disclaimer { font-size: 0.8rem; color: var(--teksti-harmaa); margin-top: 16px; }
+.rivi-puuttuu { background: #fff5f5; }
+.kaikki-ok { background: var(--ok-light); border-radius: 12px; padding: 24px; margin-bottom: 36px; border-left: 4px solid var(--ok); }
+.tulos-toiminnot {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--reunaviiva);
+}
+.disclaimer { font-size: 0.78rem; color: var(--teksti-harmaa); margin-top: 18px; line-height: 1.6; }
 
-/* Tilaus */
-.tilaus-edut { background: var(--taustavalkoinen); border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+/* ── Tilaus ───────────────────────────────────────────────────────────────── */
+.tilaus-edut { background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 24px; border: 1px solid var(--reunaviiva); }
 .tilaus-edut ul { list-style: none; }
-.tilaus-edut li { padding: 6px 0; font-size: 0.9rem; }
-.tilaus-edut li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
-.hinta-iso { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 8px; }
+.tilaus-edut li { padding: 7px 0; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--reunaviiva); }
+.tilaus-edut li::before { content: "✓"; color: var(--ok); font-weight: 800; }
+.hinta-iso { font-size: 2.8rem; font-weight: 900; text-align: center; margin-bottom: 8px; letter-spacing: -1px; }
 .hinta-iso span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
 
-/* ── FAQ ─────────────────────────────────────────────────────────────────────── */
-.faq { padding: 80px 24px; }
-.faq h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
-.faq-lista { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-.faq-item { border: 1px solid var(--reunaviiva); border-radius: 10px; overflow: hidden; }
-.faq-kysymys { padding: 18px 20px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; }
-.faq-kysymys:hover { background: var(--taustavalkoinen); }
-.faq-kysymys span { font-size: 1.3rem; color: var(--sininen); transition: transform 0.2s; }
-.faq-kysymys.auki span { transform: rotate(45deg); }
-.faq-vastaus { display: none; padding: 0 20px 18px; color: var(--teksti-harmaa); font-size: 0.95rem; line-height: 1.7; }
-.faq-vastaus a { color: var(--sininen); }
-
 @media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
+  .hero h1 { font-size: 2.2rem; }
   .steps { grid-template-columns: 1fr 1fr; }
   .urgency-grid { grid-template-columns: 1fr; }
   .hinta-grid { grid-template-columns: 1fr; }
   .dash-summary { grid-template-columns: 1fr 1fr; }
   .tulos-header-inner { flex-direction: column; }
   .tulos-body { padding: 24px; }
+  .tulos-header { padding: 28px 24px; }
 }
