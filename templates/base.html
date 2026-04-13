@@ -3,7 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}AI Act Compliance{% endblock %} — ComplianceAI</title>
+<title>{% block title %}EU AI Act Compliance Suomessa{% endblock %} — ComplianceAI</title>
+
+<!-- SEO -->
+<meta name="description" content="{% block meta_description %}ComplianceAI auttaa pk-yrityksiä selvittämään EU AI Act -vaatimukset ja tekemään compliance-kartoituksen 15 minuutissa, suomeksi.{% endblock %}">
+<meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+<link rel="canonical" href="https://aiact.onrender.com{{ request.path }}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ComplianceAI">
+<meta property="og:title" content="{% block og_title %}EU AI Act Compliance Suomessa — ComplianceAI{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Tarkista yrityksesi EU AI Act -tilanne ilmaiseksi. Riskiluokitus, gap-analyysi ja toimintaohjeet — 15 minuutissa, suomeksi.{% endblock %}">
+<meta property="og:url" content="https://aiact.onrender.com{{ request.path }}">
+<meta property="og:locale" content="fi_FI">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}EU AI Act Compliance — ComplianceAI{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}Tarkista yrityksesi EU AI Act -tilanne ilmaiseksi. Sakot rikkomuksista jopa 15M€.{% endblock %}">
+
+<!-- JSON-LD rakennteinen data -->
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ComplianceAI",
+  "description": "EU AI Act compliance -työkalu pk-yrityksille. Riskiluokitus ja gap-analyysi suomeksi.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "description": "Ilmainen kartoitus — Pro 49€/kk"
+  },
+  "url": "https://aiact.onrender.com",
+  "inLanguage": "fi"
+}
+</script>
+{% endblock %}
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>

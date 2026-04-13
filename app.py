@@ -597,6 +597,11 @@ def tietosuoja():
     return render_template("tietosuoja.html")
 
 
+@app.route("/robots.txt")
+def robots():
+    return app.send_static_file("robots.txt")
+
+
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     if request.method == "POST":

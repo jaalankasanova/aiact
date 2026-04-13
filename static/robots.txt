@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /kartoitus/
+Disallow: /tulos/
+Disallow: /raportti/
+Disallow: /admin
+Disallow: /tilaus/checkout
+Disallow: /tilaus/success
+
+Sitemap: https://aiact.onrender.com/sitemap.xml
