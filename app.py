@@ -140,9 +140,11 @@ def init_db():
         exists = db.execute("SELECT id FROM kayttajat WHERE email=%s", [TEST_EMAIL]).fetchone()
         if not exists:
             db.execute(
-                "INSERT INTO kayttajat (id, email, salasana, yritys) VALUES (%s,%s,%s,%s)",
-                [str(uuid.uuid4()), TEST_EMAIL, generate_password_hash(TEST_PASS), "Testiyritys Oy"]
+                "INSERT INTO kayttajat (id, email, salasana, yritys, tilaaja) VALUES (%s,%s,%s,%s,%s)",
+                [str(uuid.uuid4()), TEST_EMAIL, generate_password_hash(TEST_PASS), "Testiyritys Oy", 1]
             )
+        else:
+            db.execute("UPDATE kayttajat SET tilaaja=1 WHERE email=%s", [TEST_EMAIL])
 
 
 def set_schema(db):
