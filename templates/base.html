@@ -17,6 +17,7 @@
       {% if kirjautunut %}
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>
+        {% if not tilaaja %}<a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary">Päivitä Pro</a>{% endif %}
         <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out">Kirjaudu ulos</a>
       {% else %}
         <a href="{{ url_for('kirjaudu') }}">Kirjaudu</a>

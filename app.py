@@ -103,7 +103,16 @@ def kirjautunut():
 
 @app.context_processor
 def inject_kirjautunut():
-    return {"kirjautunut": kirjautunut()}
+    tilaaja = False
+    if kirjautunut():
+        try:
+            with get_db() as db:
+                k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=?",
+                               [session["kayttaja_id"]]).fetchone()
+                tilaaja = bool(k and k["tilaaja"])
+        except Exception:
+            pass
+    return {"kirjautunut": kirjautunut(), "tilaaja": tilaaja}
 
 
 def vaadi_kirjautuminen(f):
