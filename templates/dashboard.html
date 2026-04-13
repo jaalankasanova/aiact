@@ -69,7 +69,7 @@
       <div class="jarjestelma-toiminnot">
         <a href="{{ url_for('tulos', jid=j.id) }}" class="btn btn-sm">Katso tulos</a>
         {% if tilaaja %}
-        <a href="{{ url_for('pdf_raportti', jid=j.id) }}" class="btn btn-sm btn-outline">PDF</a>
+        <a href="{{ url_for('pdf_raportti', jid=j.id) }}" target="_blank" class="btn btn-sm btn-outline">PDF</a>
         {% endif %}
         <a href="{{ url_for('muokkaa_jarjestelma', jid=j.id) }}" class="btn btn-sm btn-outline">Muokkaa</a>
         <form method="post" action="{{ url_for('poista_jarjestelma', jid=j.id) }}" style="display:inline"

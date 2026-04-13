@@ -4,34 +4,64 @@
 <meta charset="UTF-8">
 <style>
   body { font-family: Arial, sans-serif; font-size: 11pt; color: #222; margin: 0; padding: 40px; }
-  h1 { font-size: 20pt; color: #1a1a2e; border-bottom: 3px solid #2563eb; padding-bottom: 8px; }
-  h2 { font-size: 14pt; color: #1a1a2e; margin-top: 24px; }
-  .header-info { background: #f8fafc; padding: 16px; border-radius: 6px; margin-bottom: 24px; }
+  h1 { font-size: 20pt; color: #1a1a2e; border-bottom: 3px solid #2563eb; padding-bottom: 8px; margin-bottom: 20px; }
+  h2 { font-size: 13pt; color: #1a1a2e; margin-top: 28px; margin-bottom: 8px; border-left: 4px solid #2563eb; padding-left: 10px; }
+  .header-info { background: #f8fafc; padding: 16px; border-radius: 6px; margin-bottom: 24px; line-height: 1.8; }
   .riski-korkea { color: #dc2626; font-weight: bold; }
   .riski-kielletty { color: #7c3aed; font-weight: bold; }
   .riski-rajattu { color: #d97706; font-weight: bold; }
   .riski-minimaalinen { color: #16a34a; font-weight: bold; }
   table { width: 100%; border-collapse: collapse; margin-top: 12px; }
   th { background: #1a1a2e; color: white; padding: 8px 12px; text-align: left; font-size: 10pt; }
-  td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; font-size: 10pt; }
-  .ok { color: #16a34a; }
-  .puuttuu { color: #dc2626; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; font-size: 10pt; vertical-align: top; }
+  .ok { color: #16a34a; font-weight: 600; }
+  .puuttuu { color: #dc2626; font-weight: 600; }
+  .toimenpide-lista { margin: 0; padding-left: 20px; }
+  .toimenpide-lista li { margin-bottom: 12px; }
+  .toimenpide-meta { font-size: 9pt; color: #6b7280; margin-top: 4px; }
+  .allekirjoitus-alue {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .allekirjoitus-kentta { border-top: 1.5px solid #222; padding-top: 8px; }
+  .allekirjoitus-otsikko { font-size: 9pt; color: #6b7280; }
+  .allekirjoitus-tyhja { height: 48px; }
+  .vastuuhenkilo-taulukko { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .vastuuhenkilo-taulukko td { padding: 6px 10px; border: 1px solid #e5e7eb; font-size: 10pt; }
+  .vastuuhenkilo-taulukko td:first-child { background: #f8fafc; font-weight: 600; width: 35%; }
+  .tarkistus-box { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 6px; padding: 14px 18px; margin-top: 12px; font-size: 10pt; }
   .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 9pt; color: #6b7280; }
-  .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 10pt; font-weight: bold; }
+  .kuvaus-teksti { color: #4b5563; font-style: italic; margin-bottom: 16px; }
+  @media print {
+    .tulosta-nappi { display: none; }
+  }
+  .tulosta-nappi {
+    position: fixed; top: 20px; right: 20px;
+    background: #2563eb; color: white;
+    border: none; padding: 10px 20px; border-radius: 6px;
+    font-size: 11pt; font-weight: 600; cursor: pointer;
+  }
 </style>
 </head>
 <body>
+<button class="tulosta-nappi" onclick="window.print()">Tulosta / Tallenna PDF</button>
+
 <h1>EU AI Act Compliance -raportti</h1>
+
 <div class="header-info">
   <strong>Yritys:</strong> {{ kayttaja.yritys }}<br>
   {% if kayttaja.ytunnus %}<strong>Y-tunnus:</strong> {{ kayttaja.ytunnus }}<br>{% endif %}
   <strong>Järjestelmä:</strong> {{ jarjestelma.nimi }}<br>
+  {% if jarjestelma.kuvaus %}<strong>Kuvaus:</strong> {{ jarjestelma.kuvaus }}<br>{% endif %}
   <strong>Raportin päiväys:</strong> {{ pvm }}<br>
+  <strong>Seuraava tarkistus:</strong> {{ seuraava_tarkistus }}<br>
   <strong>Riskiluokitus:</strong>
   <span class="riski-{{ riski.taso }}">
     {% if riski.taso == "korkea" %}KORKEA RISKI (Annex III)
     {% elif riski.taso == "kielletty" %}MAHDOLLISESTI KIELLETTY (Art. 5)
-    {% elif riski.taso == "rajattu" %}RAJATTU RISKI
+    {% elif riski.taso == "rajattu" %}RAJATTU RISKI (Art. 50)
     {% else %}MINIMIRISKI{% endif %}
   </span>
 </div>
@@ -60,18 +90,82 @@
 {% endif %}
 
 {% if riski.puuttuvat %}
-<h2>Välittömät toimenpiteet</h2>
-<ol>
+<h2>Toimenpidesuunnitelma</h2>
+<ol class="toimenpide-lista">
   {% for v in riski.puuttuvat %}
-  <li><strong>{{ v.otsikko }}</strong> ({{ v.artikkeli }}) — Deadline: {{ v.deadline }}<br>{{ v.kuvaus }}</li>
+  {% set tp = toimenpiteet.get(v.id, {}) %}
+  <li>
+    <strong>{{ v.otsikko }}</strong> ({{ v.artikkeli }}) — Deadline: {{ v.deadline }}<br>
+    {{ v.kuvaus }}
+    {% if tp %}
+    <div class="toimenpide-meta">
+      ⏱ Arvioitu työmäärä: {{ tp.aika }} &nbsp;|&nbsp;
+      👤 Vastuuhenkilö: {{ tp.vastuu }}<br>
+      Ohje: {{ tp.ohje }}
+    </div>
+    {% endif %}
+  </li>
   {% endfor %}
 </ol>
 {% endif %}
+
+<h2>Vastuuhenkilöt</h2>
+<table class="vastuuhenkilo-taulukko">
+  <tr>
+    <td>AI-järjestelmän omistaja</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Compliance-vastaava</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Tekninen vastuuhenkilö</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Hyväksytty</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<div class="tarkistus-box">
+  <strong>Seuraava compliance-tarkistus:</strong> {{ seuraava_tarkistus }}<br>
+  Suosittelemme tarkistamaan tilanteen vähintään 6 kuukauden välein tai aina kun järjestelmään tehdään merkittäviä muutoksia.
+</div>
+
+<div class="allekirjoitus-alue">
+  <div>
+    <div class="allekirjoitus-tyhja"></div>
+    <div class="allekirjoitus-kentta">
+      <div class="allekirjoitus-otsikko">Päiväys ja paikka</div>
+    </div>
+  </div>
+  <div>
+    <div class="allekirjoitus-tyhja"></div>
+    <div class="allekirjoitus-kentta">
+      <div class="allekirjoitus-otsikko">Allekirjoitus ja nimenselvennys (compliance-vastaava)</div>
+    </div>
+  </div>
+  <div>
+    <div class="allekirjoitus-tyhja"></div>
+    <div class="allekirjoitus-kentta">
+      <div class="allekirjoitus-otsikko">Allekirjoitus ja nimenselvennys (toimitusjohtaja / vastuuhenkilö)</div>
+    </div>
+  </div>
+  <div>
+    <div class="allekirjoitus-tyhja"></div>
+    <div class="allekirjoitus-kentta">
+      <div class="allekirjoitus-otsikko">Leima (tarvittaessa)</div>
+    </div>
+  </div>
+</div>
 
 <div class="footer">
   Raportti generoitu ComplianceAI-työkalulla (complianceai.fi) | {{ pvm }}<br>
   Tämä raportti ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.<br>
   EU AI Act (2024/1689) — Täysi compliance-deadline korkean riskin järjestelmille: 2.8.2026
 </div>
+
 </body>
 </html>

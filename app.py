@@ -559,15 +559,9 @@ def stripe_webhook():
 
 # ── PDF-raportti ───────────────────────────────────────────────────────────────
 
-@app.route("/raportti/<jid>.pdf")
+@app.route("/raportti/<jid>")
 @vaadi_tilaus
 def pdf_raportti(jid):
-    try:
-        from weasyprint import HTML
-    except ImportError:
-        flash("PDF-vienti ei ole käytettävissä tässä ympäristössä.", "warning")
-        return redirect(url_for("tulos", jid=jid))
-
     with get_db() as db:
         set_schema(db)
         j = db.execute(
@@ -581,15 +575,14 @@ def pdf_raportti(jid):
         return redirect(url_for("dashboard"))
 
     riski = json.loads(j["riski_data"])
-    html = render_template("raportti_pdf.html",
+    seuraava_tarkistus = (datetime.now() + timedelta(days=180)).strftime("%d.%m.%Y")
+    return render_template("raportti_pdf.html",
                            jarjestelma=j,
                            riski=riski,
                            kayttaja=kayttaja,
+                           toimenpiteet=TOIMENPITEET,
+                           seuraava_tarkistus=seuraava_tarkistus,
                            pvm=datetime.now().strftime("%d.%m.%Y"))
-
-    pdf = HTML(string=html).write_pdf()
-    return Response(pdf, mimetype="application/pdf",
-                    headers={"Content-Disposition": f"attachment; filename=aiact-raportti-{j['nimi']}.pdf"})
 
 
 # ── Muut sivut ─────────────────────────────────────────────────────────────────

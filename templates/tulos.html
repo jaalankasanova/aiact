@@ -85,7 +85,7 @@
       <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">← Takaisin dashboardille</a>
       <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-outline">+ Kartoita seuraava järjestelmä</a>
       {% if tilaaja %}
-      <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" class="btn btn-primary">Lataa PDF-raportti</a>
+      <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" target="_blank" class="btn btn-primary">Avaa PDF-raportti</a>
       {% else %}
       <a href="{{ url_for('tilaus') }}" class="btn btn-primary">PDF-raportti — päivitä Pro</a>
       {% endif %}
