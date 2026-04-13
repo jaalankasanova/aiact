@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, s
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import sqlite3
+import psycopg2
+import psycopg2.extras
 import os
 import json
 import uuid
@@ -45,21 +46,56 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
 STRIPE_WEBHOOK_SECRET  = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRICE_ID        = os.environ.get("STRIPE_PRICE_ID", "")
 
-DB_PATH = os.environ.get("DB_PATH", os.path.join(BASE_DIR, "aiact.db"))
+DATABASE_URL = os.environ.get("DATABASE_URL", "")
 
 
 # ── Tietokanta ─────────────────────────────────────────────────────────────────
 
+class DbWrapper:
+    """Tekee psycopg2-yhteydestä sqlite3-yhteensopivan rajapinnan."""
+    def __init__(self):
+        self.conn = psycopg2.connect(DATABASE_URL)
+        self.cur  = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    def execute(self, sql, params=None):
+        sql = sql.replace("?", "%s")
+        self.cur.execute(sql, params or [])
+        return self
+
+    def executemany(self, sql, seq):
+        sql = sql.replace("?", "%s")
+        self.cur.executemany(sql, seq)
+        return self
+
+    def fetchone(self):
+        return self.cur.fetchone()
+
+    def fetchall(self):
+        return self.cur.fetchall() or []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, *_):
+        if exc_type:
+            self.conn.rollback()
+        else:
+            self.conn.commit()
+        self.cur.close()
+        self.conn.close()
+
+
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+    return DbWrapper()
 
 
 def init_db():
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True) if os.path.dirname(DB_PATH) else None
     with get_db() as db:
-        db.executescript("""
+        # Erillinen skeema jotta ei sotke muita sovelluksia samassa tietokannassa
+        db.execute("CREATE SCHEMA IF NOT EXISTS aiact")
+        db.execute("SET search_path TO aiact")
+
+        db.execute("""
         CREATE TABLE IF NOT EXISTS kayttajat (
             id          TEXT PRIMARY KEY,
             email       TEXT UNIQUE NOT NULL,
@@ -71,9 +107,11 @@ def init_db():
             stripe_id   TEXT,
             tilaaja     INTEGER DEFAULT 0,
             tilaus_paattyy TEXT,
-            luotu       TEXT DEFAULT (datetime('now'))
-        );
+            luotu       TIMESTAMP DEFAULT NOW()
+        )
+        """)
 
+        db.execute("""
         CREATE TABLE IF NOT EXISTS jarjestelmat (
             id          TEXT PRIMARY KEY,
             kayttaja_id TEXT NOT NULL,
@@ -82,26 +120,35 @@ def init_db():
             vastaukset  TEXT,
             riski_taso  TEXT,
             riski_data  TEXT,
-            luotu       TEXT DEFAULT (datetime('now')),
+            luotu       TIMESTAMP DEFAULT NOW(),
             FOREIGN KEY (kayttaja_id) REFERENCES kayttajat(id)
-        );
+        )
+        """)
 
+        db.execute("""
         CREATE TABLE IF NOT EXISTS kayntikerrat (
-            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            id       SERIAL PRIMARY KEY,
             polku    TEXT NOT NULL,
             ip       TEXT,
-            aika     TEXT DEFAULT (datetime('now'))
-        );
+            aika     TIMESTAMP DEFAULT NOW()
+        )
         """)
+
         # Luo testikäyttäjä jos ei ole
         TEST_EMAIL = os.environ.get("TEST_USER_EMAIL", "testi@complianceai.fi")
         TEST_PASS  = os.environ.get("TEST_USER_PASSWORD", "testi1234")
-        exists = db.execute("SELECT id FROM kayttajat WHERE email=?", [TEST_EMAIL]).fetchone()
+        exists = db.execute("SELECT id FROM kayttajat WHERE email=%s", [TEST_EMAIL]).fetchone()
         if not exists:
             db.execute(
-                "INSERT INTO kayttajat (id, email, salasana, yritys) VALUES (?,?,?,?)",
+                "INSERT INTO kayttajat (id, email, salasana, yritys) VALUES (%s,%s,%s,%s)",
                 [str(uuid.uuid4()), TEST_EMAIL, generate_password_hash(TEST_PASS), "Testiyritys Oy"]
             )
+
+
+def set_schema(db):
+    """Aseta aiact-skeema jokaisessa yhteydessä."""
+    db.execute("SET search_path TO aiact")
+    return db
 
 
 # ── Auth-apufunktiot ───────────────────────────────────────────────────────────
@@ -116,7 +163,8 @@ def inject_kirjautunut():
     if kirjautunut():
         try:
             with get_db() as db:
-                k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=?",
+                set_schema(db)
+                k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s",
                                [session["kayttaja_id"]]).fetchone()
                 tilaaja = bool(k and k["tilaaja"])
         except Exception:
@@ -141,7 +189,8 @@ def vaadi_tilaus(f):
         if not kirjautunut():
             return redirect(url_for("kirjaudu"))
         with get_db() as db:
-            k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=?",
+            set_schema(db)
+            k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s",
                            [session["kayttaja_id"]]).fetchone()
         if not k or not k["tilaaja"]:
             flash("Tämä ominaisuus vaatii aktiivisen tilauksen.", "warning")
@@ -154,13 +203,13 @@ ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
 
 @app.before_request
 def kirjaa_kaynnit():
-    # Älä kirjaa staattisia tiedostoja, admin-sivua tai webhookeja
     skip = ["/static/", "/admin", "/stripe/webhook", "/sitemap.xml", "/favicon"]
     if not any(request.path.startswith(s) for s in skip):
         try:
             ip = request.headers.get("X-Forwarded-For", request.remote_addr or "").split(",")[0].strip()
             with get_db() as db:
-                db.execute("INSERT INTO kayntikerrat (polku, ip) VALUES (?, ?)",
+                set_schema(db)
+                db.execute("INSERT INTO kayntikerrat (polku, ip) VALUES (%s, %s)",
                            [request.path, ip])
         except Exception:
             pass
@@ -188,14 +237,15 @@ def rekisteri():
             return render_template("rekisteri.html")
 
         with get_db() as db:
-            olemassa = db.execute("SELECT id FROM kayttajat WHERE email=?", [email]).fetchone()
+            set_schema(db)
+            olemassa = db.execute("SELECT id FROM kayttajat WHERE email=%s", [email]).fetchone()
             if olemassa:
                 flash("Sähköpostiosoite on jo käytössä.", "error")
                 return render_template("rekisteri.html")
 
             kid = str(uuid.uuid4())
             db.execute(
-                "INSERT INTO kayttajat (id,email,salasana,yritys,ytunnus,koko) VALUES (?,?,?,?,?,?)",
+                "INSERT INTO kayttajat (id,email,salasana,yritys,ytunnus,koko) VALUES (%s,%s,%s,%s,%s,%s)",
                 [kid, email, generate_password_hash(salasana), yritys, ytunnus, koko]
             )
 
@@ -216,7 +266,8 @@ def kirjaudu():
         salasana = request.form.get("salasana", "")
 
         with get_db() as db:
-            k = db.execute("SELECT * FROM kayttajat WHERE email=?", [email]).fetchone()
+            set_schema(db)
+            k = db.execute("SELECT * FROM kayttajat WHERE email=%s", [email]).fetchone()
 
         if not k or not check_password_hash(k["salasana"], salasana):
             flash("Väärä sähköposti tai salasana.", "error")
@@ -241,13 +292,14 @@ def kirjaudu_ulos():
 def dashboard():
     kid = session["kayttaja_id"]
     with get_db() as db:
-        kayttaja = db.execute("SELECT * FROM kayttajat WHERE id=?", [kid]).fetchone()
+        set_schema(db)
+        kayttaja = db.execute("SELECT * FROM kayttajat WHERE id=%s", [kid]).fetchone()
         if not kayttaja:
             session.clear()
             flash("Istunto vanhentunut, kirjaudu uudelleen.", "warning")
             return redirect(url_for("kirjaudu"))
         jarjestelmat = db.execute(
-            "SELECT * FROM jarjestelmat WHERE kayttaja_id=? ORDER BY luotu DESC", [kid]
+            "SELECT * FROM jarjestelmat WHERE kayttaja_id=%s ORDER BY luotu DESC", [kid]
         ).fetchall()
 
     js_lista = []
@@ -300,8 +352,9 @@ def uusi_jarjestelma():
 @vaadi_kirjautuminen
 def muokkaa_jarjestelma(jid):
     with get_db() as db:
+        set_schema(db)
         j = db.execute(
-            "SELECT * FROM jarjestelmat WHERE id=? AND kayttaja_id=?",
+            "SELECT * FROM jarjestelmat WHERE id=%s AND kayttaja_id=%s",
             [jid, session["kayttaja_id"]]
         ).fetchone()
     if not j:
@@ -352,11 +405,12 @@ def kartoitus_3():
         muokkaa_id = k.get("muokkaa_id")
 
         with get_db() as db:
+            set_schema(db)
             if muokkaa_id:
                 db.execute(
                     """UPDATE jarjestelmat
-                       SET nimi=?, kuvaus=?, vastaukset=?, riski_taso=?, riski_data=?
-                       WHERE id=? AND kayttaja_id=?""",
+                       SET nimi=%s, kuvaus=%s, vastaukset=%s, riski_taso=%s, riski_data=%s
+                       WHERE id=%s AND kayttaja_id=%s""",
                     [k["nimi"], k.get("kuvaus", ""), json.dumps(k),
                      riski["taso"], json.dumps(riski),
                      muokkaa_id, session["kayttaja_id"]]
@@ -367,7 +421,7 @@ def kartoitus_3():
                 db.execute(
                     """INSERT INTO jarjestelmat
                        (id, kayttaja_id, nimi, kuvaus, vastaukset, riski_taso, riski_data)
-                       VALUES (?,?,?,?,?,?,?)""",
+                       VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                     [jid, session["kayttaja_id"], k["nimi"], k.get("kuvaus", ""),
                      json.dumps(k), riski["taso"], json.dumps(riski)]
                 )
@@ -389,10 +443,13 @@ def kartoitus_3():
 @vaadi_kirjautuminen
 def tulos(jid):
     with get_db() as db:
+        set_schema(db)
         j = db.execute(
-            "SELECT * FROM jarjestelmat WHERE id=? AND kayttaja_id=?",
+            "SELECT * FROM jarjestelmat WHERE id=%s AND kayttaja_id=%s",
             [jid, session["kayttaja_id"]]
         ).fetchone()
+        k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s",
+                       [session["kayttaja_id"]]).fetchone()
 
     if not j:
         flash("Järjestelmää ei löydy.", "error")
@@ -402,8 +459,6 @@ def tulos(jid):
     vastaukset = json.loads(j["vastaukset"]) if j["vastaukset"] else {}
     paivat_jaljella = (datetime(2026, 8, 2) - datetime.now()).days
 
-    with get_db() as db:
-        k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=?", [session["kayttaja_id"]]).fetchone()
     return render_template("tulos.html",
                            jarjestelma=j,
                            riski=riski,
@@ -417,7 +472,8 @@ def tulos(jid):
 @vaadi_kirjautuminen
 def poista_jarjestelma(jid):
     with get_db() as db:
-        db.execute("DELETE FROM jarjestelmat WHERE id=? AND kayttaja_id=?",
+        set_schema(db)
+        db.execute("DELETE FROM jarjestelmat WHERE id=%s AND kayttaja_id=%s",
                    [jid, session["kayttaja_id"]])
     flash("Järjestelmä poistettu.", "success")
     return redirect(url_for("dashboard"))
@@ -442,7 +498,8 @@ def checkout():
 
     kid = session["kayttaja_id"]
     with get_db() as db:
-        k = db.execute("SELECT * FROM kayttajat WHERE id=?", [kid]).fetchone()
+        set_schema(db)
+        k = db.execute("SELECT * FROM kayttajat WHERE id=%s", [kid]).fetchone()
 
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -470,7 +527,8 @@ def tilaus_success():
             if cs.payment_status == "paid":
                 kid = session["kayttaja_id"]
                 with get_db() as db:
-                    db.execute("UPDATE kayttajat SET tilaaja=1, stripe_id=? WHERE id=?",
+                    set_schema(db)
+                    db.execute("UPDATE kayttajat SET tilaaja=1, stripe_id=%s WHERE id=%s",
                                [cs.customer, kid])
         except Exception:
             pass
@@ -491,7 +549,8 @@ def stripe_webhook():
     if event["type"] == "customer.subscription.deleted":
         customer_id = event["data"]["object"]["customer"]
         with get_db() as db:
-            db.execute("UPDATE kayttajat SET tilaaja=0 WHERE stripe_id=?", [customer_id])
+            set_schema(db)
+            db.execute("UPDATE kayttajat SET tilaaja=0 WHERE stripe_id=%s", [customer_id])
 
     return "", 200
 
@@ -508,11 +567,12 @@ def pdf_raportti(jid):
         return redirect(url_for("tulos", jid=jid))
 
     with get_db() as db:
+        set_schema(db)
         j = db.execute(
-            "SELECT * FROM jarjestelmat WHERE id=? AND kayttaja_id=?",
+            "SELECT * FROM jarjestelmat WHERE id=%s AND kayttaja_id=%s",
             [jid, session["kayttaja_id"]]
         ).fetchone()
-        kayttaja = db.execute("SELECT * FROM kayttajat WHERE id=?",
+        kayttaja = db.execute("SELECT * FROM kayttajat WHERE id=%s",
                               [session["kayttaja_id"]]).fetchone()
 
     if not j:
@@ -550,47 +610,41 @@ def admin():
         return render_template("admin_kirjaudu.html")
 
     with get_db() as db:
-        # Kävijät yhteensä
+        set_schema(db)
         kaynnit_yht = db.execute("SELECT COUNT(*) as n FROM kayntikerrat").fetchone()["n"]
-        # Uniikit IP:t
-        uniikit = db.execute("SELECT COUNT(DISTINCT ip) as n FROM kayntikerrat").fetchone()["n"]
-        # Tänään
-        tanaan = db.execute(
-            "SELECT COUNT(*) as n FROM kayntikerrat WHERE date(aika)=date('now')"
+        uniikit     = db.execute("SELECT COUNT(DISTINCT ip) as n FROM kayntikerrat").fetchone()["n"]
+        tanaan      = db.execute(
+            "SELECT COUNT(*) as n FROM kayntikerrat WHERE aika::date = CURRENT_DATE"
         ).fetchone()["n"]
-        # Viimeiset 7 päivää päivittäin
         paivat = db.execute("""
-            SELECT date(aika) as pv, COUNT(*) as n
+            SELECT aika::date as pv, COUNT(*) as n
             FROM kayntikerrat
-            WHERE aika >= datetime('now', '-7 days')
-            GROUP BY date(aika) ORDER BY pv
+            WHERE aika >= NOW() - INTERVAL '7 days'
+            GROUP BY aika::date ORDER BY pv
         """).fetchall()
-        # Suosituimmat sivut
         sivut = db.execute("""
             SELECT polku, COUNT(*) as n FROM kayntikerrat
             GROUP BY polku ORDER BY n DESC LIMIT 10
         """).fetchall()
-        # Käyttäjät
-        kayttajat_yht = db.execute("SELECT COUNT(*) as n FROM kayttajat").fetchone()["n"]
-        tilaajat_yht  = db.execute("SELECT COUNT(*) as n FROM kayttajat WHERE tilaaja=1").fetchone()["n"]
+        kayttajat_yht    = db.execute("SELECT COUNT(*) as n FROM kayttajat").fetchone()["n"]
+        tilaajat_yht     = db.execute("SELECT COUNT(*) as n FROM kayttajat WHERE tilaaja=1").fetchone()["n"]
         jarjestelmat_yht = db.execute("SELECT COUNT(*) as n FROM jarjestelmat").fetchone()["n"]
-        # Uudet käyttäjät viim. 7 pv
         uudet = db.execute("""
-            SELECT date(luotu) as pv, COUNT(*) as n FROM kayttajat
-            WHERE luotu >= datetime('now', '-7 days')
-            GROUP BY date(luotu) ORDER BY pv
+            SELECT luotu::date as pv, COUNT(*) as n FROM kayttajat
+            WHERE luotu >= NOW() - INTERVAL '7 days'
+            GROUP BY luotu::date ORDER BY pv
         """).fetchall()
 
     return render_template("admin.html",
                            kaynnit_yht=kaynnit_yht,
                            uniikit=uniikit,
                            tanaan=tanaan,
-                           paivat=list(paivat),
-                           sivut=list(sivut),
+                           paivat=[dict(r) for r in paivat],
+                           sivut=[dict(r) for r in sivut],
                            kayttajat_yht=kayttajat_yht,
                            tilaajat_yht=tilaajat_yht,
                            jarjestelmat_yht=jarjestelmat_yht,
-                           uudet=list(uudet))
+                           uudet=[dict(r) for r in uudet])
 
 
 @app.route("/sitemap.xml")

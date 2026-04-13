@@ -5,3 +5,4 @@ gunicorn>=21.0
 weasyprint>=60.0
 flask-wtf>=1.2
 flask-limiter>=3.5
+psycopg2-binary>=2.9
