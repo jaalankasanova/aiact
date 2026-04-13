@@ -8,36 +8,64 @@
     <div class="progress-step">3. Nykytila</div>
   </div>
 
-  <h1>Mikä AI-järjestelmä?</h1>
-  <p class="kartoitus-ohje">Voit kartoittaa kerrallaan yhden järjestelmän. Lisää useita järjestelmiä erikseen dashboardilta.</p>
+  <div class="kartoitus-layout">
+    <div class="kartoitus-main">
+      <h1>Mikä AI-järjestelmä kartoitetaan?</h1>
+      <p class="kartoitus-ohje">Kartoita yksi järjestelmä kerrallaan. Voit lisätä lisää järjestelmiä myöhemmin dashboardilta.</p>
 
-  <form method="post" class="form-card">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <div class="form-group">
-      <label>Järjestelmän nimi *</label>
-      <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli" value="{{ muokkaus.get('nimi', '') }}">
-      <small>Anna tunnistettava nimi — näkyy dashboardilla</small>
+      <form method="post" class="form-card">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+          <label>Järjestelmän nimi *</label>
+          <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli" value="{{ muokkaus.get('nimi', '') }}">
+          <small>Anna tunnistettava nimi — näkyy dashboardilla</small>
+        </div>
+
+        <div class="form-group">
+          <label>Lyhyt kuvaus (vapaaehtoinen)</label>
+          <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?">{{ muokkaus.get('kuvaus', '') }}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Missä toiminnossa järjestelmää käytetään? *</label>
+          <select name="toimiala" required>
+            <option value="">Valitse toiminto...</option>
+            {% for arvo, teksti in toimialat %}
+            <option value="{{ arvo }}">{{ teksti }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Peruuta</a>
+          <button type="submit" class="btn btn-primary">Seuraava →</button>
+        </div>
+      </form>
     </div>
 
-    <div class="form-group">
-      <label>Lyhyt kuvaus (vapaaehtoinen)</label>
-      <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?">{{ muokkaus.get('kuvaus', '') }}</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Missä toiminnossa järjestelmää käytetään? *</label>
-      <select name="toimiala" required>
-        <option value="">Valitse toiminto...</option>
-        {% for arvo, teksti in toimialat %}
-        <option value="{{ arvo }}">{{ teksti }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <div class="form-actions">
-      <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Peruuta</a>
-      <button type="submit" class="btn btn-primary">Seuraava →</button>
-    </div>
-  </form>
+    <aside class="kartoitus-ohje-paneeli">
+      <div class="ohje-kortti">
+        <div class="ohje-otsikko">💡 Mitä kartoitetaan?</div>
+        <p>Kartoita <strong>yksi AI-työkalu tai -järjestelmä</strong> kerrallaan. Esimerkkejä:</p>
+        <ul class="ohje-lista">
+          <li>ChatGPT tai Copilot käytettynä rekrytoinnissa</li>
+          <li>Asiakaspalveluchatbot verkkosivulla</li>
+          <li>Automaattinen laskujen käsittelyjärjestelmä</li>
+          <li>Teamtailor tai vastaava rekrytointityökalu</li>
+          <li>Oma koneoppimismalli tai algoritmi</li>
+        </ul>
+      </div>
+      <div class="ohje-kortti ohje-kortti-info">
+        <div class="ohje-otsikko">📋 Prosessi lyhyesti</div>
+        <ol class="ohje-lista">
+          <li><strong>Vaihe 1:</strong> Perustiedot järjestelmästä</li>
+          <li><strong>Vaihe 2:</strong> Järjestelmän ominaisuudet</li>
+          <li><strong>Vaihe 3:</strong> Nykytilanne ja puutteet</li>
+          <li><strong>Tulos:</strong> Riskiluokitus ja toimintaohjeet</li>
+        </ol>
+        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)">Aikaa noin 5–10 minuuttia per järjestelmä.</p>
+      </div>
+    </aside>
+  </div>
 </div>
 {% endblock %}
