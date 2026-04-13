@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Admin — Kävijätilastot{% endblock %}
+{% block content %}
+<div class="dashboard">
+  <div class="dash-header">
+    <div>
+      <h1>Admin — Tilastot</h1>
+      <p class="dash-sub">Reaaliaikaiset kävijä- ja käyttäjätiedot</p>
+    </div>
+    <a href="{{ url_for('index') }}" class="btn btn-ghost">← Etusivulle</a>
+  </div>
+
+  <!-- Pääkortit -->
+  <div class="dash-summary" style="grid-template-columns: repeat(6,1fr)">
+    <div class="summary-card">
+      <div class="summary-big">{{ kaynnit_yht }}</div>
+      <p>sivulatauksia<br>yhteensä</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-big">{{ uniikit }}</div>
+      <p>uniikkia<br>kävijää</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-big">{{ tanaan }}</div>
+      <p>latausta<br>tänään</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-big">{{ kayttajat_yht }}</div>
+      <p>rekisteröitynyttä<br>käyttäjää</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-big">{{ tilaajat_yht }}</div>
+      <p>Pro-<br>tilaajaa</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-big">{{ jarjestelmat_yht }}</div>
+      <p>kartoitettua<br>järjestelmää</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px">
+
+    <!-- Kävijät viim. 7 pv -->
+    <div class="admin-kortti">
+      <h2>Sivulataukset — viimeiset 7 päivää</h2>
+      <div class="bar-chart">
+        {% set max_n = paivat | map(attribute='n') | max if paivat else 1 %}
+        {% for rivi in paivat %}
+        <div class="bar-row">
+          <div class="bar-label">{{ rivi.pv[5:] }}</div>
+          <div class="bar-wrap">
+            <div class="bar-fill" style="width:{{ [((rivi.n / max_n) * 100)|int, 2]|max }}%"></div>
+          </div>
+          <div class="bar-val">{{ rivi.n }}</div>
+        </div>
+        {% else %}
+        <p style="color:var(--teksti-harmaa);font-size:.9rem">Ei dataa vielä.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Uudet käyttäjät -->
+    <div class="admin-kortti">
+      <h2>Uudet käyttäjät — viimeiset 7 päivää</h2>
+      <div class="bar-chart">
+        {% set max_u = uudet | map(attribute='n') | max if uudet else 1 %}
+        {% for rivi in uudet %}
+        <div class="bar-row">
+          <div class="bar-label">{{ rivi.pv[5:] }}</div>
+          <div class="bar-wrap">
+            <div class="bar-fill bar-fill-green" style="width:{{ [((rivi.n / max_u) * 100)|int, 2]|max }}%"></div>
+          </div>
+          <div class="bar-val">{{ rivi.n }}</div>
+        </div>
+        {% else %}
+        <p style="color:var(--teksti-harmaa);font-size:.9rem">Ei uusia käyttäjiä.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Suosituimmat sivut -->
+  <div class="admin-kortti" style="margin-top:24px">
+    <h2>Suosituimmat sivut</h2>
+    <table class="vaatimus-taulukko" style="margin-top:12px">
+      <thead>
+        <tr><th>Sivu</th><th>Lataukset</th></tr>
+      </thead>
+      <tbody>
+        {% for rivi in sivut %}
+        <tr>
+          <td><code>{{ rivi.polku }}</code></td>
+          <td><strong>{{ rivi.n }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

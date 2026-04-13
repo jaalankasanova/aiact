@@ -755,6 +755,23 @@ body {
 .hinta-iso { font-size: 2.8rem; font-weight: 900; text-align: center; margin-bottom: 8px; letter-spacing: -1px; }
 .hinta-iso span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
 
+/* ── Admin ───────────────────────────────────────────────────────────────────── */
+.admin-kortti {
+  background: #fff;
+  border: 1px solid var(--reunaviiva);
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.admin-kortti h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: flex; align-items: center; gap: 10px; }
+.bar-label { width: 36px; font-size: 0.78rem; color: var(--teksti-harmaa); flex-shrink: 0; }
+.bar-wrap { flex: 1; background: var(--bg); border-radius: 6px; height: 20px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #6d28d9); border-radius: 6px; transition: width 0.3s; }
+.bar-fill-green { background: linear-gradient(90deg, #059669, #047857); }
+.bar-val { width: 28px; font-size: 0.82rem; font-weight: 700; text-align: right; flex-shrink: 0; }
+
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.2rem; }
   .steps { grid-template-columns: 1fr 1fr; }

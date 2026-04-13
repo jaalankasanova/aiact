@@ -85,6 +85,13 @@ def init_db():
             luotu       TEXT DEFAULT (datetime('now')),
             FOREIGN KEY (kayttaja_id) REFERENCES kayttajat(id)
         );
+
+        CREATE TABLE IF NOT EXISTS kayntikerrat (
+            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            polku    TEXT NOT NULL,
+            ip       TEXT,
+            aika     TEXT DEFAULT (datetime('now'))
+        );
         """)
 
 
@@ -123,6 +130,22 @@ def vaadi_tilaus(f):
             return redirect(url_for("tilaus"))
         return f(*args, **kwargs)
     return wrapper
+
+
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
+
+@app.before_request
+def kirjaa_kaynnit():
+    # Älä kirjaa staattisia tiedostoja, admin-sivua tai webhookeja
+    skip = ["/static/", "/admin", "/stripe/webhook", "/sitemap.xml", "/favicon"]
+    if not any(request.path.startswith(s) for s in skip):
+        try:
+            ip = request.headers.get("X-Forwarded-For", request.remote_addr or "").split(",")[0].strip()
+            with get_db() as db:
+                db.execute("INSERT INTO kayntikerrat (polku, ip) VALUES (?, ?)",
+                           [request.path, ip])
+        except Exception:
+            pass
 
 
 # ── Reitit ─────────────────────────────────────────────────────────────────────
@@ -494,6 +517,62 @@ def pdf_raportti(jid):
 @app.route("/tietosuoja")
 def tietosuoja():
     return render_template("tietosuoja.html")
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "POST":
+        if request.form.get("salasana") == ADMIN_PASSWORD:
+            session["admin"] = True
+        else:
+            flash("Väärä salasana.", "error")
+            return render_template("admin_kirjaudu.html")
+
+    if not session.get("admin"):
+        return render_template("admin_kirjaudu.html")
+
+    with get_db() as db:
+        # Kävijät yhteensä
+        kaynnit_yht = db.execute("SELECT COUNT(*) as n FROM kayntikerrat").fetchone()["n"]
+        # Uniikit IP:t
+        uniikit = db.execute("SELECT COUNT(DISTINCT ip) as n FROM kayntikerrat").fetchone()["n"]
+        # Tänään
+        tanaan = db.execute(
+            "SELECT COUNT(*) as n FROM kayntikerrat WHERE date(aika)=date('now')"
+        ).fetchone()["n"]
+        # Viimeiset 7 päivää päivittäin
+        paivat = db.execute("""
+            SELECT date(aika) as pv, COUNT(*) as n
+            FROM kayntikerrat
+            WHERE aika >= datetime('now', '-7 days')
+            GROUP BY date(aika) ORDER BY pv
+        """).fetchall()
+        # Suosituimmat sivut
+        sivut = db.execute("""
+            SELECT polku, COUNT(*) as n FROM kayntikerrat
+            GROUP BY polku ORDER BY n DESC LIMIT 10
+        """).fetchall()
+        # Käyttäjät
+        kayttajat_yht = db.execute("SELECT COUNT(*) as n FROM kayttajat").fetchone()["n"]
+        tilaajat_yht  = db.execute("SELECT COUNT(*) as n FROM kayttajat WHERE tilaaja=1").fetchone()["n"]
+        jarjestelmat_yht = db.execute("SELECT COUNT(*) as n FROM jarjestelmat").fetchone()["n"]
+        # Uudet käyttäjät viim. 7 pv
+        uudet = db.execute("""
+            SELECT date(luotu) as pv, COUNT(*) as n FROM kayttajat
+            WHERE luotu >= datetime('now', '-7 days')
+            GROUP BY date(luotu) ORDER BY pv
+        """).fetchall()
+
+    return render_template("admin.html",
+                           kaynnit_yht=kaynnit_yht,
+                           uniikit=uniikit,
+                           tanaan=tanaan,
+                           paivat=list(paivat),
+                           sivut=list(sivut),
+                           kayttajat_yht=kayttajat_yht,
+                           tilaajat_yht=tilaajat_yht,
+                           jarjestelmat_yht=jarjestelmat_yht,
+                           uudet=list(uudet))
 
 
 @app.route("/sitemap.xml")

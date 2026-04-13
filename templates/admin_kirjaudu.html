@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Admin</h1>
+  <p class="form-sub">Kirjaudu admin-salasanalla</p>
+  <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-group">
+      <label>Salasana</label>
+      <input type="password" name="salasana" required autofocus>
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Kirjaudu</button>
+  </form>
+</div>
+{% endblock %}
