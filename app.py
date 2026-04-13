@@ -93,6 +93,15 @@ def init_db():
             aika     TEXT DEFAULT (datetime('now'))
         );
         """)
+        # Luo testikäyttäjä jos ei ole
+        TEST_EMAIL = os.environ.get("TEST_USER_EMAIL", "testi@complianceai.fi")
+        TEST_PASS  = os.environ.get("TEST_USER_PASSWORD", "testi1234")
+        exists = db.execute("SELECT id FROM kayttajat WHERE email=?", [TEST_EMAIL]).fetchone()
+        if not exists:
+            db.execute(
+                "INSERT INTO kayttajat (id, email, salasana, yritys) VALUES (?,?,?,?)",
+                [str(uuid.uuid4()), TEST_EMAIL, generate_password_hash(TEST_PASS), "Testiyritys Oy"]
+            )
 
 
 # ── Auth-apufunktiot ───────────────────────────────────────────────────────────
