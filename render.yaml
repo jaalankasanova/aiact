@@ -7,6 +7,8 @@ services:
     envVars:
       - key: SECRET_KEY
         sync: false
+      - key: DATABASE_URL
+        sync: false
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_PUBLISHABLE_KEY
@@ -15,9 +17,5 @@ services:
         sync: false
       - key: STRIPE_PRICE_ID
         sync: false
-      - key: DB_PATH
-        value: /data/aiact.db
-    disk:
-      name: aiact-data
-      mountPath: /data
-      sizeGB: 1
+      - key: ADMIN_PASSWORD
+        sync: false

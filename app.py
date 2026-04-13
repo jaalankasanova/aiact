@@ -325,6 +325,17 @@ def dashboard():
 @app.route("/kartoitus/uusi", methods=["GET", "POST"])
 @vaadi_kirjautuminen
 def uusi_jarjestelma():
+    # Tarkista ilmaiskäyttäjän kartoitusraja
+    kid = session["kayttaja_id"]
+    with get_db() as db:
+        set_schema(db)
+        k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s", [kid]).fetchone()
+        if not k["tilaaja"]:
+            maara = db.execute("SELECT COUNT(*) as n FROM jarjestelmat WHERE kayttaja_id=%s", [kid]).fetchone()["n"]
+            if maara >= 1:
+                flash("Ilmainen tili on rajoitettu yhteen kartoitukseen. Päivitä Pro jatkaaksesi.", "warning")
+                return redirect(url_for("tilaus"))
+
     if request.method == "POST":
         nimi     = request.form.get("nimi", "").strip()
         kuvaus   = request.form.get("kuvaus", "").strip()

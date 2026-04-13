@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard — {{ kayttaja.yritys }}{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
 {% block content %}
 
 <div class="dashboard">
@@ -35,9 +36,8 @@
 
   {% if not tilaaja and jarjestelmat|length >= 1 %}
   <div class="upgrade-banner">
-    <strong>Ilmainen tili:</strong> olet käyttänyt 1/1 kartoituksesta.
+    <strong>Ilmainen tili:</strong> olet käyttänyt 1/1 kartoituksesta. Uusia kartoituksia varten tarvitset Pro-tilauksen.
     <a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary">Päivitä Pro — 49€/kk</a>
-    — rajoittamattomat kartoitukset + PDF-raportit
   </div>
   {% endif %}
 
@@ -52,6 +52,7 @@
       <div class="jarjestelma-info">
         <div class="jarjestelma-nimi">{{ j.nimi }}</div>
         <div class="jarjestelma-kuvaus">{{ j.kuvaus or "Ei kuvausta" }}</div>
+        <div class="jarjestelma-pvm">Kartoitettu: {{ j.luotu[:10] if j.luotu else "" }}</div>
       </div>
       <div class="jarjestelma-riski">
         <span class="riski-badge riski-{{ riski.taso }}">

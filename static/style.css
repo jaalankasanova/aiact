@@ -626,6 +626,7 @@ body {
 .jarjestelma-info { flex: 1; }
 .jarjestelma-nimi { font-weight: 700; font-size: 0.98rem; }
 .jarjestelma-kuvaus { font-size: 0.83rem; color: var(--teksti-harmaa); margin-top: 2px; }
+.jarjestelma-pvm { font-size: 0.78rem; color: var(--teksti-harmaa); margin-top: 4px; opacity: 0.7; }
 .jarjestelma-riski { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
 .jarjestelma-toiminnot { display: flex; gap: 8px; flex-wrap: wrap; }
 .riski-badge { padding: 3px 11px; border-radius: 100px; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.3px; }
@@ -755,6 +756,9 @@ body {
 .rivi-ok { background: #f0fdf4; }
 .rivi-puuttuu { background: #fff5f5; }
 .kaikki-ok { background: var(--ok-light); border-radius: 12px; padding: 24px; margin-bottom: 36px; border-left: 4px solid var(--ok); }
+.seuraava-askel { margin-top: 16px; background: #fff; border-radius: 8px; padding: 16px 20px; }
+.seuraava-otsikko { font-weight: 700; margin-bottom: 8px; font-size: .9rem; }
+.seuraava-askel ul { padding-left: 20px; font-size: .9rem; color: var(--teksti-harmaa); display: flex; flex-direction: column; gap: 6px; }
 .tulos-toiminnot {
   display: flex;
   gap: 12px;

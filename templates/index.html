@@ -164,7 +164,11 @@
           <li>Deadline-seuranta ja muistutukset</li>
           <li>Dokumenttipohjat suomeksi</li>
         </ul>
+        {% if kirjautunut %}
+        <a href="{{ url_for('tilaus') }}" class="btn btn-primary">Päivitä Pro — 49€/kk</a>
+        {% else %}
         <a href="{{ url_for('rekisteri') }}" class="btn btn-primary">Aloita — 49€/kk</a>
+        {% endif %}
       </div>
     </div>
     <p class="hinta-note">ALV 0%. Peruuta milloin tahansa. Ei sitoutumisaikaa.</p>
