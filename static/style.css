@@ -9,7 +9,7 @@
   --accent-light: #d1fae5;
   --bg: #f8f7ff;
   --teksti: #0f172a;
-  --teksti-harmaa: #64748b;
+  --teksti-harmaa: #475569;
   --reunaviiva: #e2e8f0;
   --tumma: #0a0e1a;
   --tumma2: #111827;
@@ -167,9 +167,9 @@ body {
   padding: 28px 24px;
   text-align: center;
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.7);
 }
-.footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+.footer a { color: rgba(255,255,255,0.85); text-decoration: none; }
 .footer a:hover { color: #fff; }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
@@ -248,7 +248,7 @@ body {
   color: #fff;
   border-color: rgba(255,255,255,0.35);
 }
-.hero-note { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+.hero-note { font-size: 0.82rem; color: rgba(255,255,255,0.72); }
 
 /* ── Mitä on ─────────────────────────────────────────────────────────────── */
 .mita-on { padding: 96px 24px; background: #fff; }
@@ -340,7 +340,7 @@ body {
   letter-spacing: -1px;
   margin-bottom: 8px;
 }
-.urgency-label { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.urgency-label { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
 
 /* ── Miten toimii ─────────────────────────────────────────────────────────── */
 .miten { padding: 96px 24px; background: #0d1117; color: #fff; }
@@ -369,7 +369,7 @@ body {
 }
 .step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(124,58,237,0.2); border-color: rgba(124,58,237,0.3); }
 .step h3 { color: #fff; }
-.step p { color: rgba(255,255,255,0.55); }
+.step p { color: rgba(255,255,255,0.85); }
 .step-num {
   width: 52px;
   height: 52px;
@@ -458,7 +458,7 @@ body {
   border-color: var(--primary);
   box-shadow: 0 8px 32px rgba(124,58,237,0.35);
 }
-.hinta-suosittu p, .hinta-suosittu .hinta-nimi { color: rgba(255,255,255,0.7); }
+.hinta-suosittu p, .hinta-suosittu .hinta-nimi { color: rgba(255,255,255,0.9); }
 .hinta-suosittu li { border-color: rgba(255,255,255,0.1) !important; }
 .hinta-badge {
   position: absolute;
@@ -478,11 +478,11 @@ body {
 .hinta-hinta { font-size: 2.6rem; font-weight: 900; margin-bottom: 24px; letter-spacing: -1px; }
 .hinta-hinta span { font-size: 1rem; font-weight: 400; color: var(--teksti-harmaa); }
 .hinta-kortti ul { list-style: none; margin-bottom: 28px; }
-.hinta-kortti li { padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.8); }
+.hinta-kortti li { padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.92); }
 .hinta-kortti li::before { content: "✓"; color: #34d399; font-weight: 800; flex-shrink: 0; }
-.hinta-kortti li.ei::before { content: "–"; color: rgba(255,255,255,0.2); }
-.hinta-kortti li.ei { color: rgba(255,255,255,0.3); }
-.hinta-note { text-align: center; color: rgba(255,255,255,0.4); font-size: 0.83rem; margin-top: 20px; }
+.hinta-kortti li.ei::before { content: "–"; color: rgba(255,255,255,0.45); }
+.hinta-kortti li.ei { color: rgba(255,255,255,0.5); }
+.hinta-note { text-align: center; color: rgba(255,255,255,0.72); font-size: 0.83rem; margin-top: 20px; }
 
 /* ── CTA bottom ───────────────────────────────────────────────────────────── */
 .cta-bottom {
