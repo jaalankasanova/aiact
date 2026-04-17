@@ -19,15 +19,9 @@
   .toimenpide-lista { margin: 0; padding-left: 20px; }
   .toimenpide-lista li { margin-bottom: 12px; }
   .toimenpide-meta { font-size: 9pt; color: #6b7280; margin-top: 4px; }
-  .allekirjoitus-alue {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-  .allekirjoitus-kentta { border-top: 1.5px solid #222; padding-top: 8px; }
-  .allekirjoitus-otsikko { font-size: 9pt; color: #6b7280; }
-  .allekirjoitus-tyhja { height: 48px; }
+  .allekirjoitus-taulukko { width: 100%; border-collapse: collapse; margin-top: 48px; }
+  .allekirjoitus-taulukko td { width: 50%; padding: 48px 16px 8px 0; border-top: 1.5px solid #222; vertical-align: bottom; font-size: 9pt; color: #6b7280; }
+  .allekirjoitus-taulukko td:nth-child(2) { padding-left: 32px; border-left: none; }
   .vastuuhenkilo-taulukko { width: 100%; border-collapse: collapse; margin-top: 8px; }
   .vastuuhenkilo-taulukko td { padding: 6px 10px; border: 1px solid #e5e7eb; font-size: 10pt; }
   .vastuuhenkilo-taulukko td:first-child { background: #f8fafc; font-weight: 600; width: 35%; }
@@ -134,32 +128,16 @@
   Suosittelemme tarkistamaan tilanteen vähintään 6 kuukauden välein tai aina kun järjestelmään tehdään merkittäviä muutoksia.
 </div>
 
-<div class="allekirjoitus-alue">
-  <div>
-    <div class="allekirjoitus-tyhja"></div>
-    <div class="allekirjoitus-kentta">
-      <div class="allekirjoitus-otsikko">Päiväys ja paikka</div>
-    </div>
-  </div>
-  <div>
-    <div class="allekirjoitus-tyhja"></div>
-    <div class="allekirjoitus-kentta">
-      <div class="allekirjoitus-otsikko">Allekirjoitus ja nimenselvennys (compliance-vastaava)</div>
-    </div>
-  </div>
-  <div>
-    <div class="allekirjoitus-tyhja"></div>
-    <div class="allekirjoitus-kentta">
-      <div class="allekirjoitus-otsikko">Allekirjoitus ja nimenselvennys (toimitusjohtaja / vastuuhenkilö)</div>
-    </div>
-  </div>
-  <div>
-    <div class="allekirjoitus-tyhja"></div>
-    <div class="allekirjoitus-kentta">
-      <div class="allekirjoitus-otsikko">Leima (tarvittaessa)</div>
-    </div>
-  </div>
-</div>
+<table class="allekirjoitus-taulukko">
+  <tr>
+    <td>Päiväys ja paikka</td>
+    <td>Allekirjoitus ja nimenselvennys (compliance-vastaava)</td>
+  </tr>
+  <tr>
+    <td>Allekirjoitus ja nimenselvennys (toimitusjohtaja / vastuuhenkilö)</td>
+    <td>Leima (tarvittaessa)</td>
+  </tr>
+</table>
 
 <div class="footer">
   Raportti generoitu ComplianceAI-työkalulla (complianceai.fi) | {{ pvm }}<br>
