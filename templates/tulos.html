@@ -72,20 +72,35 @@
       <h2>Kaikki vaatimukset</h2>
       <table class="vaatimus-taulukko">
         <thead>
-          <tr><th>Vaatimus</th><th>Artikkeli</th><th>Prioriteetti</th><th>Tila</th></tr>
+          <tr><th>Vaatimus</th><th>Artikkeli</th><th>Prioriteetti</th><th>Tila</th><th>Ohje</th></tr>
         </thead>
         <tbody>
           {% for v in riski.vaaditut %}
           {% set tehty = vastaukset.get(v.id, False) %}
+          {% set tp = toimenpiteet.get(v.id, {}) %}
           <tr class="{{ 'rivi-ok' if tehty else 'rivi-puuttuu' }}">
-            <td>{{ v.otsikko }}</td>
+            <td>
+              <strong>{{ v.otsikko }}</strong><br>
+              <small style="color:#6b7280;">{{ v.kuvaus }}</small>
+            </td>
             <td>{{ v.artikkeli }}</td>
             <td><span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span></td>
-            <td>{% if tehty %}✓ Hoidettu{% else %}✗ Puuttuu{% endif %}</td>
+            <td>{% if tehty %}<span style="color:#059669;font-weight:600;">✓ Hoidettu</span>{% else %}<span style="color:#dc2626;font-weight:600;">✗ Puuttuu</span>{% endif %}</td>
+            <td>
+              {% if not tehty and tp %}
+              <small style="color:#4b5563;">{{ tp.ohje[:120] }}{% if tp.ohje|length > 120 %}…{% endif %}</small><br>
+              <small style="color:#6b7280;">⏱ {{ tp.aika }} &nbsp;|&nbsp; 👤 {{ tp.vastuu }}</small>
+              {% elif tehty %}
+              <small style="color:#6b7280;">—</small>
+              {% endif %}
+            </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
+      <p style="font-size:.85rem;color:#6b7280;margin-top:.75rem;">
+        Lisätietoa vaatimuksista: <a href="{{ url_for('opas') }}#artikkelit" style="color:var(--primary);">AI Act -opas → Mitä artiklat tarkoittavat?</a>
+      </p>
     </div>
     {% endif %}
 
