@@ -7,14 +7,14 @@
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="deadline-badge">⏳ Deadline: 2.8.2026 — enää {{ paivat_jaljella }} päivää</div>
-    <h1>EU pakottaa yritykset<br>auditoimaan AI-käyttönsä</h1>
-    <p class="hero-sub">EU AI Act velvoittaa kaikkia yrityksiä — myös pk-yrityksiä — selvittämään mitä tekoälyjärjestelmiä ne käyttävät ja ovatko ne lain mukaisia. Sakot rikkomuksista ovat jopa <strong>15 miljoonaa euroa tai 3% liikevaihdosta</strong>.<br><br>ComplianceAI auttaa sinua kartoittamaan tilanne, tunnistamaan riskit ja tekemään tarvittavat dokumentit — 15 minuutissa, suomeksi.</p>
+    <div class="deadline-badge" data-i18n="hero.badge">⏳ Deadline: 2.8.2026 — enää {{ paivat_jaljella }} päivää</div>
+    <h1 data-i18n-html="hero.h1">EU pakottaa yritykset<br>auditoimaan AI-käyttönsä</h1>
+    <p class="hero-sub" data-i18n-html="hero.sub">EU AI Act velvoittaa kaikkia yrityksiä — myös pk-yrityksiä — selvittämään mitä tekoälyjärjestelmiä ne käyttävät ja ovatko ne lain mukaisia. Sakot rikkomuksista ovat jopa <strong>15 miljoonaa euroa tai 3% liikevaihdosta</strong>.<br><br>ComplianceAI auttaa sinua kartoittamaan tilanne, tunnistamaan riskit ja tekemään tarvittavat dokumentit — 15 minuutissa, suomeksi.</p>
     <div class="hero-cta">
-      <a href="{{ url_for('rekisteri') }}" class="btn btn-primary btn-lg">Tarkista yrityksesi tilanne ilmaiseksi</a>
-      <a href="#miten" class="btn btn-ghost btn-lg">Miten toimii?</a>
+      <a href="{{ url_for('rekisteri') }}" class="btn btn-primary btn-lg" data-i18n="hero.cta1">Tarkista yrityksesi tilanne ilmaiseksi</a>
+      <a href="#miten" class="btn btn-ghost btn-lg" data-i18n="hero.cta2">Miten toimii?</a>
     </div>
-    <p class="hero-note">Ei luottokorttia. Ensimmäinen kartoitus ilmaiseksi.</p>
+    <p class="hero-note" data-i18n="hero.note">Ei luottokorttia. Ensimmäinen kartoitus ilmaiseksi.</p>
   </div>
 </section>
 
@@ -22,34 +22,34 @@
   <div class="container">
     <div class="mita-on-grid">
       <div class="mita-on-teksti">
-        <div class="section-tag">Mikä on EU AI Act?</div>
-        <h2>Euroopan unionin tekoälylaki — velvoittaa kaikki yritykset</h2>
-        <p>EU AI Act (asetus 2024/1689) on maailman ensimmäinen kattava tekoälyä sääntelevä laki. Se astui voimaan elokuussa 2024 ja velvoittaa kaikkia EU-alueella toimivia yrityksiä — koosta riippumatta.</p>
-        <p>Laki jakaa tekoälyjärjestelmät neljään riskiluokkaan: <strong>kielletyt, korkea riski, rajattu riski</strong> ja <strong>minimiriski</strong>. Mitä korkeampi riskiluokka, sitä tiukemmat vaatimukset dokumentaatiolle, valvonnalle ja läpinäkyvyydelle.</p>
-        <p>Korkean riskin järjestelmille — kuten rekrytointiin, luottopäätöksiin tai terveydenhuoltoon käytettävät AI-työkalut — täydet compliance-vaatimukset tulevat voimaan <strong>2.8.2026</strong>.</p>
+        <div class="section-tag" data-i18n="mita.tag">Mikä on EU AI Act?</div>
+        <h2 data-i18n="mita.h2">Euroopan unionin tekoälylaki — velvoittaa kaikki yritykset</h2>
+        <p data-i18n-html="mita.p1">EU AI Act (asetus 2024/1689) on maailman ensimmäinen kattava tekoälyä sääntelevä laki. Se astui voimaan elokuussa 2024 ja velvoittaa kaikkia EU-alueella toimivia yrityksiä — koosta riippumatta.</p>
+        <p data-i18n-html="mita.p2">Laki jakaa tekoälyjärjestelmät neljään riskiluokkaan: <strong>kielletyt, korkea riski, rajattu riski</strong> ja <strong>minimiriski</strong>. Mitä korkeampi riskiluokka, sitä tiukemmat vaatimukset dokumentaatiolle, valvonnalle ja läpinäkyvyydelle.</p>
+        <p data-i18n-html="mita.p3">Korkean riskin järjestelmille — kuten rekrytointiin, luottopäätöksiin tai terveydenhuoltoon käytettävät AI-työkalut — täydet compliance-vaatimukset tulevat voimaan <strong>2.8.2026</strong>.</p>
       </div>
       <div class="mita-on-esimerkit">
-        <div class="esimerkki-otsikko">Esimerkkejä korkean riskin järjestelmistä:</div>
+        <div class="esimerkki-otsikko" data-i18n="mita.examples">Esimerkkejä korkean riskin järjestelmistä:</div>
         <div class="esimerkki-item esimerkki-korkea">
           <span class="esimerkki-ikoni">👤</span>
-          <div><strong>Rekrytointi-AI</strong><br><small>CV:n automaattinen pisteytys tai hylkäys. Etsitkö töitä tai tekijöitä? Kokeile <a href="https://duunarit.onrender.com" target="_blank" rel="noopener" style="color:inherit;font-weight:600">Duunarit.fi →</a></small></div>
+          <div><strong data-i18n="mita.ex1.title">Rekrytointi-AI</strong><br><small data-i18n="mita.ex1.desc">CV:n automaattinen pisteytys tai hylkäys.</small></div>
         </div>
         <div class="esimerkki-item esimerkki-korkea">
           <span class="esimerkki-ikoni">💳</span>
-          <div><strong>Luottopäätösalgoritmi</strong><br><small>Automaattiset laina- tai vakuutuspäätökset</small></div>
+          <div><strong data-i18n="mita.ex2.title">Luottopäätösalgoritmi</strong><br><small data-i18n="mita.ex2.desc">Automaattiset laina- tai vakuutuspäätökset</small></div>
         </div>
         <div class="esimerkki-item esimerkki-rajattu">
           <span class="esimerkki-ikoni">💬</span>
-          <div><strong>Asiakaspalveluchatbot</strong><br><small>AI joka kommunikoi asiakkaiden kanssa</small></div>
+          <div><strong data-i18n="mita.ex3.title">Asiakaspalveluchatbot</strong><br><small data-i18n="mita.ex3.desc">AI joka kommunikoi asiakkaiden kanssa</small></div>
         </div>
         <div class="esimerkki-item esimerkki-ok">
           <span class="esimerkki-ikoni">✍️</span>
-          <div><strong>Sisäinen kirjoitusapuri</strong><br><small>ChatGPT tekstien kirjoittamiseen sisäisesti</small></div>
+          <div><strong data-i18n="mita.ex4.title">Sisäinen kirjoitusapuri</strong><br><small data-i18n="mita.ex4.desc">ChatGPT tekstien kirjoittamiseen sisäisesti</small></div>
         </div>
         <div class="esimerkki-selite">
-          <span class="piste piste-korkea"></span> Korkea riski &nbsp;
-          <span class="piste piste-rajattu"></span> Rajattu riski &nbsp;
-          <span class="piste piste-ok"></span> Minimiriski
+          <span class="piste piste-korkea"></span> <span data-i18n="mita.legend.high">Korkea riski</span> &nbsp;
+          <span class="piste piste-rajattu"></span> <span data-i18n="mita.legend.limited">Rajattu riski</span> &nbsp;
+          <span class="piste piste-ok"></span> <span data-i18n="mita.legend.min">Minimiriski</span>
         </div>
       </div>
     </div>
@@ -61,15 +61,15 @@
     <div class="urgency-grid">
       <div class="urgency-item">
         <span class="urgency-number">3%</span>
-        <span class="urgency-label">liikevaihdosta tai 15M€ — sakko vaatimustenvastaisuudesta</span>
+        <span class="urgency-label" data-i18n="urgency.1">liikevaihdosta tai 15M€ — sakko vaatimustenvastaisuudesta</span>
       </div>
       <div class="urgency-item">
         <span class="urgency-number">&lt;30%</span>
-        <span class="urgency-label">pk-yrityksistä on valmistautunut AI Act:iin</span>
+        <span class="urgency-label" data-i18n="urgency.2">pk-yrityksistä on valmistautunut AI Act:iin</span>
       </div>
       <div class="urgency-item">
         <span class="urgency-number">2.8.2026</span>
-        <span class="urgency-label">täysi compliance-deadline korkean riskin järjestelmille</span>
+        <span class="urgency-label" data-i18n="urgency.3">täysi compliance-deadline korkean riskin järjestelmille</span>
       </div>
     </div>
   </div>
@@ -77,27 +77,27 @@
 
 <section class="miten" id="miten">
   <div class="container">
-    <h2>Miten se toimii?</h2>
+    <h2 data-i18n="how.h2">Miten se toimii?</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Kartoita järjestelmät</h3>
-        <p>Kerro mitä AI-työkaluja yrityksenne käyttää — rekrytoinnissa, asiakaspalvelussa, päätöksenteossa.</p>
+        <h3 data-i18n="how.s1.h3">Kartoita järjestelmät</h3>
+        <p data-i18n="how.s1.p">Kerro mitä AI-työkaluja yrityksenne käyttää — rekrytoinnissa, asiakaspalvelussa, päätöksenteossa.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Saat riskiluokituksen</h3>
-        <p>Järjestelmä analysoi vastaukset EU AI Act:n mukaan ja kertoo onko riski kielletty, korkea, rajattu vai minimaalinen.</p>
+        <h3 data-i18n="how.s2.h3">Saat riskiluokituksen</h3>
+        <p data-i18n="how.s2.p">Järjestelmä analysoi vastaukset EU AI Act:n mukaan ja kertoo onko riski kielletty, korkea, rajattu vai minimaalinen.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Tunnista puutteet</h3>
-        <p>Näet tarkalleen mitä vaatimuksia puuttuu — tekninen dokumentaatio, lokit, ihmisvalvonta, QMS.</p>
+        <h3 data-i18n="how.s3.h3">Tunnista puutteet</h3>
+        <p data-i18n="how.s3.p">Näet tarkalleen mitä vaatimuksia puuttuu — tekninen dokumentaatio, lokit, ihmisvalvonta, QMS.</p>
       </div>
       <div class="step">
         <div class="step-num">4</div>
-        <h3>Lataa PDF-raportti</h3>
-        <p>Pro-tilaajat saavat valmiin PDF-raportin viranomaisraportointia varten. Ilmaisella tilillä näet tulokset ruudulla.</p>
+        <h3 data-i18n="how.s4.h3">Lataa PDF-raportti</h3>
+        <p data-i18n="how.s4.p">Pro-tilaajat saavat valmiin PDF-raportin viranomaisraportointia varten. Ilmaisella tilillä näet tulokset ruudulla.</p>
       </div>
     </div>
   </div>
@@ -105,31 +105,31 @@
 
 <section class="faq" id="faq">
   <div class="container">
-    <h2>Usein kysytyt kysymykset</h2>
+    <h2 data-i18n="faq.h2">Usein kysytyt kysymykset</h2>
     <div class="faq-lista">
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Koskeeko EU AI Act minun yritystäni? <span>+</span></div>
-        <div class="faq-vastaus">Kyllä, jos yrityksesi käyttää tai tarjoaa tekoälyjärjestelmiä EU:ssa. Tämä koskee myös pk-yrityksiä jotka käyttävät esim. ChatGPT:tä rekrytoinnissa, AI-chatbottia asiakaspalvelussa tai automaattista päätöksentekoa. Laki tuli voimaan 2024 ja ensimmäiset velvoitteet astuivat voimaan helmikuussa 2025.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q1">Koskeeko EU AI Act minun yritystäni?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a1">Kyllä, jos yrityksesi käyttää tai tarjoaa tekoälyjärjestelmiä EU:ssa. Tämä koskee myös pk-yrityksiä jotka käyttävät esim. ChatGPT:tä rekrytoinnissa, AI-chatbottia asiakaspalvelussa tai automaattista päätöksentekoa. Laki tuli voimaan 2024 ja ensimmäiset velvoitteet astuivat voimaan helmikuussa 2025.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Mitä tapahtuu jos en tee mitään? <span>+</span></div>
-        <div class="faq-vastaus">Vaatimustenvastaisuudesta voi seurata sakko joka on jopa 3% vuotuisesta liikevaihdosta tai 15 miljoonaa euroa — sen mukaan kumpi on suurempi. Valvontaviranomainen Suomessa on Liikenne- ja viestintävirasto Traficom.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q2">Mitä tapahtuu jos en tee mitään?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a2">Vaatimustenvastaisuudesta voi seurata sakko joka on jopa 3% vuotuisesta liikevaihdosta tai 15 miljoonaa euroa — sen mukaan kumpi on suurempi. Valvontaviranomainen Suomessa on Liikenne- ja viestintävirasto Traficom.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Käytämme vain ChatGPT:tä — koskeeko tämä meitä? <span>+</span></div>
-        <div class="faq-vastaus">Se riippuu mihin käytätte sitä. Jos ChatGPT on integroitu asiakaspalvelubottiin tai sen avulla tehdään päätöksiä jotka vaikuttavat ihmisiin (esim. rekrytointi), avoimuusvaatimukset koskevat teitä. Pelkkä sisäinen käyttö tekstien kirjoittamiseen on yleensä minimiriskiluokassa.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q3">Käytämme vain ChatGPT:tä — koskeeko tämä meitä?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a3">Se riippuu mihin käytätte sitä. Jos ChatGPT on integroitu asiakaspalvelubottiin tai sen avulla tehdään päätöksiä jotka vaikuttavat ihmisiin (esim. rekrytointi), avoimuusvaatimukset koskevat teitä. Pelkkä sisäinen käyttö tekstien kirjoittamiseen on yleensä minimiriskiluokassa.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Kuinka kauan kartoitus kestää? <span>+</span></div>
-        <div class="faq-vastaus">Yhden AI-järjestelmän kartoitus vie noin 10–15 minuuttia. Saat heti riskiluokituksen ja listan puuttuvista vaatimuksista. Kartoituksia voi tehdä niin monta kuin yrityksellä on AI-järjestelmiä.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q4">Kuinka kauan kartoitus kestää?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a4">Yhden AI-järjestelmän kartoitus vie noin 10–15 minuuttia. Saat heti riskiluokituksen ja listan puuttuvista vaatimuksista. Kartoituksia voi tehdä niin monta kuin yrityksellä on AI-järjestelmiä.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Korvataanko tällä lakimies? <span>+</span></div>
-        <div class="faq-vastaus">Ei. ComplianceAI auttaa tunnistamaan riskit ja tekemään pohjatyön, mutta ennen viranomaisdokumentointia suosittelemme tarkistuttamaan materiaalit lakimiehellä. Työkalu säästää huomattavasti aikaa ja rahaa koska pohjatyö on jo tehty.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q5">Korvataanko tällä lakimies?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a5">Ei. ComplianceAI auttaa tunnistamaan riskit ja tekemään pohjatyön, mutta ennen viranomaisdokumentointia suosittelemme tarkistuttamaan materiaalit lakimiehellä. Työkalu säästää huomattavasti aikaa ja rahaa koska pohjatyö on jo tehty.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-kysymys" onclick="toggleFaq(this)">Onko data turvassa? <span>+</span></div>
-        <div class="faq-vastaus">Kartoitustietoja ei jaeta kolmansille osapuolille. Data tallennetaan suojatusti ja sitä käytetään vain compliance-analyysin tuottamiseen. Lue lisää <a href="/tietosuoja">tietosuojaselosteestamme</a>.</div>
+        <div class="faq-kysymys" onclick="toggleFaq(this)"><span data-i18n="faq.q6">Onko data turvassa?</span> <span>+</span></div>
+        <div class="faq-vastaus" data-i18n="faq.a6">Kartoitustietoja ei jaeta kolmansille osapuolille. Data tallennetaan suojatusti ja sitä käytetään vain compliance-analyysin tuottamiseen. Lue lisää <a href="/tietosuoja">tietosuojaselosteestamme</a>.</div>
       </div>
     </div>
   </div>
@@ -137,48 +137,48 @@
 
 <section class="hinnoittelu" id="hinnoittelu">
   <div class="container">
-    <h2>Hinnoittelu</h2>
+    <h2 data-i18n="price.h2">Hinnoittelu</h2>
     <div class="hinta-grid">
       <div class="hinta-kortti">
-        <div class="hinta-nimi">Ilmainen</div>
+        <div class="hinta-nimi" data-i18n="price.free.name">Ilmainen</div>
         <div class="hinta-hinta">0€</div>
         <ul>
-          <li>1 AI-järjestelmän kartoitus</li>
-          <li>Riskiluokitus</li>
-          <li>Gap-analyysi</li>
-          <li class="ei">PDF-raportti</li>
-          <li class="ei">Rajoittamattomat kartoitukset</li>
-          <li class="ei">Deadline-seuranta</li>
+          <li data-i18n="price.free.li1">1 AI-järjestelmän kartoitus</li>
+          <li data-i18n="price.free.li2">Riskiluokitus</li>
+          <li data-i18n="price.free.li3">Gap-analyysi</li>
+          <li class="ei" data-i18n="price.free.li4">PDF-raportti</li>
+          <li class="ei" data-i18n="price.free.li5">Rajoittamattomat kartoitukset</li>
+          <li class="ei" data-i18n="price.free.li6">Deadline-seuranta</li>
         </ul>
-        <a href="{{ url_for('rekisteri') }}" class="btn btn-outline-light">Aloita</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-outline-light" data-i18n="price.free.btn">Aloita</a>
       </div>
       <div class="hinta-kortti hinta-suosittu">
-        <div class="hinta-badge">Suosituin</div>
-        <div class="hinta-nimi">Pro</div>
-        <div class="hinta-hinta">49€ <span>/kk</span></div>
+        <div class="hinta-badge" data-i18n="price.pro.badge">Suosituin</div>
+        <div class="hinta-nimi" data-i18n="price.pro.name">Pro</div>
+        <div class="hinta-hinta">49€ <span data-i18n="price.pro.per">/kk</span></div>
         <ul>
-          <li>Rajoittamattomat kartoitukset</li>
-          <li>Riskiluokitus kaikille järjestelmille</li>
-          <li>Gap-analyysi</li>
-          <li>PDF-raportit viranomaisille</li>
-          <li>Deadline-seuranta ja muistutukset</li>
-          <li>Dokumenttipohjat suomeksi</li>
+          <li data-i18n="price.pro.li1">Rajoittamattomat kartoitukset</li>
+          <li data-i18n="price.pro.li2">Riskiluokitus kaikille järjestelmille</li>
+          <li data-i18n="price.pro.li3">Gap-analyysi</li>
+          <li data-i18n="price.pro.li4">PDF-raportit viranomaisille</li>
+          <li data-i18n="price.pro.li5">Deadline-seuranta ja muistutukset</li>
+          <li data-i18n="price.pro.li6">Dokumenttipohjat suomeksi</li>
         </ul>
         {% if kirjautunut %}
-        <a href="{{ url_for('tilaus') }}" class="btn btn-primary">Päivitä Pro — 49€/kk</a>
+        <a href="{{ url_for('tilaus') }}" class="btn btn-primary" data-i18n="price.pro.btn.upgrade">Päivitä Pro — 49€/kk</a>
         {% else %}
-        <a href="{{ url_for('rekisteri') }}" class="btn btn-primary">Aloita — 49€/kk</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-primary" data-i18n="price.pro.btn.start">Aloita — 49€/kk</a>
         {% endif %}
       </div>
     </div>
-    <p class="hinta-note">ALV 0%. Peruuta milloin tahansa. Ei sitoutumisaikaa.</p>
+    <p class="hinta-note" data-i18n="price.note">ALV 0%. Peruuta milloin tahansa. Ei sitoutumisaikaa.</p>
   </div>
 </section>
 
 <section class="cta-bottom">
   <div class="container">
-    <h2>AI Act deadline lähestyy.<br>Tarkista tilanne nyt.</h2>
-    <a href="{{ url_for('rekisteri') }}" class="btn btn-primary btn-lg">Aloita ilmainen kartoitus</a>
+    <h2 data-i18n-html="cta.h2">AI Act deadline lähestyy.<br>Tarkista tilanne nyt.</h2>
+    <a href="{{ url_for('rekisteri') }}" class="btn btn-primary btn-lg" data-i18n="cta.btn">Aloita ilmainen kartoitus</a>
   </div>
 </section>
 

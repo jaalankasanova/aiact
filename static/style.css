@@ -81,6 +81,10 @@ body {
 }
 .nav-links a:hover { color: var(--teksti); background: rgba(124,58,237,0.06); }
 .nav-out { color: var(--teksti-harmaa) !important; }
+.lang-switcher { display: flex; gap: 4px; margin-left: 8px; border-left: 1px solid var(--reunaviiva); padding-left: 12px; }
+.lang-btn { background: transparent; border: 1.5px solid var(--reunaviiva); border-radius: 6px; padding: 3px 8px; font-size: .78rem; font-weight: 700; cursor: pointer; color: var(--teksti-harmaa); transition: all .15s; }
+.lang-btn:hover { border-color: var(--primary); color: var(--primary); }
+.lang-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
 .nav-hamburger {
   display: none;
   flex-direction: column;

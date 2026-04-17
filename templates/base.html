@@ -23,7 +23,6 @@
 <meta name="twitter:title" content="{% block twitter_title %}EU AI Act Compliance — ComplianceAI{% endblock %}">
 <meta name="twitter:description" content="{% block twitter_description %}Tarkista yrityksesi EU AI Act -tilanne ilmaiseksi. Sakot rikkomuksista jopa 15M€.{% endblock %}">
 
-<!-- JSON-LD rakennteinen data -->
 {% block jsonld %}
 <script type="application/ld+json">
 {
@@ -55,16 +54,20 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navMenu">
-      <a href="{{ url_for('opas') }}">AI Act -opas</a>
+      <a href="{{ url_for('opas') }}" data-i18n="nav.guide">AI Act -opas</a>
       {% if kirjautunut %}
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>
-        {% if not tilaaja %}<a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary">Päivitä Pro</a>{% endif %}
-        <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out">Kirjaudu ulos</a>
+        <a href="{{ url_for('dashboard') }}" data-i18n="nav.dashboard">Dashboard</a>
+        <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm" data-i18n="nav.new">+ Uusi kartoitus</a>
+        {% if not tilaaja %}<a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary" data-i18n="nav.upgrade">Päivitä Pro</a>{% endif %}
+        <a href="{{ url_for('kirjaudu_ulos') }}" class="nav-out" data-i18n="nav.logout">Kirjaudu ulos</a>
       {% else %}
-        <a href="{{ url_for('kirjaudu') }}">Kirjaudu</a>
-        <a href="{{ url_for('rekisteri') }}" class="btn btn-sm btn-primary">Aloita ilmaiseksi</a>
+        <a href="{{ url_for('kirjaudu') }}" data-i18n="nav.login">Kirjaudu</a>
+        <a href="{{ url_for('rekisteri') }}" class="btn btn-sm btn-primary" data-i18n="nav.start">Aloita ilmaiseksi</a>
       {% endif %}
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="fi" onclick="applyLang('fi')">FI</button>
+        <button class="lang-btn" data-lang="en" onclick="applyLang('en')">EN</button>
+      </div>
     </div>
   </div>
 </nav>
@@ -80,9 +83,10 @@
 
 <footer class="footer">
   <p>ComplianceAI &copy; 2026 &nbsp;&middot;&nbsp;
-  <a href="/tietosuoja">Tietosuoja</a> &nbsp;&middot;&nbsp;
+  <a href="/tietosuoja" data-i18n="footer.privacy">Tietosuoja</a> &nbsp;&middot;&nbsp;
   Työkalu ei korvaa juridista neuvontaa.</p>
 </footer>
+<script src="{{ url_for('static', filename='i18n.js') }}"></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
