@@ -622,6 +622,11 @@ def robots():
     return app.send_static_file("robots.txt")
 
 
+@app.route("/llms.txt")
+def llms():
+    return app.send_static_file("llms.txt"), 200, {"Content-Type": "text/plain; charset=utf-8"}
+
+
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     if request.method == "POST":
