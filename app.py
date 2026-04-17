@@ -10,7 +10,7 @@ import uuid
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
-from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_RAJATTU, TOIMENPITEET
+from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_DEPLOYER, VAATIMUKSET_RAJATTU, TOIMENPITEET
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -348,6 +348,7 @@ def uusi_jarjestelma():
         nimi     = request.form.get("nimi", "").strip()
         kuvaus   = request.form.get("kuvaus", "").strip()
         toimiala = request.form.get("toimiala", "muu")
+        rooli    = request.form.get("rooli", "deployer")
 
         if not nimi:
             flash("Anna järjestelmälle nimi.", "error")
@@ -360,6 +361,7 @@ def uusi_jarjestelma():
             "nimi": nimi,
             "kuvaus": kuvaus,
             "toimiala": toimiala,
+            "rooli": rooli,
         }
         if muokkaa_id:
             session["kartoitus"]["muokkaa_id"] = muokkaa_id

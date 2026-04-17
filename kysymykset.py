@@ -89,6 +89,43 @@ VAATIMUKSET = [
     },
 ]
 
+# Vaatimukset korkean riskin järjestelmille — deployer (käyttäjäyritys, ei kehittäjä)
+# Art. 26 — kevyemmät vaatimukset kuin providerille
+VAATIMUKSET_DEPLOYER = [
+    {
+        "id": "ihmisvalvonta",
+        "otsikko": "Ihmisen valvonta",
+        "kuvaus": "Koulutettu henkilö valvoo järjestelmää ja voi puuttua sen toimintaan (Art. 26)",
+        "artikkeli": "Art. 26",
+        "deadline": "2.8.2026",
+        "prioriteetti": "kriittinen",
+    },
+    {
+        "id": "lokit",
+        "otsikko": "Lokitiedostot tallessa",
+        "kuvaus": "Järjestelmän käyttölokit tallennetaan vähintään 6 kuukauden ajan (Art. 26)",
+        "artikkeli": "Art. 26",
+        "deadline": "2.8.2026",
+        "prioriteetti": "korkea",
+    },
+    {
+        "id": "riskiarvio",
+        "otsikko": "Käyttöriskien arviointi",
+        "kuvaus": "Yrityksenne on arvioinut mitä riskejä järjestelmän käytöstä voi seurata teidän kontekstissanne (Art. 26)",
+        "artikkeli": "Art. 26",
+        "deadline": "2.8.2026",
+        "prioriteetti": "korkea",
+    },
+    {
+        "id": "tyontekijat_informoitu",
+        "otsikko": "Työntekijät informoitu",
+        "kuvaus": "Henkilöstölle on kerrottu että he työskentelevät AI-järjestelmän kanssa tai sen valvonnassa (Art. 26)",
+        "artikkeli": "Art. 26",
+        "deadline": "2.8.2026",
+        "prioriteetti": "normaali",
+    },
+]
+
 # Vaatimukset rajatun riskin järjestelmille (chatbotit, AI-sisältö)
 VAATIMUKSET_RAJATTU = [
     {
@@ -216,15 +253,22 @@ def luokittele_riski(vastaukset: dict) -> dict:
     )
 
     if korkea:
-        puuttuvat = [
-            v for v in VAATIMUKSET
-            if not vastaukset.get(v["id"], False)
-        ]
+        on_deployer = vastaukset.get("rooli") == "deployer"
+        lista = VAATIMUKSET_DEPLOYER if on_deployer else VAATIMUKSET
+        puuttuvat = [v for v in lista if not vastaukset.get(v["id"], False)]
+        selitys = (
+            "Järjestelmä luokitellaan korkean riskin AI-järjestelmäksi (Annex III). "
+            "Koska käytätte valmista työkalua (ette ole kehittäjä), vaatimukset ovat kevyemmät — "
+            "päävastuut ovat järjestelmän toimittajalla. Teidän vastuullanne on Art. 26 velvoitteet."
+            if on_deployer else
+            "Järjestelmä luokitellaan korkean riskin AI-järjestelmäksi (Annex III). "
+            "Täydet compliance-vaatimukset voimassa 2.8.2026."
+        )
         return {
             "taso": "korkea",
-            "selitys": f"Järjestelmä luokitellaan korkean riskin AI-järjestelmäksi (Annex III). Täydet compliance-vaatimukset voimassa 2.8.2026.",
+            "selitys": selitys,
             "puuttuvat": puuttuvat,
-            "vaaditut": VAATIMUKSET,
+            "vaaditut": lista,
         }
 
     # Rajattu riski (chatbotit, AI-sisältö)

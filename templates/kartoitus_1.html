@@ -27,6 +27,29 @@
         </div>
 
         <div class="form-group">
+          <label>Mistä tämä järjestelmä on peräisin? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="rooli" value="deployer" required
+                {% if muokkaus.get('rooli') != 'provider' %}checked{% endif %}>
+              <span>
+                <strong>Ostettu tai lisensoitu valmis työkalu</strong><br>
+                <small>Esim. ChatGPT, Microsoft Copilot, Teamtailor, tai muu valmis sovellus jonka olette hankkineet</small>
+              </span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rooli" value="provider"
+                {% if muokkaus.get('rooli') == 'provider' %}checked{% endif %}>
+              <span>
+                <strong>Yrityksenne itse kehittämä järjestelmä</strong><br>
+                <small>Oma koodattu ratkaisu, teetetty ohjelmisto tai oma koneoppimismalli</small>
+              </span>
+            </label>
+          </div>
+          <small style="margin-top:.5rem;display:block;">Tämä vaikuttaa vaatimusten laajuuteen — valmiin työkalun käyttäjällä on kevyemmät velvoitteet kuin kehittäjällä.</small>
+        </div>
+
+        <div class="form-group">
           <label>Missä toiminnossa järjestelmää käytetään? *</label>
           <select name="toimiala" required>
             <option value="">Valitse toiminto...</option>
