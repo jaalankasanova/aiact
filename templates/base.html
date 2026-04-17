@@ -55,6 +55,7 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navMenu">
+      <a href="{{ url_for('opas') }}">AI Act -opas</a>
       {% if kirjautunut %}
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-sm">+ Uusi kartoitus</a>

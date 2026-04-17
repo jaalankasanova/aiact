@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% block title %}EU AI Act -opas suomeksi — mitä laki tarkoittaa käytännössä{% endblock %}
+{% block meta_description %}EU AI Act selitettynä selkosuomeksi pk-yrityksille. Mitä artiklat tarkoittavat, ketkä ovat velvollisia ja mitä pitää tehdä ennen 2.8.2026 deadlinea.{% endblock %}
+{% block content %}
+
+<div style="max-width:820px;margin:0 auto;padding:3rem 1.5rem;">
+
+  <div style="margin-bottom:2.5rem;">
+    <div class="section-tag">Opas</div>
+    <h1 style="font-size:2rem;margin-bottom:.75rem;">EU AI Act selkosuomeksi</h1>
+    <p style="color:var(--teksti-harmaa);font-size:1.05rem;">EU AI Act on monimutkainen laki täynnä artiklaviittauksia. Tässä oppaassa selitämme mitä ne tarkoittavat käytännössä — ilman lakikieltä.</p>
+  </div>
+
+  <!-- Sisällysluettelo -->
+  <div class="form-card" style="margin-bottom:2.5rem;padding:1.5rem;">
+    <div style="font-weight:700;margin-bottom:.75rem;">Sisältö</div>
+    <ol style="margin:0;padding-left:1.25rem;line-height:2;">
+      <li><a href="#mika-on" style="color:var(--primary);">Mikä EU AI Act on?</a></li>
+      <li><a href="#ketä-koskee" style="color:var(--primary);">Ketä laki koskee?</a></li>
+      <li><a href="#riskiluokat" style="color:var(--primary);">Neljä riskiluokkaa selitettynä</a></li>
+      <li><a href="#provider-deployer" style="color:var(--primary);">Kehittäjä vai käyttäjä — mikä ero?</a></li>
+      <li><a href="#artikkelit" style="color:var(--primary);">Mitä artiklat tarkoittavat?</a></li>
+      <li><a href="#deadline" style="color:var(--primary);">Deadline ja sanktiot</a></li>
+    </ol>
+  </div>
+
+  <!-- Mikä on EU AI Act -->
+  <div id="mika-on" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Mikä EU AI Act on?</h2>
+    <p>EU AI Act (virallisesti asetus 2024/1689) on Euroopan unionin laki joka sääntelee tekoälyn käyttöä. Se tuli voimaan elokuussa 2024 ja velvoittaa kaikkia EU-alueella toimivia yrityksiä — riippumatta siitä onko yritys suomalainen vai ulkomainen.</p>
+    <p>Lain idea on yksinkertainen: <strong>mitä suurempi vahinko AI:sta voi seurata, sitä tiukemmat säännöt.</strong> Esimerkiksi sairaalan diagnostiikka-AI on tiukemman valvonnan alla kuin yrityksen sisäinen tekstinkirjoitusapuri.</p>
+  </div>
+
+  <!-- Ketä koskee -->
+  <div id="ketä-koskee" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Ketä laki koskee?</h2>
+    <p>Laki koskee kaikkia yrityksiä jotka <strong>käyttävät tai tarjoavat tekoälyjärjestelmiä</strong> EU:n alueella. Tähän kuuluu:</p>
+    <ul style="line-height:2;margin-bottom:1rem;">
+      <li>Yritys joka käyttää ChatGPT:tä rekrytoinnissa</li>
+      <li>Yritys jonka verkkosivulla on AI-chatbot</li>
+      <li>Yritys joka on rakentanut oman algoritmin luottopäätöksiin</li>
+      <li>Yritys joka käyttää automaattista laskujen käsittelyä</li>
+    </ul>
+    <div class="form-card" style="background:#eff6ff;border:1.5px solid #bfdbfe;padding:1rem 1.25rem;">
+      <strong>Huom:</strong> Pelkkä ChatGPT:n käyttö tekstien kirjoittamiseen sisäisesti ei yleensä vaadi erityistoimia. Vaatimukset kasvavat kun AI tekee päätöksiä jotka vaikuttavat ihmisiin.
+    </div>
+  </div>
+
+  <!-- Riskiluokat -->
+  <div id="riskiluokat" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Neljä riskiluokkaa selitettynä</h2>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="form-card" style="border-left:4px solid #7c3aed;padding:1.25rem;">
+        <div style="font-weight:700;color:#7c3aed;margin-bottom:.5rem;">Kielletty — ei sallittu ollenkaan</div>
+        <p style="margin:0;font-size:.95rem;">Järjestelmät jotka laki kieltää kokonaan. Käytännössä: sosiaalinen pisteytys (kuten Kiinan pisteytysjärjestelmä), alitajuinen manipulointi tai kasvojentunnistus julkisissa tiloissa reaaliajassa.</p>
+      </div>
+      <div class="form-card" style="border-left:4px solid #dc2626;padding:1.25rem;">
+        <div style="font-weight:700;color:#dc2626;margin-bottom:.5rem;">Korkea riski — tiukat vaatimukset</div>
+        <p style="margin:0;font-size:.95rem;">AI joka käytetään rekrytoinnissa, lainansaannissa, terveydenhuollossa, koulutuksessa tai julkisissa palveluissa. Näiltä vaaditaan dokumentaatio, lokitus, ihmisvalvonta ja rekisteröinti EU:hun.</p>
+      </div>
+      <div class="form-card" style="border-left:4px solid #d97706;padding:1.25rem;">
+        <div style="font-weight:700;color:#d97706;margin-bottom:.5rem;">Rajattu riski — avoimuusvaatimukset</div>
+        <p style="margin:0;font-size:.95rem;">Chatbotit ja AI joka tuottaa sisältöä. Vaatimus: käyttäjille pitää kertoa selvästi että he juttelevat AI:n kanssa — ei saa esittää olevansa ihminen.</p>
+      </div>
+      <div class="form-card" style="border-left:4px solid #16a34a;padding:1.25rem;">
+        <div style="font-weight:700;color:#16a34a;margin-bottom:.5rem;">Minimiriski — ei pakollisia vaatimuksia</div>
+        <p style="margin:0;font-size:.95rem;">Esim. roskapostisuodattimet, hakukoneet, sisäiset kirjoitusapurit. Ei erityisiä lakisääteisiä vaatimuksia, hyvät käytännöt suositeltavia.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Provider vs Deployer -->
+  <div id="provider-deployer" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Kehittäjä vai käyttäjä — mikä ero?</h2>
+    <p>Laki erottelee kaksi roolia joilla on eri velvoitteet:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="font-weight:700;margin-bottom:.5rem;">Kehittäjä (Provider)</div>
+        <p style="font-size:.9rem;margin:0;color:var(--teksti-harmaa);">Yritys joka on itse rakentanut tai teettänyt AI-järjestelmän. Vastuu on suurin — kaikki tekniset vaatimukset, dokumentaatio ja EU-rekisteröinti kuuluvat heille.</p>
+      </div>
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="font-weight:700;margin-bottom:.5rem;">Käyttäjä (Deployer)</div>
+        <p style="font-size:.9rem;margin:0;color:var(--teksti-harmaa);">Yritys joka käyttää valmista AI-työkalua (esim. ChatGPT, Copilot, ostettu sovellus). Velvoitteet ovat kevyemmät — päävastuut ovat toimittajalla.</p>
+      </div>
+    </div>
+    <div class="form-card" style="background:#eff6ff;border:1.5px solid #bfdbfe;padding:1rem 1.25rem;">
+      <strong>Suurin osa pk-yrityksistä on käyttäjiä</strong> — he käyttävät valmiita työkaluja eivätkä kehitä omia. Tämä tarkoittaa merkittävästi kevyempiä velvoitteita.
+    </div>
+  </div>
+
+  <!-- Artikkelit -->
+  <div id="artikkelit" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Mitä artiklat tarkoittavat?</h2>
+    <p style="color:var(--teksti-harmaa);margin-bottom:1.5rem;">EU AI Act käyttää artiklaviittauksia (Art. 5, Art. 11 jne.). Tässä ne selitettynä selkosuomeksi:</p>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 5</span>
+          <div>
+            <strong>Kielletyt järjestelmät</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Lista AI-järjestelmistä joita ei saa käyttää ollenkaan EU:ssa. Käytännössä: sosiaalinen pisteytys, alitajuinen manipulointi, reaaliaikainen biometrinen tunnistus julkisissa tiloissa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 9</span>
+          <div>
+            <strong>Riskinarviointi</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Korkean riskin järjestelmille pitää tehdä kirjallinen riskinarviointi: mitä voi mennä pieleen, kuinka todennäköistä se on ja miten riskit hallitaan. Ei tarvitse olla monimutkainen — selkeä Word-dokumentti riittää.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 10</span>
+          <div>
+            <strong>Datan laatu</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Jos AI on koulutettu datalla, se data pitää dokumentoida: mistä se on peräisin, onko se tasapuolista, miten se on käsitelty. Tärkeä varsinkin omia malleja kehittäville yrityksille.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 11</span>
+          <div>
+            <strong>Tekninen dokumentaatio</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Järjestelmästä pitää olla kirjallinen kuvaus: mitä se tekee, miten se toimii, mihin se on tarkoitettu ja mitkä ovat sen rajoitukset. Viranomainen voi pyytää tämän tarkastuksessa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 12</span>
+          <div>
+            <strong>Lokitiedostot</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Järjestelmän toiminnasta pitää jäädä lokeja vähintään 6 kuukauden ajalta. Näistä pitää näkyä mitä päätöksiä on tehty, milloin ja millä syötteillä. Pilvipalveluissa tämä hoituu usein automaattisesti.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 14</span>
+          <div>
+            <strong>Ihmisvalvonta</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Korkean riskin AI:lla pitää olla nimetty henkilö joka seuraa sen toimintaa ja voi tarvittaessa puuttua tai pysäyttää järjestelmän. Ei tarvita erityistä teknistä osaamista — riittää että joku vastaa valvonnasta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 17</span>
+          <div>
+            <strong>Laadunhallinta (QMS)</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Yrityksellä pitää olla kirjallinen prosessi: miten AI-järjestelmiä hankitaan, otetaan käyttöön, seurataan ja päivitetään. Ei vaadita ISO-sertifiointia — selkeä sisäinen ohje riittää.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 26</span>
+          <div>
+            <strong>Käyttäjäyrityksen velvoitteet</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Jos käytätte valmista AI-työkalua (ette ole kehittäjä), tämä artikla koskee teitä. Velvoitteet: järjestä ihmisvalvonta, säilytä lokit, arvioi käyttöriskit omassa kontekstissanne ja kerro työntekijöille AI:n käytöstä.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 43</span>
+          <div>
+            <strong>Vaatimustenmukaisuusarviointi</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Korkean riskin järjestelmä pitää virallisesti arvioida ennen käyttöönottoa ja aina kun siihen tehdään merkittäviä muutoksia. Tämä kartoitustyökalu auttaa pohjatyön tekemisessä.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 49</span>
+          <div>
+            <strong>EU-rekisteröinti</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Korkean riskin järjestelmät pitää rekisteröidä EU:n yhteiseen AI-tietokantaan. Rekisteröinti tapahtuu EU:n virallisen portaalin kautta. Kehittäjä on ensisijaisesti vastuussa, mutta käyttäjäyrityskin voi joutua rekisteröimään jos kehittäjä on EU:n ulkopuolella.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Art. 50</span>
+          <div>
+            <strong>Avoimuus chatboteissa ja AI-sisällössä</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Jos teillä on chatbot tai AI joka kommunikoi asiakkaiden kanssa, pitää selvästi kertoa että kyseessä on AI — ei ihminen. Lisäksi tekoälyn generoima sisältö (kuvat, tekstit, videot) pitää merkitä tunnistettavasti.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card" style="padding:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;white-space:nowrap;margin-top:2px;">Annex III</span>
+          <div>
+            <strong>Korkean riskin toimialat</strong>
+            <p style="margin:.25rem 0 0;font-size:.9rem;color:var(--teksti-harmaa);">Lain liite III listaa toimialat joilla AI automaattisesti luokitellaan korkean riskin järjestelmäksi: rekrytointi ja HR, luottopäätökset ja vakuutukset, terveydenhuolto, koulutus, kriittinen infrastruktuuri, lainvalvonta, maahanmuutto ja julkiset palvelut.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Deadline -->
+  <div id="deadline" style="margin-bottom:3rem;">
+    <h2 style="font-size:1.4rem;border-left:4px solid var(--primary);padding-left:.75rem;margin-bottom:1rem;">Deadline ja sanktiot</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div class="form-card" style="text-align:center;padding:1.5rem;">
+        <div style="font-size:1.8rem;font-weight:900;color:#dc2626;">2.8.2026</div>
+        <div style="color:var(--teksti-harmaa);margin-top:.25rem;font-size:.9rem;">Korkean riskin järjestelmien täysi compliance-deadline</div>
+      </div>
+      <div class="form-card" style="text-align:center;padding:1.5rem;">
+        <div style="font-size:1.8rem;font-weight:900;color:#dc2626;">15M€ / 3%</div>
+        <div style="color:var(--teksti-harmaa);margin-top:.25rem;font-size:.9rem;">Maksimisankio — 15 miljoonaa euroa tai 3% vuotuisesta liikevaihdosta</div>
+      </div>
+    </div>
+    <p>Suomen valvontaviranomainen on <strong>Liikenne- ja viestintävirasto Traficom</strong>. Sankiot astuvat voimaan deadlinen jälkeen.</p>
+    <div class="form-card" style="background:#fef2f2;border:1.5px solid #fecaca;padding:1rem 1.25rem;">
+      <strong>Tärkeää:</strong> Tämä opas on yleinen tietopaketti eikä korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan compliance-dokumentit lakimiehellä ennen viranomaisten kanssa asiointia.
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="text-align:center;padding:2rem;background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(109,40,217,.05));border-radius:16px;border:1.5px solid rgba(124,58,237,.15);">
+    <h2 style="font-size:1.3rem;margin-bottom:.5rem;">Valmis tarkistamaan yrityksesi tilanteen?</h2>
+    <p style="color:var(--teksti-harmaa);margin-bottom:1.25rem;">Tee ilmainen kartoitus — 10 minuuttia, ei luottokorttia.</p>
+    <a href="{{ url_for('rekisteri') }}" class="btn btn-primary btn-lg">Aloita ilmainen kartoitus</a>
+  </div>
+
+</div>
+{% endblock %}

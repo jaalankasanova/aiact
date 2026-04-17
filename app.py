@@ -612,6 +612,10 @@ def pdf_raportti(jid):
 def tietosuoja():
     return render_template("tietosuoja.html")
 
+@app.route("/opas")
+def opas():
+    return render_template("opas.html")
+
 
 @app.route("/robots.txt")
 def robots():
@@ -672,7 +676,8 @@ def admin():
 def sitemap():
     pages = [
         ("https://aiact.onrender.com/", "weekly", "1.0"),
-        ("https://aiact.onrender.com/rekisteri", "monthly", "0.9"),
+        ("https://aiact.onrender.com/opas", "monthly", "0.9"),
+        ("https://aiact.onrender.com/rekisteri", "monthly", "0.8"),
         ("https://aiact.onrender.com/kirjaudu", "monthly", "0.7"),
         ("https://aiact.onrender.com/tietosuoja", "monthly", "0.3"),
     ]
