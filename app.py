@@ -338,7 +338,7 @@ def uusi_jarjestelma():
     with get_db() as db:
         set_schema(db)
         k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s", [kid]).fetchone()
-        if not k["tilaaja"]:
+        if not k or not k["tilaaja"]:
             maara = db.execute("SELECT COUNT(*) as n FROM jarjestelmat WHERE kayttaja_id=%s", [kid]).fetchone()["n"]
             if maara >= 1:
                 flash("Ilmainen tili on rajoitettu yhteen kartoitukseen. Päivitä Pro jatkaaksesi.", "warning")
@@ -636,7 +636,7 @@ def admin():
             "SELECT COUNT(*) as n FROM kayntikerrat WHERE aika::date = CURRENT_DATE"
         ).fetchone()["n"]
         paivat = db.execute("""
-            SELECT aika::date as pv, COUNT(*) as n
+            SELECT TO_CHAR(aika::date, 'YYYY-MM-DD') as pv, COUNT(*) as n
             FROM kayntikerrat
             WHERE aika >= NOW() - INTERVAL '7 days'
             GROUP BY aika::date ORDER BY pv
@@ -649,7 +649,7 @@ def admin():
         tilaajat_yht     = db.execute("SELECT COUNT(*) as n FROM kayttajat WHERE tilaaja=1").fetchone()["n"]
         jarjestelmat_yht = db.execute("SELECT COUNT(*) as n FROM jarjestelmat").fetchone()["n"]
         uudet = db.execute("""
-            SELECT luotu::date as pv, COUNT(*) as n FROM kayttajat
+            SELECT TO_CHAR(luotu::date, 'YYYY-MM-DD') as pv, COUNT(*) as n FROM kayttajat
             WHERE luotu >= NOW() - INTERVAL '7 days'
             GROUP BY luotu::date ORDER BY pv
         """).fetchall()
