@@ -131,6 +131,12 @@ body {
   border: 2px solid var(--primary);
 }
 .btn-outline:hover { background: var(--primary); color: #fff; }
+.btn-outline-light {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.7);
+}
+.btn-outline-light:hover { background: rgba(255,255,255,0.15); color: #fff; border-color: #fff; }
 .btn-ghost {
   background: transparent;
   color: var(--teksti-harmaa);
