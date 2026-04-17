@@ -29,6 +29,14 @@ app = Flask(__name__,
             static_folder=os.path.join(BASE_DIR, "static"))
 
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-vaihda-tuotannossa")
+
+@app.template_filter("pvm")
+def pvm_filter(arvo):
+    if not arvo:
+        return ""
+    if hasattr(arvo, "strftime"):
+        return arvo.strftime("%Y-%m-%d")
+    return str(arvo)[:10]
 app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-vaihda-tuotannossa")
 app.permanent_session_lifetime = timedelta(hours=8)
 

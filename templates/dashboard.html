@@ -52,7 +52,7 @@
       <div class="jarjestelma-info">
         <div class="jarjestelma-nimi">{{ j.nimi }}</div>
         <div class="jarjestelma-kuvaus">{{ j.kuvaus or "Ei kuvausta" }}</div>
-        <div class="jarjestelma-pvm">Kartoitettu: {{ j.luotu[:10] if j.luotu else "" }}</div>
+        <div class="jarjestelma-pvm">Kartoitettu: {{ j.luotu | pvm }}</div>
       </div>
       <div class="jarjestelma-riski">
         <span class="riski-badge riski-{{ riski.taso }}">
