@@ -420,8 +420,9 @@ def kartoitus_3():
 
     if request.method == "POST":
         k = session["kartoitus"]
-        for v in VAATIMUKSET + VAATIMUKSET_RAJATTU:
-            k[v["id"]] = request.form.get(v["id"]) == "on"
+        kaikki_ids = {v["id"] for v in VAATIMUKSET + VAATIMUKSET_DEPLOYER + VAATIMUKSET_RAJATTU}
+        for vid in kaikki_ids:
+            k[vid] = request.form.get(vid) == "on"
         session["kartoitus"] = k
 
         riski = luokittele_riski(k)
@@ -454,11 +455,12 @@ def kartoitus_3():
         return redirect(url_for("tulos", jid=jid))
 
     k = session["kartoitus"]
+    on_deployer = k.get("rooli") == "deployer"
     riski_esikatselu = luokittele_riski(k)
     return render_template("kartoitus_3.html",
                            kartoitus=k,
                            riski_esikatselu=riski_esikatselu,
-                           vaatimukset=VAATIMUKSET,
+                           vaatimukset=VAATIMUKSET_DEPLOYER if on_deployer else VAATIMUKSET,
                            vaatimukset_rajattu=VAATIMUKSET_RAJATTU)
 
 

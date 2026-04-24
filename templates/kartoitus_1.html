@@ -54,7 +54,7 @@
           <select name="toimiala" required>
             <option value="">Valitse toiminto...</option>
             {% for arvo, teksti in toimialat %}
-            <option value="{{ arvo }}">{{ teksti }}</option>
+            <option value="{{ arvo }}" {% if muokkaus.get('toimiala') == arvo %}selected{% endif %}>{{ teksti }}</option>
             {% endfor %}
           </select>
         </div>

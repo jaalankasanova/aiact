@@ -37,7 +37,7 @@
         {% for v in vaatimukset %}
         <div class="checkbox-group checkbox-group-req">
           <label class="checkbox-label">
-            <input type="checkbox" name="{{ v.id }}">
+            <input type="checkbox" name="{{ v.id }}" {% if kartoitus.get(v.id) %}checked{% endif %}>
             <span>
               <strong>{{ v.otsikko }}</strong>
               <span class="req-artikkeli">{{ v.artikkeli }}</span>
@@ -54,7 +54,7 @@
         {% for v in vaatimukset_rajattu %}
         <div class="checkbox-group checkbox-group-req">
           <label class="checkbox-label">
-            <input type="checkbox" name="{{ v.id }}">
+            <input type="checkbox" name="{{ v.id }}" {% if kartoitus.get(v.id) %}checked{% endif %}>
             <span>
               <strong>{{ v.otsikko }}</strong>
               <span class="req-artikkeli">{{ v.artikkeli }}</span><br>
