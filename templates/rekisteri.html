@@ -4,43 +4,43 @@
 {% block robots %}noindex, follow{% endblock %}
 {% block content %}
 <div class="form-page">
-  <h1>Aloita ilmainen kartoitus</h1>
-  <p class="form-sub">Ei luottokorttia. Ensimmäinen kartoitus on ilmainen.</p>
+  <h1 data-i18n="reg.h1">Aloita ilmainen kartoitus</h1>
+  <p class="form-sub" data-i18n="reg.sub">Ei luottokorttia. Ensimmäinen kartoitus on ilmainen.</p>
   <form method="post" class="form-card">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
-      <label>Yrityksen nimi *</label>
-      <input type="text" name="yritys" required placeholder="Esim. Acme Oy">
+      <label data-i18n="reg.company">Yrityksen nimi *</label>
+      <input type="text" name="yritys" required data-i18n="reg.company_placeholder" placeholder="Esim. Acme Oy">
     </div>
     <div class="form-group">
-      <label>Y-tunnus</label>
+      <label data-i18n="reg.ytunnus">Y-tunnus</label>
       <input type="text" name="ytunnus" placeholder="1234567-8">
     </div>
     <div class="form-group">
-      <label>Yrityksen koko</label>
+      <label data-i18n="reg.size">Yrityksen koko</label>
       <select name="koko">
-        <option value="">Valitse...</option>
-        <option value="mikro">Mikroyritys (alle 10 hlö)</option>
-        <option value="pieni">Pieni yritys (10–49 hlö)</option>
-        <option value="keski">Keskisuuri yritys (50–249 hlö)</option>
-        <option value="suuri">Suuri yritys (250+ hlö)</option>
+        <option value="" data-i18n="reg.size.select">Valitse...</option>
+        <option value="mikro" data-i18n="reg.size.1">1–10 henkilöä</option>
+        <option value="pieni" data-i18n="reg.size.2">11–50 henkilöä</option>
+        <option value="keski" data-i18n="reg.size.3">51–250 henkilöä</option>
+        <option value="suuri" data-i18n="reg.size.4">Yli 250 henkilöä</option>
       </select>
     </div>
     <div class="form-group">
-      <label>Sähköposti *</label>
-      <input type="email" name="email" required placeholder="nimi@yritys.fi">
+      <label data-i18n="reg.email">Sähköposti *</label>
+      <input type="email" name="email" required data-i18n="reg.email_placeholder" placeholder="nimi@yritys.fi">
     </div>
     <div class="form-group">
-      <label>Salasana *</label>
+      <label data-i18n="reg.pwd">Salasana *</label>
       <div class="password-wrap">
-        <input type="password" name="salasana" required minlength="8" placeholder="Vähintään 8 merkkiä" id="pw-rekisteri">
-        <button type="button" class="pw-toggle" onclick="togglePw('pw-rekisteri', this)">Näytä</button>
+        <input type="password" name="salasana" required minlength="8" data-i18n="reg.pwd_placeholder" placeholder="Vähintään 8 merkkiä" id="pw-rekisteri">
+        <button type="button" class="pw-toggle" onclick="togglePw('pw-rekisteri', this)" data-i18n="reg.show_pwd">Näytä</button>
       </div>
-      <small>Vähintään 8 merkkiä</small>
+      <small data-i18n="reg.pwd_hint">Vähintään 8 merkkiä</small>
     </div>
-    <button type="submit" class="btn btn-primary btn-full">Luo tili ja aloita →</button>
+    <button type="submit" class="btn btn-primary btn-full" data-i18n="reg.btn">Luo tili ja aloita →</button>
   </form>
-  <p class="form-footer">Jo tili? <a href="{{ url_for('kirjaudu') }}">Kirjaudu sisään</a></p>
+  <p class="form-footer"><span data-i18n="reg.have_account">Jo tili?</span> <a href="{{ url_for('kirjaudu') }}" data-i18n="reg.login">Kirjaudu sisään</a></p>
 </div>
 {% endblock %}
 {% block scripts %}

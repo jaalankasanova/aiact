@@ -4,25 +4,25 @@
 <div class="form-page">
   <div style="text-align:center;margin-bottom:28px">
     <div style="font-size:2rem;margin-bottom:8px">⚖️</div>
-    <h1>Tervetuloa takaisin</h1>
-    <p class="form-sub">Kirjaudu ComplianceAI-tilillesi</p>
+    <h1 data-i18n="login.welcome">Tervetuloa takaisin</h1>
+    <p class="form-sub" data-i18n="login.sub2">Kirjaudu ComplianceAI-tilillesi</p>
   </div>
   <form method="post" class="form-card">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="form-group">
-      <label>Sähköposti</label>
-      <input type="email" name="email" required placeholder="nimi@yritys.fi" autofocus>
+      <label data-i18n="login.email">Sähköposti</label>
+      <input type="email" name="email" required data-i18n="login.email_placeholder" placeholder="nimi@yritys.fi" autofocus>
     </div>
     <div class="form-group">
-      <label>Salasana</label>
+      <label data-i18n="login.pwd">Salasana</label>
       <div class="password-wrap">
-        <input type="password" name="salasana" required placeholder="Salasanasi" id="pw-kirjaudu">
-        <button type="button" class="pw-toggle" onclick="togglePw('pw-kirjaudu', this)">Näytä</button>
+        <input type="password" name="salasana" required data-i18n="login.pwd_placeholder" placeholder="Salasanasi" id="pw-kirjaudu">
+        <button type="button" class="pw-toggle" onclick="togglePw('pw-kirjaudu', this)" data-i18n="login.show_pwd">Näytä</button>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">Kirjaudu sisään →</button>
+    <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px" data-i18n="login.btn">Kirjaudu sisään →</button>
   </form>
-  <p class="form-footer">Ei tiliä vielä? <a href="{{ url_for('rekisteri') }}">Rekisteröidy ilmaiseksi</a></p>
+  <p class="form-footer"><span data-i18n="login.no_account">Ei tiliä vielä?</span> <a href="{{ url_for('rekisteri') }}" data-i18n="login.register">Rekisteröidy ilmaiseksi</a></p>
 </div>
 {% endblock %}
 {% block scripts %}

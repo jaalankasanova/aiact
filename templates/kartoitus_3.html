@@ -3,9 +3,9 @@
 {% block content %}
 <div class="kartoitus-page">
   <div class="kartoitus-progress">
-    <div class="progress-step done">1. Perustiedot</div>
-    <div class="progress-step done">2. Ominaisuudet</div>
-    <div class="progress-step active">3. Nykytila</div>
+    <div class="progress-step done" data-i18n="k.step1">1. Perustiedot</div>
+    <div class="progress-step done" data-i18n="k.step2">2. Ominaisuudet</div>
+    <div class="progress-step active" data-i18n="k.step3">3. Nykytila</div>
   </div>
 
   <div class="kartoitus-layout">
@@ -14,26 +14,26 @@
 
       {% if riski_esikatselu.taso == "kielletty" %}
       <div class="alert alert-danger">
-        <strong>Varoitus:</strong> Järjestelmä saattaa kuulua EU AI Act:n kiellettyihin järjestelmiin (Art. 5). Ota välittömästi yhteyttä lakimieheen ennen käytön jatkamista.
+        <strong data-i18n="k3.alert_prohibited_title">Varoitus:</strong> <span data-i18n="k3.alert_prohibited_body">Järjestelmä saattaa kuulua EU AI Act:n kiellettyihin järjestelmiin (Art. 5). Ota välittömästi yhteyttä lakimieheen ennen käytön jatkamista.</span>
       </div>
       {% elif riski_esikatselu.taso == "korkea" %}
       <div class="alert alert-warning">
-        <strong>Korkea riski tunnistettu.</strong> Tämä järjestelmä kuuluu todennäköisesti korkean riskin luokkaan (Annex III). Merkitse alta mitkä vaatimukset ovat jo täytetty.
+        <strong data-i18n="k3.alert_high_title">Korkea riski tunnistettu.</strong> <span data-i18n="k3.alert_high_body">Tämä järjestelmä kuuluu todennäköisesti korkean riskin luokkaan (Annex III). Merkitse alta mitkä vaatimukset ovat jo täytetty.</span>
       </div>
       {% elif riski_esikatselu.taso == "rajattu" %}
       <div class="alert alert-info">
-        <strong>Rajattu riski.</strong> Avoimuusvaatimukset (Art. 50) voimassa 2.8.2026. Merkitse alla mitkä on hoidettu.
+        <strong data-i18n="k3.alert_limited_title">Rajattu riski.</strong> <span data-i18n="k3.alert_limited_body">Avoimuusvaatimukset (Art. 50) voimassa 2.8.2026. Merkitse alla mitkä on hoidettu.</span>
       </div>
       {% else %}
       <div class="alert alert-success">
-        <strong>Minimiriski.</strong> Erityisiä lakisääteisiä vaatimuksia ei tunnistettu. Hyvät käytännöt suositeltavia.
+        <strong data-i18n="k3.alert_minimal_title">Minimiriski.</strong> <span data-i18n="k3.alert_minimal_body">Erityisiä lakisääteisiä vaatimuksia ei tunnistettu. Hyvät käytännöt suositeltavia.</span>
       </div>
       {% endif %}
 
       <form method="post" class="form-card">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         {% if riski_esikatselu.taso == "korkea" %}
-        <p class="section-otsikko">Korkean riskin vaatimukset — mitkä ovat jo käytössä?</p>
+        <p class="section-otsikko" data-i18n="k3.high_req_heading">Korkean riskin vaatimukset — mitkä ovat jo käytössä?</p>
         {% for v in vaatimukset %}
         <div class="checkbox-group checkbox-group-req">
           <label class="checkbox-label">
@@ -50,7 +50,7 @@
         {% endif %}
 
         {% if riski_esikatselu.taso in ["rajattu", "korkea"] %}
-        <p class="section-otsikko">Avoimuusvaatimukset</p>
+        <p class="section-otsikko" data-i18n="k3.transp_heading">Avoimuusvaatimukset</p>
         {% for v in vaatimukset_rajattu %}
         <div class="checkbox-group checkbox-group-req">
           <label class="checkbox-label">
@@ -66,38 +66,38 @@
         {% endif %}
 
         {% if riski_esikatselu.taso == "minimaalinen" %}
-        <p class="kartoitus-ohje">Ei pakollisia vaatimuksia tunnistettu. Jatka tallentamaan tulos.</p>
+        <p class="kartoitus-ohje" data-i18n="k3.no_req">Ei pakollisia vaatimuksia tunnistettu. Jatka tallentamaan tulos.</p>
         {% endif %}
 
         <div class="form-actions">
-          <a href="{{ url_for('kartoitus_2') }}" class="btn btn-ghost">← Takaisin</a>
-          <button type="submit" class="btn btn-primary">Analysoi ja tallenna →</button>
+          <a href="{{ url_for('kartoitus_2') }}" class="btn btn-ghost" data-i18n="k.back">← Takaisin</a>
+          <button type="submit" class="btn btn-primary" data-i18n="k3.submit">Analysoi ja tallenna →</button>
         </div>
       </form>
     </div>
 
     <aside class="kartoitus-ohje-paneeli">
       <div class="ohje-kortti">
-        <div class="ohje-otsikko">💡 Miten rastittaa?</div>
-        <p>Rastita vain ne vaatimukset jotka ovat <strong>oikeasti käytössä</strong> tällä hetkellä — ei suunnitelmia tai aikomuksia. Realistinen arvio on parempi kuin optimistinen.</p>
+        <div class="ohje-otsikko" data-i18n="k3.tip1_title">💡 Miten rastittaa?</div>
+        <p data-i18n-html="k3.tip1_body">Rastita vain ne vaatimukset jotka ovat <strong>oikeasti käytössä</strong> tällä hetkellä — ei suunnitelmia tai aikomuksia. Realistinen arvio on parempi kuin optimistinen.</p>
       </div>
       {% if riski_esikatselu.taso == "korkea" %}
       <div class="ohje-kortti ohje-kortti-varoitus">
-        <div class="ohje-otsikko">⚠️ Korkea riski</div>
-        <p>Korkean riskin järjestelmille vaaditaan kattava dokumentaatio ennen <strong>2.8.2026</strong>. Puuttuvat vaatimukset näet tulossivulla toimintaohjeineen.</p>
+        <div class="ohje-otsikko" data-i18n="k3.tip2_title">⚠️ Korkea riski</div>
+        <p data-i18n-html="k3.tip2_body">Korkean riskin järjestelmille vaaditaan kattava dokumentaatio ennen <strong>2.8.2026</strong>. Puuttuvat vaatimukset näet tulossivulla toimintaohjeineen.</p>
       </div>
       {% endif %}
       <div class="ohje-kortti ohje-kortti-info">
-        <div class="ohje-otsikko">📄 Mitä seuraavaksi?</div>
-        <p>Kun tallennat, saat:</p>
+        <div class="ohje-otsikko" data-i18n="k3.tip3_title">📄 Mitä seuraavaksi?</div>
+        <p data-i18n="k3.tip3_intro">Kun tallennat, saat:</p>
         <ul class="ohje-lista">
-          <li>Tarkan riskiluokituksen</li>
-          <li>Listan puuttuvista vaatimuksista</li>
-          <li>Konkreettiset toimintaohjeet</li>
-          <li>Aikataulun ja vastuuhenkilöehdotuksen</li>
+          <li data-i18n="k3.tip3_li1">Tarkan riskiluokituksen</li>
+          <li data-i18n="k3.tip3_li2">Listan puuttuvista vaatimuksista</li>
+          <li data-i18n="k3.tip3_li3">Konkreettiset toimintaohjeet</li>
+          <li data-i18n="k3.tip3_li4">Aikataulun ja vastuuhenkilöehdotuksen</li>
         </ul>
         {% if not tilaaja %}
-        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)">Pro-tilaajat saavat myös PDF-raportin viranomaisia varten.</p>
+        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)" data-i18n="k3.tip3_pro">Pro-tilaajat saavat myös PDF-raportin viranomaisia varten.</p>
         {% endif %}
       </div>
     </aside>

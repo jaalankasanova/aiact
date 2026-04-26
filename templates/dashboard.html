@@ -7,9 +7,9 @@
   <div class="dash-header">
     <div>
       <h1>{{ kayttaja.yritys }}</h1>
-      <p class="dash-sub">AI Act compliance -tilanne</p>
+      <p class="dash-sub" data-i18n="dash.sub">AI Act compliance -tilanne</p>
     </div>
-    <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary">+ Lisää järjestelmä</a>
+    <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary" data-i18n="dash.add_system">+ Lisää järjestelmä</a>
   </div>
 
   <!-- Yhteenveto -->
@@ -19,15 +19,15 @@
         <span class="score-num">{{ yhteenveto.pisteet }}</span>
         <span class="score-label">/ 100</span>
       </div>
-      <p>Compliance-pistemäärä</p>
+      <p data-i18n="dash.score_label">Compliance-pistemäärä</p>
     </div>
     <div class="summary-card">
       <div class="summary-big">{{ paivat_jaljella }}</div>
-      <p>päivää deadline:iin<br><small>2.8.2026</small></p>
+      <p data-i18n-html="dash.days_label">päivää deadline:iin<br><small>2.8.2026</small></p>
     </div>
     <div class="summary-card">
       <div class="summary-big">{{ jarjestelmat|length }}</div>
-      <p>kartoitettua järjestelmää</p>
+      <p data-i18n="dash.systems_label">kartoitettua järjestelmää</p>
     </div>
     <div class="summary-card summary-status summary-{{ yhteenveto.taso }}">
       <div class="summary-big-text">{{ yhteenveto.yhteenveto }}</div>
@@ -36,13 +36,13 @@
 
   {% if not tilaaja and jarjestelmat|length >= 1 %}
   <div class="upgrade-banner">
-    <strong>Ilmainen tili:</strong> olet käyttänyt 1/1 kartoituksesta. Uusia kartoituksia varten tarvitset Pro-tilauksen.
-    <a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary">Päivitä Pro — 49€/kk</a>
+    <strong data-i18n="dash.free_title">Ilmainen tili:</strong> <span data-i18n="dash.free_body">olet käyttänyt 1/1 kartoituksesta. Uusia kartoituksia varten tarvitset Pro-tilauksen.</span>
+    <a href="{{ url_for('tilaus') }}" class="btn btn-sm btn-primary" data-i18n="dash.upgrade_btn">Päivitä Pro — 49€/kk</a>
   </div>
   {% endif %}
 
   <!-- Järjestelmälista -->
-  <h2>AI-järjestelmät</h2>
+  <h2 data-i18n="dash.systems_h2">AI-järjestelmät</h2>
   {% if jarjestelmat %}
   <div class="jarjestelmat-lista">
     {% for item in jarjestelmat %}
@@ -51,32 +51,32 @@
     <div class="jarjestelma-kortti riski-{{ riski.taso }}">
       <div class="jarjestelma-info">
         <div class="jarjestelma-nimi">{{ j.nimi }}</div>
-        <div class="jarjestelma-kuvaus">{{ j.kuvaus or "Ei kuvausta" }}</div>
-        <div class="jarjestelma-pvm">Kartoitettu: {{ j.luotu | pvm }}</div>
+        <div class="jarjestelma-kuvaus">{% if j.kuvaus %}{{ j.kuvaus }}{% else %}<span data-i18n="dash.no_desc">Ei kuvausta</span>{% endif %}</div>
+        <div class="jarjestelma-pvm"><span data-i18n="dash.assessed">Kartoitettu:</span> {{ j.luotu | pvm }}</div>
       </div>
       <div class="jarjestelma-riski">
         <span class="riski-badge riski-{{ riski.taso }}">
-          {% if riski.taso == "korkea" %}KORKEA RISKI
-          {% elif riski.taso == "kielletty" %}KIELLETTY
-          {% elif riski.taso == "rajattu" %}RAJATTU RISKI
-          {% else %}MINIMIRISKI{% endif %}
+          {% if riski.taso == "korkea" %}<span data-i18n="risk.high">KORKEA RISKI</span>
+          {% elif riski.taso == "kielletty" %}<span data-i18n="risk.prohibited">KIELLETTY</span>
+          {% elif riski.taso == "rajattu" %}<span data-i18n="risk.limited">RAJATTU RISKI</span>
+          {% else %}<span data-i18n="risk.minimal">MINIMIRISKI</span>{% endif %}
         </span>
         {% if riski.puuttuvat %}
-        <span class="puuttuu-count">{{ riski.puuttuvat|length }} vaatimusta puuttuu</span>
+        <span class="puuttuu-count">{{ riski.puuttuvat|length }} <span data-i18n="dash.req_missing">vaatimusta puuttuu</span></span>
         {% else %}
-        <span class="puuttuu-ok">Kaikki vaatimukset OK</span>
+        <span class="puuttuu-ok" data-i18n="dash.req_ok">Kaikki vaatimukset OK</span>
         {% endif %}
       </div>
       <div class="jarjestelma-toiminnot">
-        <a href="{{ url_for('tulos', jid=j.id) }}" class="btn btn-sm">Katso tulos</a>
+        <a href="{{ url_for('tulos', jid=j.id) }}" class="btn btn-sm" data-i18n="dash.view_result">Katso tulos</a>
         {% if tilaaja %}
         <a href="{{ url_for('pdf_raportti', jid=j.id) }}" target="_blank" class="btn btn-sm btn-outline">PDF</a>
         {% endif %}
-        <a href="{{ url_for('muokkaa_jarjestelma', jid=j.id) }}" class="btn btn-sm btn-outline">Muokkaa</a>
+        <a href="{{ url_for('muokkaa_jarjestelma', jid=j.id) }}" class="btn btn-sm btn-outline" data-i18n="dash.edit">Muokkaa</a>
         <form method="post" action="{{ url_for('poista_jarjestelma', jid=j.id) }}" style="display:inline"
               onsubmit="return confirm('Poistetaanko järjestelmä?')">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <button type="submit" class="btn btn-sm btn-danger">Poista</button>
+          <button type="submit" class="btn btn-sm btn-danger" data-i18n="dash.delete">Poista</button>
         </form>
       </div>
     </div>
@@ -84,8 +84,8 @@
   </div>
   {% else %}
   <div class="tyhja-tila">
-    <p>Ei vielä kartoitettuja AI-järjestelmiä.</p>
-    <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary">Aloita ensimmäinen kartoitus</a>
+    <p data-i18n="dash.empty">Ei vielä kartoitettuja AI-järjestelmiä.</p>
+    <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary" data-i18n="dash.start_first">Aloita ensimmäinen kartoitus</a>
   </div>
   {% endif %}
 </div>

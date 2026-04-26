@@ -3,56 +3,56 @@
 {% block content %}
 <div class="kartoitus-page">
   <div class="kartoitus-progress">
-    <div class="progress-step active">1. Perustiedot</div>
-    <div class="progress-step">2. Ominaisuudet</div>
-    <div class="progress-step">3. Nykytila</div>
+    <div class="progress-step active" data-i18n="k.step1">1. Perustiedot</div>
+    <div class="progress-step" data-i18n="k.step2">2. Ominaisuudet</div>
+    <div class="progress-step" data-i18n="k.step3">3. Nykytila</div>
   </div>
 
   <div class="kartoitus-layout">
     <div class="kartoitus-main">
-      <h1>Mikä AI-järjestelmä kartoitetaan?</h1>
-      <p class="kartoitus-ohje">Kartoita yksi järjestelmä kerrallaan. Voit lisätä lisää järjestelmiä myöhemmin dashboardilta.</p>
+      <h1 data-i18n="k1.h1">Mikä AI-järjestelmä kartoitetaan?</h1>
+      <p class="kartoitus-ohje" data-i18n="k1.ohje">Kartoita yksi järjestelmä kerrallaan. Voit lisätä lisää järjestelmiä myöhemmin dashboardilta.</p>
 
       <form method="post" class="form-card">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="form-group">
-          <label>Järjestelmän nimi *</label>
-          <input type="text" name="nimi" required placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli" value="{{ muokkaus.get('nimi', '') }}">
-          <small>Anna tunnistettava nimi — näkyy dashboardilla</small>
+          <label data-i18n="k1.name_label">Järjestelmän nimi *</label>
+          <input type="text" name="nimi" required data-i18n="k1.name_placeholder" placeholder="Esim. ChatGPT, Teamtailor, oma ML-malli" value="{{ muokkaus.get('nimi', '') }}">
+          <small data-i18n="k1.name_hint">Anna tunnistettava nimi — näkyy dashboardilla</small>
         </div>
 
         <div class="form-group">
-          <label>Lyhyt kuvaus (vapaaehtoinen)</label>
-          <textarea name="kuvaus" rows="2" placeholder="Mihin tätä järjestelmää käytetään?">{{ muokkaus.get('kuvaus', '') }}</textarea>
+          <label data-i18n="k1.desc_label">Lyhyt kuvaus (vapaaehtoinen)</label>
+          <textarea name="kuvaus" rows="2" data-i18n="k1.desc_placeholder" placeholder="Mihin tätä järjestelmää käytetään?">{{ muokkaus.get('kuvaus', '') }}</textarea>
         </div>
 
         <div class="form-group">
-          <label>Mistä tämä järjestelmä on peräisin? *</label>
+          <label data-i18n="k1.origin_label">Mistä tämä järjestelmä on peräisin? *</label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" name="rooli" value="deployer" required
                 {% if muokkaus.get('rooli') != 'provider' %}checked{% endif %}>
               <span>
-                <strong>Ostettu tai lisensoitu valmis työkalu</strong><br>
-                <small>Esim. ChatGPT, Microsoft Copilot, Teamtailor, tai muu valmis sovellus jonka olette hankkineet</small>
+                <strong data-i18n="k1.role_deployer_title">Ostettu tai lisensoitu valmis työkalu</strong><br>
+                <small data-i18n="k1.role_deployer_desc">Esim. ChatGPT, Microsoft Copilot, Teamtailor, tai muu valmis sovellus jonka olette hankkineet</small>
               </span>
             </label>
             <label class="radio-label">
               <input type="radio" name="rooli" value="provider"
                 {% if muokkaus.get('rooli') == 'provider' %}checked{% endif %}>
               <span>
-                <strong>Yrityksenne itse kehittämä järjestelmä</strong><br>
-                <small>Oma koodattu ratkaisu, teetetty ohjelmisto tai oma koneoppimismalli</small>
+                <strong data-i18n="k1.role_provider_title">Yrityksenne itse kehittämä järjestelmä</strong><br>
+                <small data-i18n="k1.role_provider_desc">Oma koodattu ratkaisu, teetetty ohjelmisto tai oma koneoppimismalli</small>
               </span>
             </label>
           </div>
-          <small style="margin-top:.5rem;display:block;">Tämä vaikuttaa vaatimusten laajuuteen — valmiin työkalun käyttäjällä on kevyemmät velvoitteet kuin kehittäjällä.</small>
+          <small style="margin-top:.5rem;display:block;" data-i18n="k1.role_hint">Tämä vaikuttaa vaatimusten laajuuteen — valmiin työkalun käyttäjällä on kevyemmät velvoitteet kuin kehittäjällä.</small>
         </div>
 
         <div class="form-group">
-          <label>Missä toiminnossa järjestelmää käytetään? *</label>
+          <label data-i18n="k1.sector_label">Missä toiminnossa järjestelmää käytetään? *</label>
           <select name="toimiala" required>
-            <option value="">Valitse toiminto...</option>
+            <option value="" data-i18n="k1.sector_select">Valitse toiminto...</option>
             {% for arvo, teksti in toimialat %}
             <option value="{{ arvo }}" {% if muokkaus.get('toimiala') == arvo %}selected{% endif %}>{{ teksti }}</option>
             {% endfor %}
@@ -60,33 +60,33 @@
         </div>
 
         <div class="form-actions">
-          <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Peruuta</a>
-          <button type="submit" class="btn btn-primary">Seuraava →</button>
+          <a href="{{ url_for('dashboard') }}" class="btn btn-ghost" data-i18n="k.cancel">Peruuta</a>
+          <button type="submit" class="btn btn-primary" data-i18n="k.next">Seuraava →</button>
         </div>
       </form>
     </div>
 
     <aside class="kartoitus-ohje-paneeli">
       <div class="ohje-kortti">
-        <div class="ohje-otsikko">💡 Mitä kartoitetaan?</div>
-        <p>Kartoita <strong>yksi AI-työkalu tai -järjestelmä</strong> kerrallaan. Esimerkkejä:</p>
+        <div class="ohje-otsikko" data-i18n="k1.tip1_title">💡 Mitä kartoitetaan?</div>
+        <p data-i18n-html="k1.tip1_body">Kartoita <strong>yksi AI-työkalu tai -järjestelmä</strong> kerrallaan. Esimerkkejä:</p>
         <ul class="ohje-lista">
-          <li>ChatGPT tai Copilot käytettynä rekrytoinnissa</li>
-          <li>Asiakaspalveluchatbot verkkosivulla</li>
-          <li>Automaattinen laskujen käsittelyjärjestelmä</li>
-          <li>Teamtailor tai vastaava rekrytointityökalu</li>
-          <li>Oma koneoppimismalli tai algoritmi</li>
+          <li data-i18n="k1.tip1_ex1">ChatGPT tai Copilot käytettynä rekrytoinnissa</li>
+          <li data-i18n="k1.tip1_ex2">Asiakaspalveluchatbot verkkosivulla</li>
+          <li data-i18n="k1.tip1_ex3">Automaattinen laskujen käsittelyjärjestelmä</li>
+          <li data-i18n="k1.tip1_ex4">Teamtailor tai vastaava rekrytointityökalu</li>
+          <li data-i18n="k1.tip1_ex5">Oma koneoppimismalli tai algoritmi</li>
         </ul>
       </div>
       <div class="ohje-kortti ohje-kortti-info">
-        <div class="ohje-otsikko">📋 Prosessi lyhyesti</div>
+        <div class="ohje-otsikko" data-i18n="k1.tip2_title">📋 Prosessi lyhyesti</div>
         <ol class="ohje-lista">
-          <li><strong>Vaihe 1:</strong> Perustiedot järjestelmästä</li>
-          <li><strong>Vaihe 2:</strong> Järjestelmän ominaisuudet</li>
-          <li><strong>Vaihe 3:</strong> Nykytilanne ja puutteet</li>
-          <li><strong>Tulos:</strong> Riskiluokitus ja toimintaohjeet</li>
+          <li data-i18n-html="k1.tip2_s1"><strong>Vaihe 1:</strong> Perustiedot järjestelmästä</li>
+          <li data-i18n-html="k1.tip2_s2"><strong>Vaihe 2:</strong> Järjestelmän ominaisuudet</li>
+          <li data-i18n-html="k1.tip2_s3"><strong>Vaihe 3:</strong> Nykytilanne ja puutteet</li>
+          <li data-i18n-html="k1.tip2_s4"><strong>Tulos:</strong> Riskiluokitus ja toimintaohjeet</li>
         </ol>
-        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)">Aikaa noin 5–10 minuuttia per järjestelmä.</p>
+        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)" data-i18n="k1.tip2_time">Aikaa noin 5–10 minuuttia per järjestelmä.</p>
       </div>
     </aside>
   </div>

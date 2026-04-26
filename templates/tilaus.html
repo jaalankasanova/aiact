@@ -2,22 +2,22 @@
 {% block title %}Päivitä Pro{% endblock %}
 {% block content %}
 <div class="form-page">
-  <h1>Päivitä Pro-tilaus</h1>
+  <h1 data-i18n="tilaus.h1">Päivitä Pro-tilaus</h1>
   <div class="tilaus-edut">
     <ul>
-      <li>Rajoittamattomat AI-järjestelmien kartoitukset</li>
-      <li>PDF-raportit viranomaisille ja johtoryhmälle</li>
-      <li>Deadline-seuranta ja muistutukset sähköpostiin</li>
-      <li>Dokumenttipohjat suomeksi (tekninen dok, QMS, riskinarviointi)</li>
-      <li>Peruuta milloin tahansa</li>
+      <li data-i18n="tilaus.li1">Rajoittamattomat AI-järjestelmien kartoitukset</li>
+      <li data-i18n="tilaus.li2">PDF-raportit viranomaisille ja johtoryhmälle</li>
+      <li data-i18n="tilaus.li3">Deadline-seuranta ja muistutukset sähköpostiin</li>
+      <li data-i18n="tilaus.li4">Dokumenttipohjat suomeksi (tekninen dok, QMS, riskinarviointi)</li>
+      <li data-i18n="tilaus.li5">Peruuta milloin tahansa</li>
     </ul>
   </div>
-  <div class="hinta-iso">49€ <span>/ kuukausi</span></div>
-  <p>ALV 0%. Peruuta milloin tahansa.</p>
+  <div class="hinta-iso">49€ <span data-i18n="tilaus.per_month">/ kuukausi</span></div>
+  <p data-i18n="tilaus.vat_note">ALV 0%. Peruuta milloin tahansa.</p>
   <form method="post" action="{{ url_for('checkout') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <button type="submit" class="btn btn-primary btn-full btn-lg">Aktivoi Pro-tilaus — 49€/kk</button>
+    <button type="submit" class="btn btn-primary btn-full btn-lg" data-i18n="tilaus.btn">Aktivoi Pro-tilaus — 49€/kk</button>
   </form>
-  <p class="form-footer"><a href="{{ url_for('dashboard') }}">← Takaisin</a></p>
+  <p class="form-footer"><a href="{{ url_for('dashboard') }}" data-i18n="tilaus.back">← Takaisin</a></p>
 </div>
 {% endblock %}

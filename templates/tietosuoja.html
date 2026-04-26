@@ -2,59 +2,59 @@
 {% block title %}Tietosuojaseloste{% endblock %}
 {% block content %}
 <div class="form-page" style="max-width:720px">
-  <h1>Tietosuojaseloste</h1>
-  <p class="form-sub">Päivitetty 12.4.2026</p>
+  <h1 data-i18n="privacy.h1">Tietosuojaseloste</h1>
+  <p class="form-sub" data-i18n="privacy.updated">Päivitetty 12.4.2026</p>
 
   <div class="form-card" style="line-height:1.8">
-    <h2 style="margin-bottom:8px">1. Rekisterinpitäjä</h2>
-    <p>ComplianceAI-palvelua ylläpitää yksityishenkilö (jäljempänä "me" tai "palveluntarjoaja"). Yhteystiedot: <a href="mailto:tuki@complianceai.fi">tuki@complianceai.fi</a></p>
+    <h2 style="margin-bottom:8px" data-i18n="privacy.s1_h2">1. Rekisterinpitäjä</h2>
+    <p data-i18n-html="privacy.s1_p">ComplianceAI-palvelua ylläpitää yksityishenkilö (jäljempänä "me" tai "palveluntarjoaja"). Yhteystiedot: <a href="mailto:tuki@complianceai.fi">tuki@complianceai.fi</a></p>
 
-    <h2 style="margin:24px 0 8px">2. Mitä tietoja kerätään</h2>
-    <p>Rekisteröitymisen yhteydessä keräämme:</p>
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s2_h2">2. Mitä tietoja kerätään</h2>
+    <p data-i18n="privacy.s2_reg_intro">Rekisteröitymisen yhteydessä keräämme:</p>
     <ul style="margin:8px 0 8px 20px">
-      <li>Sähköpostiosoite</li>
-      <li>Yrityksen nimi ja Y-tunnus (vapaaehtoinen)</li>
-      <li>Yrityksen koko</li>
-      <li>Salasana (tallennetaan salattuna, ei koskaan selkokielisenä)</li>
+      <li data-i18n="privacy.s2_li1">Sähköpostiosoite</li>
+      <li data-i18n="privacy.s2_li2">Yrityksen nimi ja Y-tunnus (vapaaehtoinen)</li>
+      <li data-i18n="privacy.s2_li3">Yrityksen koko</li>
+      <li data-i18n="privacy.s2_li4">Salasana (tallennetaan salattuna, ei koskaan selkokielisenä)</li>
     </ul>
-    <p>Kartoitusten yhteydessä keräämme:</p>
+    <p data-i18n="privacy.s2_assess_intro">Kartoitusten yhteydessä keräämme:</p>
     <ul style="margin:8px 0 8px 20px">
-      <li>Kartoitettujen AI-järjestelmien nimet, kuvaukset ja vastaukset</li>
-      <li>Lasketut riskiluokitukset ja compliance-pisteet</li>
-    </ul>
-
-    <h2 style="margin:24px 0 8px">3. Mihin tietoja käytetään</h2>
-    <p>Tietoja käytetään yksinomaan:</p>
-    <ul style="margin:8px 0 8px 20px">
-      <li>Palvelun tuottamiseen (compliance-analyysi, raporttien generointi)</li>
-      <li>Tilauksen hallintaan (Stripe-maksupalvelu)</li>
-      <li>Asiakaspalveluun</li>
-    </ul>
-    <p>Tietoja ei myydä eikä jaeta kolmansille osapuolille markkinointitarkoituksiin.</p>
-
-    <h2 style="margin:24px 0 8px">4. Kolmannet osapuolet</h2>
-    <p>Käytämme seuraavia alihankkijoita:</p>
-    <ul style="margin:8px 0 8px 20px">
-      <li><strong>Stripe</strong> — maksujen käsittely (Stripe Inc., USA, EU–USA Data Privacy Framework)</li>
-      <li><strong>Render</strong> — palvelimen hosting (Render Services Inc., USA)</li>
+      <li data-i18n="privacy.s2_li5">Kartoitettujen AI-järjestelmien nimet, kuvaukset ja vastaukset</li>
+      <li data-i18n="privacy.s2_li6">Lasketut riskiluokitukset ja compliance-pisteet</li>
     </ul>
 
-    <h2 style="margin:24px 0 8px">5. Tietojen säilytysaika</h2>
-    <p>Henkilötiedot säilytetään niin kauan kuin tili on aktiivinen. Tilin poistamisen jälkeen tiedot poistetaan 30 päivän kuluessa. Voit pyytää tietojesi poistamista milloin tahansa sähköpostilla.</p>
-
-    <h2 style="margin:24px 0 8px">6. Rekisteröidyn oikeudet</h2>
-    <p>Sinulla on oikeus:</p>
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s3_h2">3. Mihin tietoja käytetään</h2>
+    <p data-i18n="privacy.s3_intro">Tietoja käytetään yksinomaan:</p>
     <ul style="margin:8px 0 8px 20px">
-      <li>Tarkastaa mitä tietoja sinusta on tallennettu</li>
-      <li>Pyytää tietojen korjaamista tai poistamista</li>
-      <li>Siirtää tietosi toiseen palveluun (tietojen siirrettävyys)</li>
-      <li>Tehdä valitus tietosuojavaltuutetulle (tietosuoja.fi)</li>
+      <li data-i18n="privacy.s3_li1">Palvelun tuottamiseen (compliance-analyysi, raporttien generointi)</li>
+      <li data-i18n="privacy.s3_li2">Tilauksen hallintaan (Stripe-maksupalvelu)</li>
+      <li data-i18n="privacy.s3_li3">Asiakaspalveluun</li>
     </ul>
-    <p>Pyyntöjä voi lähettää osoitteeseen <a href="mailto:tuki@complianceai.fi">tuki@complianceai.fi</a></p>
+    <p data-i18n="privacy.s3_note">Tietoja ei myydä eikä jaeta kolmansille osapuolille markkinointitarkoituksiin.</p>
 
-    <h2 style="margin:24px 0 8px">7. Evästeet</h2>
-    <p>Palvelu käyttää istuntoevästeitä kirjautumisen ylläpitämiseen. Evästeitä ei käytetä seurantaan tai markkinointiin.</p>
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s4_h2">4. Kolmannet osapuolet</h2>
+    <p data-i18n="privacy.s4_intro">Käytämme seuraavia alihankkijoita:</p>
+    <ul style="margin:8px 0 8px 20px">
+      <li data-i18n-html="privacy.s4_li1"><strong>Stripe</strong> — maksujen käsittely (Stripe Inc., USA, EU–USA Data Privacy Framework)</li>
+      <li data-i18n-html="privacy.s4_li2"><strong>Render</strong> — palvelimen hosting (Render Services Inc., USA)</li>
+    </ul>
+
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s5_h2">5. Tietojen säilytysaika</h2>
+    <p data-i18n="privacy.s5_p">Henkilötiedot säilytetään niin kauan kuin tili on aktiivinen. Tilin poistamisen jälkeen tiedot poistetaan 30 päivän kuluessa. Voit pyytää tietojesi poistamista milloin tahansa sähköpostilla.</p>
+
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s6_h2">6. Rekisteröidyn oikeudet</h2>
+    <p data-i18n="privacy.s6_intro">Sinulla on oikeus:</p>
+    <ul style="margin:8px 0 8px 20px">
+      <li data-i18n="privacy.s6_li1">Tarkastaa mitä tietoja sinusta on tallennettu</li>
+      <li data-i18n="privacy.s6_li2">Pyytää tietojen korjaamista tai poistamista</li>
+      <li data-i18n="privacy.s6_li3">Siirtää tietosi toiseen palveluun (tietojen siirrettävyys)</li>
+      <li data-i18n="privacy.s6_li4">Tehdä valitus tietosuojavaltuutetulle (tietosuoja.fi)</li>
+    </ul>
+    <p data-i18n-html="privacy.s6_contact">Pyyntöjä voi lähettää osoitteeseen <a href="mailto:tuki@complianceai.fi">tuki@complianceai.fi</a></p>
+
+    <h2 style="margin:24px 0 8px" data-i18n="privacy.s7_h2">7. Evästeet</h2>
+    <p data-i18n="privacy.s7_p">Palvelu käyttää istuntoevästeitä kirjautumisen ylläpitämiseen. Evästeitä ei käytetä seurantaan tai markkinointiin.</p>
   </div>
-  <p style="margin-top:16px"><a href="/" class="btn btn-ghost">← Takaisin etusivulle</a></p>
+  <p style="margin-top:16px"><a href="/" class="btn btn-ghost" data-i18n="privacy.back">← Takaisin etusivulle</a></p>
 </div>
 {% endblock %}

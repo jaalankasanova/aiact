@@ -9,24 +9,24 @@
         <p>{{ jarjestelma.kuvaus or "" }}</p>
       </div>
       <div class="riski-iso-badge riski-{{ riski.taso }}">
-        {% if riski.taso == "korkea" %}KORKEA RISKI
-        {% elif riski.taso == "kielletty" %}KIELLETTY
-        {% elif riski.taso == "rajattu" %}RAJATTU RISKI
-        {% else %}MINIMIRISKI{% endif %}
+        {% if riski.taso == "korkea" %}<span data-i18n="risk.high">KORKEA RISKI</span>
+        {% elif riski.taso == "kielletty" %}<span data-i18n="risk.prohibited">KIELLETTY</span>
+        {% elif riski.taso == "rajattu" %}<span data-i18n="risk.limited">RAJATTU RISKI</span>
+        {% else %}<span data-i18n="risk.minimal">MINIMIRISKI</span>{% endif %}
       </div>
     </div>
   </div>
 
   <div class="tulos-body">
     <div class="tulos-selitys">
-      <h2>Riskiluokitus</h2>
+      <h2 data-i18n="tulos.risk_h2">Riskiluokitus</h2>
       <p>{{ riski.selitys }}</p>
-      <p><strong>{{ paivat_jaljella }} päivää</strong> deadlineen (2.8.2026)</p>
+      <p><strong>{{ paivat_jaljella }} </strong><span data-i18n="tulos.days_to_deadline">päivää</span> deadlineen (2.8.2026)</p>
     </div>
 
     {% if riski.puuttuvat %}
     <div class="puuttuvat-osio">
-      <h2>Puuttuvat vaatimukset ({{ riski.puuttuvat|length }})</h2>
+      <h2><span data-i18n="tulos.missing_h2">Puuttuvat vaatimukset</span> ({{ riski.puuttuvat|length }})</h2>
       <div class="puuttuvat-lista">
         {% for v in riski.puuttuvat %}
         {% set tp = toimenpiteet.get(v.id, {}) %}
@@ -39,7 +39,7 @@
           <p>{{ v.kuvaus }}</p>
           {% if tp %}
           <div class="toimenpide-box">
-            <div class="toimenpide-otsikko">Mitä tehdä:</div>
+            <div class="toimenpide-otsikko" data-i18n="tulos.what_to_do">Mitä tehdä:</div>
             <p>{{ tp.ohje }}</p>
             <div class="toimenpide-meta">
               <span>⏱ {{ tp.aika }}</span>
@@ -47,21 +47,21 @@
             </div>
           </div>
           {% endif %}
-          <p class="puuttuva-deadline">Deadline: {{ v.deadline }}</p>
+          <p class="puuttuva-deadline"><span data-i18n="tulos.deadline_label">Deadline:</span> {{ v.deadline }}</p>
         </div>
         {% endfor %}
       </div>
     </div>
     {% else %}
     <div class="kaikki-ok">
-      <h2>✓ Kaikki vaatimukset täytetty</h2>
-      <p>Hyvää työtä! Järjestelmänne on dokumentoitu EU AI Act -vaatimusten mukaisesti.</p>
+      <h2 data-i18n="tulos.all_ok_h2">✓ Kaikki vaatimukset täytetty</h2>
+      <p data-i18n="tulos.all_ok_p">Hyvää työtä! Järjestelmänne on dokumentoitu EU AI Act -vaatimusten mukaisesti.</p>
       <div class="seuraava-askel">
-        <div class="seuraava-otsikko">Seuraavat askeleet:</div>
+        <div class="seuraava-otsikko" data-i18n="tulos.next_steps_title">Seuraavat askeleet:</div>
         <ul>
-          <li>Lataa PDF-raportti ja arkistoi se viranomaisdokumentaatiota varten</li>
-          <li>Tarkista tilanne uudelleen 6 kuukauden kuluttua tai aina kun järjestelmään tehdään muutoksia</li>
-          <li>Kartoita muut yrityksenne AI-järjestelmät</li>
+          <li data-i18n="tulos.next_li1">Lataa PDF-raportti ja arkistoi se viranomaisdokumentaatiota varten</li>
+          <li data-i18n="tulos.next_li2">Tarkista tilanne uudelleen 6 kuukauden kuluttua tai aina kun järjestelmään tehdään muutoksia</li>
+          <li data-i18n="tulos.next_li3">Kartoita muut yrityksenne AI-järjestelmät</li>
         </ul>
       </div>
     </div>
@@ -69,10 +69,10 @@
 
     {% if riski.vaaditut %}
     <div class="vaaditut-osio">
-      <h2>Kaikki vaatimukset</h2>
+      <h2 data-i18n="tulos.all_req_h2">Kaikki vaatimukset</h2>
       <table class="vaatimus-taulukko">
         <thead>
-          <tr><th>Vaatimus</th><th>Artikkeli</th><th>Prioriteetti</th><th>Tila</th><th>Ohje</th></tr>
+          <tr><th data-i18n="tulos.th_req">Vaatimus</th><th data-i18n="tulos.th_art">Artikkeli</th><th data-i18n="tulos.th_prio">Prioriteetti</th><th data-i18n="tulos.th_status">Tila</th><th data-i18n="tulos.th_guide">Ohje</th></tr>
         </thead>
         <tbody>
           {% for v in riski.vaaditut %}
@@ -85,7 +85,7 @@
             </td>
             <td>{{ v.artikkeli }}</td>
             <td><span class="req-prioriteetti prio-{{ v.prioriteetti }}">{{ v.prioriteetti }}</span></td>
-            <td>{% if tehty %}<span style="color:#059669;font-weight:600;">✓ Hoidettu</span>{% else %}<span style="color:#dc2626;font-weight:600;">✗ Puuttuu</span>{% endif %}</td>
+            <td>{% if tehty %}<span style="color:#059669;font-weight:600;" data-i18n="tulos.status_done">✓ Hoidettu</span>{% else %}<span style="color:#dc2626;font-weight:600;" data-i18n="tulos.status_missing">✗ Puuttuu</span>{% endif %}</td>
             <td>
               {% if not tehty and tp %}
               <small style="color:#4b5563;">{{ tp.ohje[:120] }}{% if tp.ohje|length > 120 %}…{% endif %}</small><br>
@@ -105,15 +105,15 @@
     {% endif %}
 
     <div class="tulos-toiminnot">
-      <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">← Takaisin dashboardille</a>
-      <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-outline">+ Kartoita seuraava järjestelmä</a>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-ghost" data-i18n="tulos.back_dashboard">← Takaisin dashboardille</a>
+      <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-outline" data-i18n="tulos.next_system">+ Kartoita seuraava järjestelmä</a>
       {% if tilaaja %}
-      <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" target="_blank" class="btn btn-primary">Avaa PDF-raportti</a>
+      <a href="{{ url_for('pdf_raportti', jid=jarjestelma.id) }}" target="_blank" class="btn btn-primary" data-i18n="tulos.open_pdf">Avaa PDF-raportti</a>
       {% else %}
-      <a href="{{ url_for('tilaus') }}" class="btn btn-primary">PDF-raportti — päivitä Pro</a>
+      <a href="{{ url_for('tilaus') }}" class="btn btn-primary" data-i18n="tulos.upgrade_pdf">PDF-raportti — päivitä Pro</a>
       {% endif %}
     </div>
-    <p class="disclaimer">Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.</p>
+    <p class="disclaimer" data-i18n="tulos.disclaimer">Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.</p>
   </div>
 </div>
 {% endblock %}

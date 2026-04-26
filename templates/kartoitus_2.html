@@ -3,15 +3,15 @@
 {% block content %}
 <div class="kartoitus-page">
   <div class="kartoitus-progress">
-    <div class="progress-step done">1. Perustiedot</div>
-    <div class="progress-step active">2. Ominaisuudet</div>
-    <div class="progress-step">3. Nykytila</div>
+    <div class="progress-step done" data-i18n="k.step1">1. Perustiedot</div>
+    <div class="progress-step active" data-i18n="k.step2">2. Ominaisuudet</div>
+    <div class="progress-step" data-i18n="k.step3">3. Nykytila</div>
   </div>
 
   <div class="kartoitus-layout">
     <div class="kartoitus-main">
       <h1>{{ kartoitus.nimi }} — ominaisuudet</h1>
-      <p class="kartoitus-ohje">Valitse kaikki ominaisuudet jotka kuvaavat tätä järjestelmää. Nämä määrittävät riskiluokituksen.</p>
+      <p class="kartoitus-ohje" data-i18n="k2.ohje">Valitse kaikki ominaisuudet jotka kuvaavat tätä järjestelmää. Nämä määrittävät riskiluokituksen.</p>
 
       <form method="post" class="form-card">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -20,8 +20,8 @@
           <label class="checkbox-label">
             <input type="checkbox" name="autonominen" {% if kartoitus.get('autonominen') %}checked{% endif %}>
             <span>
-              <strong>Tekee automaattisia päätöksiä</strong><br>
-              <small>Järjestelmä tekee tai ehdottaa päätöksiä ilman, että ihminen tarkistaa jokaisen erikseen (esim. CV:n automaattinen hylkäys, luottopäätös)</small>
+              <strong data-i18n="k2.feat1_title">Tekee automaattisia päätöksiä</strong><br>
+              <small data-i18n="k2.feat1_desc">Järjestelmä tekee tai ehdottaa päätöksiä ilman, että ihminen tarkistaa jokaisen erikseen (esim. CV:n automaattinen hylkäys, luottopäätös)</small>
             </span>
           </label>
         </div>
@@ -30,8 +30,8 @@
           <label class="checkbox-label">
             <input type="checkbox" name="kohdistuu_henkiloihin" {% if kartoitus.get('kohdistuu_henkiloihin') %}checked{% endif %}>
             <span>
-              <strong>Kohdistuu suoraan luonnollisiin henkilöihin</strong><br>
-              <small>Järjestelmän päätökset tai arviot vaikuttavat suoraan ihmisten elämään (esim. rekrytointi, vakuutus, lainahakemus)</small>
+              <strong data-i18n="k2.feat2_title">Kohdistuu suoraan luonnollisiin henkilöihin</strong><br>
+              <small data-i18n="k2.feat2_desc">Järjestelmän päätökset tai arviot vaikuttavat suoraan ihmisten elämään (esim. rekrytointi, vakuutus, lainahakemus)</small>
             </span>
           </label>
         </div>
@@ -40,8 +40,8 @@
           <label class="checkbox-label">
             <input type="checkbox" name="biometria" {% if kartoitus.get('biometria') %}checked{% endif %}>
             <span>
-              <strong>Käsittelee biometrisiä tietoja</strong><br>
-              <small>Kasvojentunnistus, sormenjälki, äänianalyysi tai muu biometrinen tunnistaminen</small>
+              <strong data-i18n="k2.feat3_title">Käsittelee biometrisiä tietoja</strong><br>
+              <small data-i18n="k2.feat3_desc">Kasvojentunnistus, sormenjälki, äänianalyysi tai muu biometrinen tunnistaminen</small>
             </span>
           </label>
         </div>
@@ -50,8 +50,8 @@
           <label class="checkbox-label">
             <input type="checkbox" name="chatbot" {% if kartoitus.get('chatbot') %}checked{% endif %}>
             <span>
-              <strong>Chatbot tai AI-assistentti</strong><br>
-              <small>Järjestelmä kommunikoi suoraan ihmisten kanssa luonnollisella kielellä</small>
+              <strong data-i18n="k2.feat4_title">Chatbot tai AI-assistentti</strong><br>
+              <small data-i18n="k2.feat4_desc">Järjestelmä kommunikoi suoraan ihmisten kanssa luonnollisella kielellä</small>
             </span>
           </label>
         </div>
@@ -60,8 +60,8 @@
           <label class="checkbox-label">
             <input type="checkbox" name="generoi_sisaltoa" {% if kartoitus.get('generoi_sisaltoa') %}checked{% endif %}>
             <span>
-              <strong>Generoi tekstiä, kuvia tai muuta sisältöä</strong><br>
-              <small>Järjestelmä tuottaa tekoälyavusteista sisältöä joka jaetaan ulospäin</small>
+              <strong data-i18n="k2.feat5_title">Generoi tekstiä, kuvia tai muuta sisältöä</strong><br>
+              <small data-i18n="k2.feat5_desc">Järjestelmä tuottaa tekoälyavusteista sisältöä joka jaetaan ulospäin</small>
             </span>
           </label>
         </div>
@@ -70,34 +70,34 @@
           <label class="checkbox-label">
             <input type="checkbox" name="kielletty" {% if kartoitus.get('kielletty') %}checked{% endif %}>
             <span>
-              <strong>Sosiaalinen pisteytys tai manipulointi</strong><br>
-              <small>Järjestelmä pisteyttää ihmisiä käyttäytymisen perusteella tai vaikuttaa alitajuisesti päätöksiin (EU AI Act Art. 5 kielletty)</small>
+              <strong data-i18n="k2.feat6_title">Sosiaalinen pisteytys tai manipulointi</strong><br>
+              <small data-i18n="k2.feat6_desc">Järjestelmä pisteyttää ihmisiä käyttäytymisen perusteella tai vaikuttaa alitajuisesti päätöksiin (EU AI Act Art. 5 kielletty)</small>
             </span>
           </label>
         </div>
 
         <div class="form-actions">
-          <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-ghost">← Takaisin</a>
-          <button type="submit" class="btn btn-primary">Seuraava →</button>
+          <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-ghost" data-i18n="k.back">← Takaisin</a>
+          <button type="submit" class="btn btn-primary" data-i18n="k.next">Seuraava →</button>
         </div>
       </form>
     </div>
 
     <aside class="kartoitus-ohje-paneeli">
       <div class="ohje-kortti">
-        <div class="ohje-otsikko">💡 Miten vastata?</div>
-        <p>Valitse <strong>kaikki</strong> vaihtoehdot jotka sopivat järjestelmään. Jos olet epävarma, valitse mieluummin kyllä — analyysi on konservatiivinen ja parempi yliarvioida kuin aliarvioida.</p>
+        <div class="ohje-otsikko" data-i18n="k2.tip1_title">💡 Miten vastata?</div>
+        <p data-i18n-html="k2.tip1_body">Valitse <strong>kaikki</strong> vaihtoehdot jotka sopivat järjestelmään. Jos olet epävarma, valitse mieluummin kyllä — analyysi on konservatiivinen ja parempi yliarvioida kuin aliarvioida.</p>
       </div>
       <div class="ohje-kortti">
-        <div class="ohje-otsikko">⚠️ Korkean riskin merkit</div>
-        <p>Jos järjestelmä <strong>tekee automaattisia päätöksiä</strong> ja <strong>kohdistuu henkilöihin</strong>, se kuuluu todennäköisesti korkean riskin luokkaan — erityisesti rekrytoinnissa, luotottamisessa tai terveydenhuollossa.</p>
+        <div class="ohje-otsikko" data-i18n="k2.tip2_title">⚠️ Korkean riskin merkit</div>
+        <p data-i18n-html="k2.tip2_body">Jos järjestelmä <strong>tekee automaattisia päätöksiä</strong> ja <strong>kohdistuu henkilöihin</strong>, se kuuluu todennäköisesti korkean riskin luokkaan — erityisesti rekrytoinnissa, luotottamisessa tai terveydenhuollossa.</p>
       </div>
       <div class="ohje-kortti ohje-kortti-info">
-        <div class="ohje-otsikko">📌 Esimerkkejä</div>
+        <div class="ohje-otsikko" data-i18n="k2.tip3_title">📌 Esimerkkejä</div>
         <ul class="ohje-lista">
-          <li><strong>ChatGPT sisäisessä käytössä</strong> → yleensä vain "generoi sisältöä"</li>
-          <li><strong>Rekrytointibotti</strong> → autonominen + kohdistuu henkilöihin</li>
-          <li><strong>Verkkosivun chatbot</strong> → chatbot + mahdollisesti generoi sisältöä</li>
+          <li data-i18n-html="k2.tip3_ex1"><strong>ChatGPT sisäisessä käytössä</strong> → yleensä vain "generoi sisältöä"</li>
+          <li data-i18n-html="k2.tip3_ex2"><strong>Rekrytointibotti</strong> → autonominen + kohdistuu henkilöihin</li>
+          <li data-i18n-html="k2.tip3_ex3"><strong>Verkkosivun chatbot</strong> → chatbot + mahdollisesti generoi sisältöä</li>
         </ul>
       </div>
     </aside>
