@@ -269,7 +269,9 @@ function applyLang(lang) {
       if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
         el.placeholder = t[key];
       } else {
-        el.textContent = t[key];
+        let val = t[key];
+        if (el.dataset.days) val = val.replace('{n}', el.dataset.days);
+        el.textContent = val;
       }
     }
   });
