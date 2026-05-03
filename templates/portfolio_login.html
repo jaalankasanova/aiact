@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>—</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Mono', monospace;
+  background: #0f0f0d;
+  color: #f0ede8;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+.box {
+  width: min(360px, 90vw);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: up .4s ease;
+}
+@keyframes up { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #e8a020;
+  margin-bottom: 4px;
+}
+label {
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #6a6860;
+  display: block;
+  margin-bottom: 8px;
+}
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  background: #191917;
+  border: 1px solid #2a2a27;
+  border-radius: 8px;
+  color: #f0ede8;
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  letter-spacing: .1em;
+  outline: none;
+  transition: border-color .15s;
+}
+input[type="password"]:focus { border-color: #e8a020; }
+input[type="password"].virhe { border-color: #c44d1a; animation: shake .3s ease; }
+@keyframes shake {
+  0%,100% { transform:translateX(0); }
+  25%      { transform:translateX(-6px); }
+  75%      { transform:translateX(6px); }
+}
+button {
+  width: 100%;
+  padding: 12px;
+  background: #e8a020;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: .06em;
+  transition: background .15s;
+}
+button:hover { background: #c98a10; }
+.err-msg {
+  font-size: 12px;
+  color: #c44d1a;
+  letter-spacing: .04em;
+}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="dot"></div>
+  <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Salasana</label>
+    <input
+      type="password"
+      name="pw"
+      class="{{ 'virhe' if virhe else '' }}"
+      autofocus
+      autocomplete="current-password"
+      placeholder="••••••••"
+    >
+    {% if virhe %}
+      <p class="err-msg" style="margin-top:8px">Väärä salasana.</p>
+    {% endif %}
+    <button type="submit" style="margin-top:16px">Jatka →</button>
+  </form>
+</div>
+</body>
+</html>

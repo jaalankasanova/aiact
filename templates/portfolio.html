@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Portfolio — Niko</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Mono', monospace;
+  background: #0f0f0d;
+  color: #f0ede8;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+::selection { background: #e8a02030; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Tokens ── */
+:root {
+  --amber:      #e8a020;
+  --amber-dim:  #b87a10;
+  --bg:         #0f0f0d;
+  --bg-card:    #191917;
+  --bg-card2:   #1f1f1c;
+  --border:     #2a2a27;
+  --muted:      #6a6860;
+  --text:       #f0ede8;
+  --text-soft:  #b8b5b0;
+  --green:      #3d9e62;
+  --blue:       #3a7cb8;
+  --pad:        clamp(20px, 5vw, 48px);
+}
+
+/* ── Layout ── */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
+
+/* ── Keyframes ── */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+@keyframes pulse    { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+@keyframes spin     { to { transform:rotate(360deg); } }
+@keyframes float    { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
+
+/* ── Hero ── */
+.hero {
+  padding: calc(var(--pad) * 2) 0 var(--pad);
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp .6s ease;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 18px;
+}
+.hero-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(42px, 8vw, 80px);
+  font-weight: 400;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.hero-title {
+  font-size: clamp(14px, 2.5vw, 18px);
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 28px;
+}
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.hero-meta a, .hero-meta span {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+.hero-meta a:hover { color: var(--amber); }
+.hero-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Section ── */
+.section { padding: var(--pad) 0; }
+.section-label {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Software project grid ── */
+.sw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}
+.sw-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .2s, transform .2s;
+}
+.sw-card:hover {
+  border-color: #3a3a37;
+  transform: translateY(-2px);
+}
+.sw-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.sw-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.sw-card-status {
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: #1a2a1e;
+  color: var(--green);
+  border: 1px solid #2a4a2e;
+}
+.sw-card-status.wip {
+  background: #2a2010;
+  color: var(--amber);
+  border-color: #4a3a10;
+}
+.sw-card h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.25;
+}
+.sw-card p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.65;
+  flex: 1;
+}
+.sw-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-card2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  letter-spacing: .04em;
+}
+
+/* ── Hardware / 3D project grid ── */
+.hw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  gap: 20px;
+}
+.hw-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.hw-card:hover { border-color: #3a3a37; }
+
+/* model-viewer container */
+.model-wrap {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  background: #141412;
+  border-bottom: 1px solid var(--border);
+}
+model-viewer {
+  width: 100%;
+  height: 100%;
+  --progress-bar-color: var(--amber);
+  --progress-bar-height: 2px;
+}
+.model-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+}
+.model-placeholder-icon {
+  font-size: 36px;
+  animation: float 3s ease-in-out infinite;
+  opacity: .4;
+}
+.model-placeholder p {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .4;
+}
+.model-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #0f0f0d99;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  backdrop-filter: blur(4px);
+}
+.model-badge.live {
+  background: #0a1a0e99;
+  color: var(--green);
+  border-color: #2a4a2e;
+}
+
+.hw-info { padding: 20px; }
+.hw-info h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.hw-info p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+/* ── Skills ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: 12px;
+}
+.skill-group h4 {
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.skill-item {
+  font-size: 13px;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.skill-item::before {
+  content: '';
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.footer {
+  padding: var(--pad) 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-left {
+  font-size: 12px;
+  color: var(--muted);
+}
+.footer-right {
+  display: flex;
+  gap: 16px;
+}
+.footer-right a {
+  font-size: 12px;
+  color: var(--muted);
+  transition: color .15s;
+}
+.footer-right a:hover { color: var(--amber); }
+
+/* ── Divider ── */
+hr.section-div {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Animations on scroll ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-eyebrow">Software &amp; Hardware Engineer · Helsinki</div>
+    <h1 class="hero-name">Niko<br><em style="color:var(--text-soft)">Nika</em></h1>
+    <p class="hero-title">
+      Rakennan ohjelmistoja, autonomisia ajoneuvoja ja tekoälysovelluksia.
+      Full-stack kehityksestä sulautettuihin järjestelmiin ja 3D-suunnitteluun.
+    </p>
+    <div class="hero-meta">
+      <span><span class="hero-dot"></span> Saatavilla</span>
+      <a href="mailto:nikonika@metropolia.fi">nikonika@metropolia.fi</a>
+      <a href="https://github.com/jaalankasanova" target="_blank" rel="noopener">GitHub</a>
+      <span>Metropolia AMK</span>
+    </div>
+  </section>
+
+  <!-- ── Ohjelmistoprojektit ───────────────────────────────────────────────── -->
+  <section class="section reveal">
+    <div class="section-label">Ohjelmistoprojektit</div>
+    <div class="sw-grid">
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">🤖</div>
+          <span class="sw-card-status">Live</span>
+        </div>
+        <h3>Huutokauppa­generaattori</h3>
+        <p>Claude AI -pohjainen suomenkielisten myynti-ilmoitusten generaattori. Streaming-vastaukset, JSON-parsinta, Huutokaupat.com-tyylinen UI.</p>
+        <div class="sw-tags">
+          <span class="tag">React</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">Streaming SSE</span>
+          <span class="tag">Vite</span>
+        </div>
+      </div>
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">🧾</div>
+          <span class="sw-card-status">Live</span>
+        </div>
+        <h3>TositeAI</h3>
+        <p>Kuittien automaattinen AI-käsittely. Claude Vision tunnistaa summat, päivämäärät ja kategoriat. Ilmainen 15 kuittiä/kk, Pro 12€/kk.</p>
+        <div class="sw-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">Claude Vision</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">SQLite</span>
+        </div>
+      </div>
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">📋</div>
+          <span class="sw-card-status">Live</span>
+        </div>
+        <h3>EU AI Act Compliance</h3>
+        <p>SaaS-työkalu pk-yrityksille EU AI Act -vaatimusten kartoitukseen. Riskiluokitus, gap-analyysi ja PDF-raportti. Pro 49€/kk.</p>
+        <div class="sw-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">📄</div>
+          <span class="sw-card-status">Live</span>
+        </div>
+        <h3>Laskurit</h3>
+        <p>Laskutusgeneraattori freelancereille ja yrittäjille. PDF-laskut fpdf2:lla, tilausmuistutukset sähköpostilla. 3 laskua/kk ilmaiseksi.</p>
+        <div class="sw-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">fpdf2</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">SMTP</span>
+        </div>
+      </div>
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">👥</div>
+          <span class="sw-card-status">Live</span>
+        </div>
+        <h3>Rekrytointipalvelu</h3>
+        <p>Rekrytointipalvelu palkkatyöntekijöille, freelancereille ja yrittäjille. Stripe-maksumuuri, hakijatyypin mukaan räätälöity haku.</p>
+        <div class="sw-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">Stripe</span>
+          <span class="tag">GitHub</span>
+        </div>
+      </div>
+
+      <div class="sw-card">
+        <div class="sw-card-top">
+          <div class="sw-card-icon">📡</div>
+          <span class="sw-card-status wip">Tutkimus</span>
+        </div>
+        <h3>Fraktaaliantenni</h3>
+        <p>Atmosfäärisen sähkökentän keräys fraktaaliantennilla. 2D Laplace-simulaatio optimoi geometrian: 15°/0.65/6 tasoa. Blender-visualisointi.</p>
+        <div class="sw-tags">
+          <span class="tag">Python</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">Blender</span>
+          <span class="tag">Laplace-sim</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Laitteistoprojektit ───────────────────────────────────────────────── -->
+  <section class="section reveal">
+    <div class="section-label">Laitteisto &amp; 3D-suunnittelu</div>
+    <div class="hw-grid">
+
+      <!-- LATTICE-1 -->
+      <div class="hw-card">
+        <div class="model-wrap">
+          <model-viewer
+            id="mv-lattice"
+            src="{{ url_for('static', filename='models/lattice1.glb') }}"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1000"
+            rotation-per-second="20deg"
+            shadow-intensity="0.8"
+            exposure="0.9"
+            environment-image="neutral"
+            style="background:#141412"
+            aria-label="LATTICE-1 sähköauto 3D-malli"
+          ></model-viewer>
+          <div class="model-placeholder" id="ph-lattice">
+            <div class="model-placeholder-icon">🚗</div>
+            <p>GLB tulossa · Fusion 360</p>
+          </div>
+          <span class="model-badge" id="badge-lattice">Fusion 360</span>
+        </div>
+        <div class="hw-info">
+          <h3>LATTICE-1</h3>
+          <p>Täysmetallinen 3D-tulostettu sähköurheiluauto. Metalliristikkorakenne (lattice), integroitu akkupaketti, Python-skeletonin generoima runko.</p>
+          <div class="sw-tags">
+            <span class="tag">Fusion 360</span>
+            <span class="tag">Python</span>
+            <span class="tag">Metal 3D print</span>
+            <span class="tag">EV</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turbofan -->
+      <div class="hw-card">
+        <div class="model-wrap">
+          <model-viewer
+            id="mv-turbine"
+            src="{{ url_for('static', filename='models/turbine.glb') }}"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1000"
+            rotation-per-second="30deg"
+            shadow-intensity="0.8"
+            exposure="1.0"
+            environment-image="neutral"
+            style="background:#141412"
+            aria-label="Turbofan-moottori 3D-malli"
+          ></model-viewer>
+          <div class="model-placeholder" id="ph-turbine">
+            <div class="model-placeholder-icon">✈️</div>
+            <p>GLB tulossa · Fusion 360</p>
+          </div>
+          <span class="model-badge" id="badge-turbine">Fusion 360</span>
+        </div>
+        <div class="hw-info">
+          <h3>Turbofan-moottori</h3>
+          <p>Parametrinen turbofan-moottori Python-generoinnilla Fusion 360 -APIin kautta. Roottori, staattori, tiivisteet ja ohivirtauskanava täysimallinnettuna.</p>
+          <div class="sw-tags">
+            <span class="tag">Fusion 360</span>
+            <span class="tag">Python API</span>
+            <span class="tag">STL</span>
+            <span class="tag">CFD-valmis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interceptor Drone -->
+      <div class="hw-card">
+        <div class="model-wrap">
+          <model-viewer
+            id="mv-interceptor"
+            src="{{ url_for('static', filename='models/interceptor.glb') }}"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1000"
+            rotation-per-second="15deg"
+            shadow-intensity="0.8"
+            exposure="0.9"
+            environment-image="neutral"
+            style="background:#141412"
+            aria-label="Interceptor drone 3D-malli"
+          ></model-viewer>
+          <div class="model-placeholder" id="ph-interceptor">
+            <div class="model-placeholder-icon">🦅</div>
+            <p>GLB tulossa · Blender</p>
+          </div>
+          <span class="model-badge" id="badge-interceptor">Blender</span>
+        </div>
+        <div class="hw-info">
+          <h3>Interceptor Drone</h3>
+          <p>Tail-sitter flying wing Shahed-interceptointiin. RPi + OV9281 kamera + 16mm linssi, GPS-esiohjaus, CV-pipeline 81ms latenssilla, handoff ~20-30m.</p>
+          <div class="sw-tags">
+            <span class="tag">Blender</span>
+            <span class="tag">RPi</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">GPS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sting Drone -->
+      <div class="hw-card">
+        <div class="model-wrap">
+          <model-viewer
+            id="mv-sting"
+            src="{{ url_for('static', filename='models/sting.glb') }}"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1000"
+            rotation-per-second="15deg"
+            shadow-intensity="0.8"
+            exposure="0.9"
+            environment-image="neutral"
+            style="background:#141412"
+            aria-label="Sting drone 3D-malli"
+          ></model-viewer>
+          <div class="model-placeholder" id="ph-sting">
+            <div class="model-placeholder-icon">🚁</div>
+            <p>GLB tulossa · Fusion 360 + Blender</p>
+          </div>
+          <span class="model-badge" id="badge-sting">Fusion 360</span>
+        </div>
+        <div class="hw-info">
+          <h3>Sting Drone</h3>
+          <p>Quad VTOL torpedorunko. Matek H743-SLIM + RPi Zero 2W + Google Coral TPU. Komponenttikiinnikkeet Fusion 360:ssa, autonominen navigointi.</p>
+          <div class="sw-tags">
+            <span class="tag">Fusion 360</span>
+            <span class="tag">Blender</span>
+            <span class="tag">RPi Zero 2W</span>
+            <span class="tag">Coral TPU</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Taidot ─────────────────────────────────────────────────────────────── -->
+  <section class="section reveal">
+    <div class="section-label">Teknologiat</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Backend</h4>
+        <div class="skill-list">
+          <span class="skill-item">Python / Flask</span>
+          <span class="skill-item">PostgreSQL / SQLite</span>
+          <span class="skill-item">REST API</span>
+          <span class="skill-item">Stripe Payments</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Frontend</h4>
+        <div class="skill-list">
+          <span class="skill-item">React + Hooks</span>
+          <span class="skill-item">Vite</span>
+          <span class="skill-item">Vanilla JS / CSS</span>
+          <span class="skill-item">Responsive design</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>AI / ML</h4>
+        <div class="skill-list">
+          <span class="skill-item">Claude API (Anthropic)</span>
+          <span class="skill-item">Computer Vision</span>
+          <span class="skill-item">Google Coral TPU</span>
+          <span class="skill-item">OpenCV</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>3D / Laitteisto</h4>
+        <div class="skill-list">
+          <span class="skill-item">Fusion 360 + Python API</span>
+          <span class="skill-item">Blender</span>
+          <span class="skill-item">Raspberry Pi</span>
+          <span class="skill-item">Metal 3D printing</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>DevOps</h4>
+        <div class="skill-list">
+          <span class="skill-item">Git / GitHub</span>
+          <span class="skill-item">Render / cloud deploy</span>
+          <span class="skill-item">Linux</span>
+          <span class="skill-item">Docker (perusteet)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+  <footer class="footer reveal">
+    <span class="footer-left">Niko Nika · nikonika@metropolia.fi</span>
+    <div class="footer-right">
+      <a href="mailto:nikonika@metropolia.fi">Ota yhteyttä</a>
+      <a href="https://github.com/jaalankasanova" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ── Scroll reveal ──────────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── model-viewer: piilota placeholder kun malli latautuu ────────────────────
+const models = [
+  { mv: 'mv-lattice',      ph: 'ph-lattice',      badge: 'badge-lattice' },
+  { mv: 'mv-turbine',      ph: 'ph-turbine',       badge: 'badge-turbine' },
+  { mv: 'mv-interceptor',  ph: 'ph-interceptor',   badge: 'badge-interceptor' },
+  { mv: 'mv-sting',        ph: 'ph-sting',         badge: 'badge-sting' },
+];
+
+models.forEach(({ mv, ph, badge }) => {
+  const viewer = document.getElementById(mv);
+  const placeholder = document.getElementById(ph);
+  const badgeEl = document.getElementById(badge);
+  if (!viewer) return;
+
+  // Model loaded successfully → hide placeholder
+  viewer.addEventListener('load', () => {
+    placeholder.style.display = 'none';
+    badgeEl.classList.add('live');
+    badgeEl.textContent = '3D · Pyöritä';
+  });
+
+  // Model failed (file not found yet) → show placeholder, hide broken viewer UI
+  viewer.addEventListener('error', () => {
+    viewer.style.opacity = '0';
+    viewer.style.pointerEvents = 'none';
+    placeholder.style.display = 'flex';
+  });
+});
+</script>
+</body>
+</html>

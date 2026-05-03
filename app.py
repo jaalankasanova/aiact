@@ -7,6 +7,9 @@ import psycopg2.extras
 import os
 import json
 import uuid
+import secrets
+import smtplib
+from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
@@ -55,6 +58,12 @@ STRIPE_WEBHOOK_SECRET  = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRICE_ID        = os.environ.get("STRIPE_PRICE_ID", "")
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", "")
+SMTP_PASS = os.environ.get("SMTP_PASS", "")
+EMAIL_FROM = os.environ.get("EMAIL_FROM", SMTP_USER)
+APP_URL    = os.environ.get("APP_URL", "https://aiact.onrender.com")
 
 
 # ── Tietokanta ─────────────────────────────────────────────────────────────────
@@ -130,6 +139,14 @@ def init_db():
             riski_data  TEXT,
             luotu       TIMESTAMP DEFAULT NOW(),
             FOREIGN KEY (kayttaja_id) REFERENCES kayttajat(id)
+        )
+        """)
+
+        db.execute("""
+        CREATE TABLE IF NOT EXISTS reset_tokenit (
+            token       TEXT PRIMARY KEY,
+            kayttaja_id TEXT NOT NULL,
+            vanhenee    TIMESTAMP NOT NULL
         )
         """)
 
@@ -614,6 +631,10 @@ def pdf_raportti(jid):
 def tietosuoja():
     return render_template("tietosuoja.html")
 
+@app.route("/niko")
+def portfolio():
+    return render_template("portfolio.html")
+
 @app.route("/opas")
 def opas():
     return render_template("opas.html")
@@ -694,6 +715,80 @@ def sitemap():
         xml += f"  <url><loc>{url}</loc><changefreq>{freq}</changefreq><priority>{prio}</priority></url>\n"
     xml += "</urlset>"
     return Response(xml, mimetype="application/xml")
+
+
+# ── Salasanan palautus ─────────────────────────────────────────────────────────
+
+def laheta_email(kohde: str, aihe: str, teksti: str):
+    if not SMTP_USER or not SMTP_PASS:
+        return
+    msg = MIMEText(teksti, "plain", "utf-8")
+    msg["Subject"] = aihe
+    msg["From"]    = EMAIL_FROM
+    msg["To"]      = kohde
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as srv:
+        srv.starttls()
+        srv.login(SMTP_USER, SMTP_PASS)
+        srv.sendmail(EMAIL_FROM, [kohde], msg.as_string())
+
+
+@app.route("/unohdin-salasanan", methods=["GET", "POST"])
+def unohdin_salasanan():
+    if request.method == "POST":
+        email = request.form.get("email", "").strip().lower()
+        with get_db() as db:
+            set_schema(db)
+            k = db.execute("SELECT id FROM kayttajat WHERE email=%s", [email]).fetchone()
+            if k:
+                token = secrets.token_urlsafe(32)
+                vanhenee = datetime.now() + timedelta(hours=1)
+                db.execute("DELETE FROM reset_tokenit WHERE kayttaja_id=%s", [k["id"]])
+                db.execute(
+                    "INSERT INTO reset_tokenit (token, kayttaja_id, vanhenee) VALUES (%s,%s,%s)",
+                    [token, k["id"], vanhenee]
+                )
+                linkki = f"{APP_URL}/uusi-salasana/{token}"
+                try:
+                    laheta_email(
+                        email,
+                        "ComplianceAI — salasanan palautus",
+                        f"Hei,\n\nKlikkaa linkkiä asettaaksesi uuden salasanan:\n{linkki}\n\nLinkki vanhenee 1 tunnin kuluttua.\n\nJos et pyytänyt tätä, voit jättää viestin huomiotta."
+                    )
+                except Exception:
+                    pass
+        # Näytetään aina sama viesti tietoturvan vuoksi
+        flash("Jos sähköpostiosoite on rekisteröity, lähetimme palautuslinkin.", "success")
+        return redirect(url_for("kirjaudu"))
+    return render_template("unohdin_salasanan.html")
+
+
+@app.route("/uusi-salasana/<token>", methods=["GET", "POST"])
+def uusi_salasana(token):
+    with get_db() as db:
+        set_schema(db)
+        r = db.execute(
+            "SELECT * FROM reset_tokenit WHERE token=%s AND vanhenee > NOW()",
+            [token]
+        ).fetchone()
+    if not r:
+        flash("Linkki on vanhentunut tai virheellinen.", "error")
+        return redirect(url_for("unohdin_salasanan"))
+
+    if request.method == "POST":
+        salasana = request.form.get("salasana", "")
+        if len(salasana) < 8:
+            flash("Salasanan täytyy olla vähintään 8 merkkiä.", "error")
+            return render_template("uusi_salasana.html", token=token)
+        with get_db() as db:
+            set_schema(db)
+            db.execute(
+                "UPDATE kayttajat SET salasana=%s WHERE id=%s",
+                [generate_password_hash(salasana), r["kayttaja_id"]]
+            )
+            db.execute("DELETE FROM reset_tokenit WHERE token=%s", [token])
+        flash("Salasana vaihdettu. Kirjaudu sisään.", "success")
+        return redirect(url_for("kirjaudu"))
+    return render_template("uusi_salasana.html", token=token)
 
 
 @app.errorhandler(404)
