@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Omat tilaukset — KuljetusHub{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+  <h1>Omat kuljetustilaukset</h1>
+  <a href="{{ url_for('kuljetus_uusi') }}" class="btn btn-primary">+ Uusi tilaus</a>
+</div>
+
+{% if not tilaukset %}
+  <div class="summary-card" style="text-align:center;padding:2rem;color:var(--text-muted,#888)">
+    Ei tilauksia vielä. <a href="{{ url_for('kuljetus_uusi') }}">Luo ensimmäinen →</a>
+  </div>
+{% endif %}
+
+<div class="jarjestelmat-lista">
+{% for t in tilaukset %}
+{% set tila_label = {'avoin':'Avoin','hyvaksytty':'Hyväksytty','toimitettu':'Toimitettu'}.get(t.tila, t.tila) %}
+{% set tila_cls = {'avoin':'korkea','hyvaksytty':'keskitaso','toimitettu':'matala'}.get(t.tila,'matala') %}
+<div class="jarjestelma-kortti riski-{{ tila_cls }}">
+  <div class="jarjestelma-info">
+    <div class="jarjestelma-nimi">
+      {{ t.nouto_osoite }} → {{ t.toimitus_osoite }}
+      <span class="riski-badge riski-{{ tila_cls }}" style="margin-left:.5rem;font-size:.75rem">{{ tila_label }}</span>
+    </div>
+    <div class="jarjestelma-kuvaus">{{ t.tuote_kuvaus }}
+      {% if t.paino %} · {{ t.paino }}{% endif %}
+      {% if t.deadline %} · Deadline: {{ t.deadline[:16] }}{% endif %}
+      {% if t.max_budjetti %} · Max {{ t.max_budjetti|int }}€{% endif %}
+    </div>
+    <div class="jarjestelma-pvm">{{ t.luotu | pvm }} · {{ t.tarjouksia }} tarjousta</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-end">
+    <a href="{{ url_for('kuljetus_tilaus', tilaus_id=t.id) }}" class="btn btn-sm btn-primary">
+      Näytä tarjoukset ({{ t.tarjouksia }})
+    </a>
+    {% if t.tila in ('hyvaksytty','toimitettu') %}
+      <a href="{{ url_for('kuljetus_lasku', tilaus_id=t.id) }}" class="btn btn-sm">📄 Lasku PDF</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

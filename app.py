@@ -150,6 +150,49 @@ def init_db():
         )
         """)
 
+        # ── Kuljetuspalvelu ────────────────────────────────────────────────────
+        db.execute("""
+        CREATE TABLE IF NOT EXISTS kuljetus_kuljettajat (
+            id       TEXT PRIMARY KEY,
+            nimi     TEXT NOT NULL,
+            yritys   TEXT,
+            puhelin  TEXT,
+            email    TEXT UNIQUE NOT NULL,
+            salasana TEXT NOT NULL,
+            luotu    TIMESTAMP DEFAULT NOW()
+        )
+        """)
+
+        db.execute("""
+        CREATE TABLE IF NOT EXISTS kuljetus_tilaukset (
+            id               TEXT PRIMARY KEY,
+            kayttaja_id      TEXT NOT NULL,
+            nouto_osoite     TEXT NOT NULL,
+            toimitus_osoite  TEXT NOT NULL,
+            tuote_kuvaus     TEXT NOT NULL,
+            paino            TEXT,
+            mitat            TEXT,
+            deadline         TEXT,
+            max_budjetti     REAL,
+            tila             TEXT DEFAULT 'avoin',
+            hyvaksytty_tarjous TEXT,
+            luotu            TIMESTAMP DEFAULT NOW()
+        )
+        """)
+
+        db.execute("""
+        CREATE TABLE IF NOT EXISTS kuljetus_tarjoukset (
+            id           TEXT PRIMARY KEY,
+            tilaus_id    TEXT NOT NULL,
+            kuljettaja_id TEXT NOT NULL,
+            hinta        REAL NOT NULL,
+            eta          TEXT,
+            viesti       TEXT,
+            tila         TEXT DEFAULT 'odottaa',
+            luotu        TIMESTAMP DEFAULT NOW()
+        )
+        """)
+
         db.execute("""
         CREATE TABLE IF NOT EXISTS kayntikerrat (
             id       SERIAL PRIMARY KEY,
@@ -800,6 +843,269 @@ def page_not_found(e):
 def rate_limit_exceeded(e):
     flash("Liian monta kirjautumisyritystä. Odota hetki.", "error")
     return render_template("kirjaudu.html"), 429
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# KULJETUSPALVELU
+# ══════════════════════════════════════════════════════════════════════════════
+
+def kuljettaja_session():
+    return session.get("kuljettaja_id")
+
+def asiakas_session():
+    return session.get("kayttaja_id")
+
+
+@app.route("/kuljetus")
+def kuljetus_index():
+    with get_db() as db:
+        set_schema(db)
+        avoimet = db.execute("""
+            SELECT t.*, k.yritys as yritys
+            FROM kuljetus_tilaukset t
+            JOIN kayttajat k ON k.id = t.kayttaja_id
+            WHERE t.tila = 'avoin'
+            ORDER BY t.luotu DESC LIMIT 10
+        """).fetchall()
+    return render_template("kuljetus_index.html", avoimet=avoimet)
+
+
+@app.route("/kuljetus/uusi", methods=["GET", "POST"])
+def kuljetus_uusi():
+    if not asiakas_session():
+        flash("Kirjaudu ensin sisään.", "error")
+        return redirect(url_for("kirjaudu"))
+    if request.method == "POST":
+        with get_db() as db:
+            set_schema(db)
+            db.execute("""
+                INSERT INTO kuljetus_tilaukset
+                (id, kayttaja_id, nouto_osoite, toimitus_osoite, tuote_kuvaus,
+                 paino, mitat, deadline, max_budjetti)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            """, [
+                str(uuid.uuid4()),
+                session["kayttaja_id"],
+                request.form["nouto_osoite"],
+                request.form["toimitus_osoite"],
+                request.form["tuote_kuvaus"],
+                request.form.get("paino") or None,
+                request.form.get("mitat") or None,
+                request.form.get("deadline") or None,
+                float(request.form["max_budjetti"]) if request.form.get("max_budjetti") else None,
+            ])
+        flash("Tilaus julkaistu. Kuljettajat voivat nyt jättää tarjouksia.", "success")
+        return redirect(url_for("kuljetus_omat"))
+    return render_template("kuljetus_uusi.html")
+
+
+@app.route("/kuljetus/omat")
+def kuljetus_omat():
+    if not asiakas_session():
+        return redirect(url_for("kirjaudu"))
+    with get_db() as db:
+        set_schema(db)
+        tilaukset = db.execute("""
+            SELECT t.*,
+                   (SELECT COUNT(*) FROM kuljetus_tarjoukset WHERE tilaus_id=t.id) as tarjouksia
+            FROM kuljetus_tilaukset t
+            WHERE t.kayttaja_id = %s
+            ORDER BY t.luotu DESC
+        """, [session["kayttaja_id"]]).fetchall()
+    return render_template("kuljetus_omat.html", tilaukset=tilaukset)
+
+
+@app.route("/kuljetus/tilaus/<tilaus_id>", methods=["GET"])
+def kuljetus_tilaus(tilaus_id):
+    with get_db() as db:
+        set_schema(db)
+        tilaus = db.execute("""
+            SELECT t.*, k.yritys as asiakas_yritys, k.email as asiakas_email
+            FROM kuljetus_tilaukset t JOIN kayttajat k ON k.id=t.kayttaja_id
+            WHERE t.id=%s
+        """, [tilaus_id]).fetchone()
+        if not tilaus:
+            flash("Tilausta ei löydy.", "error")
+            return redirect(url_for("kuljetus_index"))
+        tarjoukset = db.execute("""
+            SELECT tar.*, kj.nimi as kuljettaja_nimi, kj.yritys as kuljettaja_yritys,
+                   kj.puhelin as kuljettaja_puhelin
+            FROM kuljetus_tarjoukset tar
+            JOIN kuljetus_kuljettajat kj ON kj.id=tar.kuljettaja_id
+            WHERE tar.tilaus_id=%s ORDER BY tar.hinta ASC
+        """, [tilaus_id]).fetchall()
+        oma_tarjous = None
+        if kuljettaja_session():
+            oma_tarjous = db.execute(
+                "SELECT * FROM kuljetus_tarjoukset WHERE tilaus_id=%s AND kuljettaja_id=%s",
+                [tilaus_id, session["kuljettaja_id"]]
+            ).fetchone()
+    return render_template("kuljetus_tilaus.html",
+                           tilaus=tilaus, tarjoukset=tarjoukset, oma_tarjous=oma_tarjous)
+
+
+@app.route("/kuljetus/tilaus/<tilaus_id>/tarjous", methods=["POST"])
+def kuljetus_tarjous(tilaus_id):
+    if not kuljettaja_session():
+        flash("Kirjaudu kuljettajana ensin.", "error")
+        return redirect(url_for("kuljetus_kuljettaja_kirjaudu"))
+    with get_db() as db:
+        set_schema(db)
+        existing = db.execute(
+            "SELECT id FROM kuljetus_tarjoukset WHERE tilaus_id=%s AND kuljettaja_id=%s",
+            [tilaus_id, session["kuljettaja_id"]]
+        ).fetchone()
+        if existing:
+            flash("Olet jo jättänyt tarjouksen.", "warning")
+        else:
+            db.execute("""
+                INSERT INTO kuljetus_tarjoukset (id, tilaus_id, kuljettaja_id, hinta, eta, viesti)
+                VALUES (%s,%s,%s,%s,%s,%s)
+            """, [str(uuid.uuid4()), tilaus_id, session["kuljettaja_id"],
+                  float(request.form["hinta"]),
+                  request.form.get("eta") or None,
+                  request.form.get("viesti") or None])
+            flash("Tarjous lähetetty.", "success")
+    return redirect(url_for("kuljetus_tilaus", tilaus_id=tilaus_id))
+
+
+@app.route("/kuljetus/tilaus/<tilaus_id>/hyvaksy/<tarjous_id>", methods=["POST"])
+def kuljetus_hyvaksy(tilaus_id, tarjous_id):
+    if not asiakas_session():
+        return redirect(url_for("kirjaudu"))
+    with get_db() as db:
+        set_schema(db)
+        db.execute(
+            "UPDATE kuljetus_tilaukset SET tila='hyvaksytty', hyvaksytty_tarjous=%s WHERE id=%s AND kayttaja_id=%s",
+            [tarjous_id, tilaus_id, session["kayttaja_id"]]
+        )
+        db.execute("UPDATE kuljetus_tarjoukset SET tila='hyvaksytty' WHERE id=%s", [tarjous_id])
+        db.execute("UPDATE kuljetus_tarjoukset SET tila='hylatty' WHERE tilaus_id=%s AND id!=%s",
+                   [tilaus_id, tarjous_id])
+    flash("Tarjous hyväksytty!", "success")
+    return redirect(url_for("kuljetus_tilaus", tilaus_id=tilaus_id))
+
+
+@app.route("/kuljetus/tilaus/<tilaus_id>/toimitettu", methods=["POST"])
+def kuljetus_toimitettu(tilaus_id):
+    if not asiakas_session():
+        return redirect(url_for("kirjaudu"))
+    with get_db() as db:
+        set_schema(db)
+        db.execute("UPDATE kuljetus_tilaukset SET tila='toimitettu' WHERE id=%s AND kayttaja_id=%s",
+                   [tilaus_id, session["kayttaja_id"]])
+    flash("Tilaus merkitty toimitetuksi.", "success")
+    return redirect(url_for("kuljetus_tilaus", tilaus_id=tilaus_id))
+
+
+@app.route("/kuljetus/tilaus/<tilaus_id>/lasku")
+def kuljetus_lasku(tilaus_id):
+    if not asiakas_session():
+        return redirect(url_for("kirjaudu"))
+    with get_db() as db:
+        set_schema(db)
+        tilaus = db.execute("""
+            SELECT t.*, k.yritys as asiakas_yritys
+            FROM kuljetus_tilaukset t JOIN kayttajat k ON k.id=t.kayttaja_id
+            WHERE t.id=%s AND t.kayttaja_id=%s
+        """, [tilaus_id, session["kayttaja_id"]]).fetchone()
+        tarjous = None
+        if tilaus and tilaus["hyvaksytty_tarjous"]:
+            tarjous = db.execute("""
+                SELECT tar.*, kj.nimi, kj.yritys as kuljettaja_yritys, kj.puhelin
+                FROM kuljetus_tarjoukset tar JOIN kuljetus_kuljettajat kj ON kj.id=tar.kuljettaja_id
+                WHERE tar.id=%s
+            """, [tilaus["hyvaksytty_tarjous"]]).fetchone()
+    if not tilaus or not tarjous:
+        flash("Lasku ei saatavilla.", "error"); return redirect(url_for("kuljetus_omat"))
+    try:
+        from fpdf import FPDF
+        import io as _io
+        pdf = FPDF(); pdf.add_page()
+        pdf.set_font("Helvetica", "B", 16)
+        pdf.cell(0, 10, "LASKU", ln=True, align="C")
+        pdf.set_font("Helvetica", size=10)
+        pdf.ln(4)
+        pdf.cell(0, 6, f"Tilaus {tilaus_id[:8]}  |  {datetime.now().strftime('%d.%m.%Y')}", ln=True)
+        pdf.ln(4)
+        pdf.set_font("Helvetica", "B", 10); pdf.cell(0, 6, "Asiakas:", ln=True)
+        pdf.set_font("Helvetica", size=10); pdf.cell(0, 6, tilaus["asiakas_yritys"] or "", ln=True)
+        pdf.ln(3)
+        pdf.set_font("Helvetica", "B", 10); pdf.cell(0, 6, "Kuljetuksen tiedot:", ln=True)
+        pdf.set_font("Helvetica", size=10)
+        pdf.cell(0, 6, f"Nouto: {tilaus['nouto_osoite']}", ln=True)
+        pdf.cell(0, 6, f"Toimitus: {tilaus['toimitus_osoite']}", ln=True)
+        pdf.cell(0, 6, f"Tuote: {tilaus['tuote_kuvaus']}", ln=True)
+        if tilaus["paino"]: pdf.cell(0, 6, f"Paino: {tilaus['paino']}", ln=True)
+        if tilaus["deadline"]: pdf.cell(0, 6, f"Aikataulu: {tilaus['deadline'][:16]}", ln=True)
+        pdf.ln(4)
+        pdf.set_font("Helvetica", "B", 10); pdf.cell(0, 6, "Kuljettaja:", ln=True)
+        pdf.set_font("Helvetica", size=10)
+        pdf.cell(0, 6, f"{tarjous['kuljettaja_yritys'] or tarjous['nimi']}", ln=True)
+        if tarjous["puhelin"]: pdf.cell(0, 6, f"Puhelin: {tarjous['puhelin']}", ln=True)
+        pdf.ln(6)
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, f"Loppusumma: {tarjous['hinta']:.2f} EUR (+ ALV 25,5%)", ln=True)
+        pdf.set_font("Helvetica", size=10)
+        pdf.cell(0, 6, "Maksuehto: 14 pv netto", ln=True)
+        import io as _io2
+        buf = _io2.BytesIO(pdf.output())
+        buf.seek(0)
+        return send_file(buf, mimetype="application/pdf",
+                         download_name=f"lasku_{tilaus_id[:8]}.pdf")
+    except ImportError:
+        flash("fpdf2 ei ole asennettu.", "error")
+        return redirect(url_for("kuljetus_tilaus", tilaus_id=tilaus_id))
+
+
+# ── Kuljettaja-auth ────────────────────────────────────────────────────────────
+
+@app.route("/kuljetus/kuljettaja/rekisteroidy", methods=["GET", "POST"])
+def kuljetus_kuljettaja_rekisteroidy():
+    if request.method == "POST":
+        email = request.form["email"].strip().lower()
+        pw    = request.form["password"]
+        with get_db() as db:
+            set_schema(db)
+            try:
+                db.execute("""
+                    INSERT INTO kuljetus_kuljettajat (id, nimi, yritys, puhelin, email, salasana)
+                    VALUES (%s,%s,%s,%s,%s,%s)
+                """, [str(uuid.uuid4()),
+                      request.form["nimi"].strip(),
+                      request.form.get("yritys", "").strip() or None,
+                      request.form.get("puhelin", "").strip() or None,
+                      email,
+                      generate_password_hash(pw)])
+                flash("Rekisteröityminen onnistui. Kirjaudu sisään.", "success")
+                return redirect(url_for("kuljetus_kuljettaja_kirjaudu"))
+            except Exception:
+                flash("Sähköposti on jo käytössä.", "error")
+    return render_template("kuljetus_kuljettaja_rekisteroidy.html")
+
+
+@app.route("/kuljetus/kuljettaja/kirjaudu", methods=["GET", "POST"])
+def kuljetus_kuljettaja_kirjaudu():
+    if request.method == "POST":
+        email = request.form["email"].strip().lower()
+        with get_db() as db:
+            set_schema(db)
+            kj = db.execute(
+                "SELECT * FROM kuljetus_kuljettajat WHERE email=%s", [email]
+            ).fetchone()
+        if kj and check_password_hash(kj["salasana"], request.form["password"]):
+            session["kuljettaja_id"]   = kj["id"]
+            session["kuljettaja_nimi"] = kj["nimi"]
+            return redirect(url_for("kuljetus_index"))
+        flash("Väärä sähköposti tai salasana.", "error")
+    return render_template("kuljetus_kuljettaja_kirjaudu.html")
+
+
+@app.route("/kuljetus/kuljettaja/ulos")
+def kuljetus_kuljettaja_ulos():
+    session.pop("kuljettaja_id", None)
+    session.pop("kuljettaja_nimi", None)
+    return redirect(url_for("kuljetus_index"))
 
 
 # ── Käynnistys ─────────────────────────────────────────────────────────────────

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Kirjaudu kuljettajana — KuljetusHub{% endblock %}
+{% block content %}
+<div style="max-width:400px;margin:0 auto">
+  <h1>Kirjaudu kuljettajana</h1>
+  <form method="POST" style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+      <label class="form-label">Sähköposti</label>
+      <input type="email" name="email" class="form-input" required>
+    </div>
+    <div>
+      <label class="form-label">Salasana</label>
+      <input type="password" name="password" class="form-input" required>
+    </div>
+    <button class="btn btn-primary" style="margin-top:.5rem">Kirjaudu</button>
+  </form>
+  <p style="margin-top:1rem;text-align:center;font-size:.9rem">
+    Ei tiliä? <a href="{{ url_for('kuljetus_kuljettaja_rekisteroidy') }}">Rekisteröidy kuljettajaksi</a>
+  </p>
+</div>
+{% endblock %}

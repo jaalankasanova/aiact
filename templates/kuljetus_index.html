@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}KuljetusHub — B2B kuljetusmarkkinapaikka{% endblock %}
+{% block content %}
+
+<div class="hero" style="text-align:center;padding:3rem 1rem 2rem">
+  <h1 style="font-size:2.2rem;margin-bottom:.5rem">🚛 KuljetusHub</h1>
+  <p style="font-size:1.1rem;color:var(--text-muted,#666);max-width:560px;margin:0 auto 2rem">
+    B2B kuljetusmarkkinapaikka — tilaa kuljetus paikasta A paikkaan B,
+    rekisteröityneet kuljettajat kilpailuttavat hinnan.
+  </p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    {% if kirjautunut %}
+      <a href="{{ url_for('kuljetus_uusi') }}" class="btn btn-primary">+ Uusi tilaus</a>
+      <a href="{{ url_for('kuljetus_omat') }}" class="btn btn-sm">Omat tilaukseni</a>
+    {% else %}
+      <a href="{{ url_for('rekisteri') }}" class="btn btn-primary">Aloita asiakkaana</a>
+      <a href="{{ url_for('kirjaudu') }}" class="btn btn-sm">Kirjaudu (asiakas)</a>
+    {% endif %}
+    {% if session.kuljettaja_id %}
+      <a href="{{ url_for('kuljetus_kuljettaja_ulos') }}" class="btn btn-sm">Ulos ({{ session.kuljettaja_nimi }})</a>
+    {% else %}
+      <a href="{{ url_for('kuljetus_kuljettaja_kirjaudu') }}" class="btn btn-sm">Kirjaudu kuljettajana</a>
+      <a href="{{ url_for('kuljetus_kuljettaja_rekisteroidy') }}" class="btn btn-sm">Rekisteröidy kuljettajaksi</a>
+    {% endif %}
+  </div>
+</div>
+
+<h2 style="margin-top:2.5rem">Avoimet tilaukset</h2>
+
+{% if not avoimet %}
+  <div class="summary-card" style="text-align:center;padding:2rem;color:var(--text-muted,#888)">
+    Ei avoimia tilauksia tällä hetkellä.
+  </div>
+{% endif %}
+
+<div class="jarjestelmat-lista">
+{% for t in avoimet %}
+<div class="jarjestelma-kortti" style="cursor:pointer" onclick="location.href='{{ url_for('kuljetus_tilaus', tilaus_id=t.id) }}'">
+  <div class="jarjestelma-info">
+    <div class="jarjestelma-nimi">{{ t.nouto_osoite }} → {{ t.toimitus_osoite }}</div>
+    <div class="jarjestelma-kuvaus">{{ t.tuote_kuvaus }}
+      {% if t.paino %} · {{ t.paino }}{% endif %}
+      {% if t.mitat %} · {{ t.mitat }}{% endif %}
+    </div>
+    <div class="jarjestelma-pvm">
+      {{ t.yritys }} · {{ t.luotu | pvm }}
+      {% if t.deadline %} · Deadline: {{ t.deadline[:16] }}{% endif %}
+    </div>
+  </div>
+  <div style="text-align:right;flex-shrink:0">
+    {% if t.max_budjetti %}
+      <div style="font-size:1.2rem;font-weight:700;color:var(--primary,#2d5fd4)">max {{ t.max_budjetti|int }}€</div>
+    {% endif %}
+    <a href="{{ url_for('kuljetus_tilaus', tilaus_id=t.id) }}" class="btn btn-sm btn-primary" style="margin-top:.5rem">
+      {% if session.kuljettaja_id %}Tee tarjous{% else %}Katso{% endif %}
+    </a>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
