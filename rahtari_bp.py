@@ -45,6 +45,7 @@ def init_rahtari_db():
         puhelin         TEXT,
         lahto_kaupunki  TEXT NOT NULL,
         lahto_maakunta  TEXT NOT NULL,
+        lahto_osoite    TEXT,
         toimitus        TEXT NOT NULL,
         tuote           TEXT NOT NULL,
         paino           TEXT,
@@ -81,6 +82,11 @@ def init_rahtari_db():
     );
     """)
     db.commit()
+    try:
+        db.execute("ALTER TABLE r_tilaukset ADD COLUMN lahto_osoite TEXT")
+        db.commit()
+    except sqlite3.OperationalError:
+        pass
     db.close()
 
 
@@ -169,9 +175,9 @@ def tilaa():
         db.execute("""
             INSERT INTO r_tilaukset
             (id,ytunnus,yritys,yhteyshenk,email,puhelin,
-             lahto_kaupunki,lahto_maakunta,toimitus,tuote,
+             lahto_kaupunki,lahto_maakunta,lahto_osoite,toimitus,tuote,
              paino,mitat,deadline,max_budjetti,ovt_tunnus,operaattori,token)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (tid,
               request.form["ytunnus"].strip(),
               request.form["yritys"].strip(),
@@ -179,6 +185,7 @@ def tilaa():
               request.form["email"].strip().lower(),
               request.form.get("puhelin","").strip() or None,
               kaupunki, maakunta,
+              request.form.get("lahto_osoite","").strip() or None,
               request.form["toimitus"].strip(),
               request.form["tuote"].strip(),
               request.form.get("paino","").strip() or None,

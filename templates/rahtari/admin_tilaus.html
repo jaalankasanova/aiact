@@ -23,7 +23,7 @@
   <div class="card">
     <div class="card-head">Kuljetuksen tiedot</div>
     <div class="card-body" style="display:grid;grid-template-columns:130px 1fr;gap:.4rem .8rem;font-size:.9rem">
-      <span style="color:var(--muted)">Nouto</span>       <strong>{{ tilaus.lahto_kaupunki }} ({{ tilaus.lahto_maakunta }})</strong>
+      <span style="color:var(--muted)">Nouto</span>       <strong>{% if tilaus.lahto_osoite %}{{ tilaus.lahto_osoite }}, {% endif %}{{ tilaus.lahto_kaupunki }} ({{ tilaus.lahto_maakunta }})</strong>
       <span style="color:var(--muted)">Toimitus</span>    <strong>{{ tilaus.toimitus }}</strong>
       <span style="color:var(--muted)">Tavara</span>      <span>{{ tilaus.tuote }}</span>
       {% if tilaus.paino %}<span style="color:var(--muted)">Paino</span><span>{{ tilaus.paino }}</span>{% endif %}
