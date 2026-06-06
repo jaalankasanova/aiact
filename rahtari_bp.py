@@ -6,6 +6,7 @@ from datetime import datetime
 from functools import wraps
 from email.mime.text import MIMEText
 from kaupungit import MAAKUNNAT, maakunta_kaupungille
+from finvoice import luo_finvoice, laheta_maventa
 
 bp = Blueprint("rahtari", __name__,
                url_prefix="/rahtari",
@@ -266,6 +267,19 @@ def hyvaksy(token, tarjous_id):
                            f"{tilaus['lahto_kaupunki']}→{tilaus['toimitus']}. "
                            f"Yhteys: {tilaus['yhteyshenk']} {tilaus['puhelin'] or ''}")
         threading.Thread(target=ilmoitus, daemon=True).start()
+    # Lähetä verkkolasku jos tilaajalla on OVT-tunnus
+    if tilaus.get("ovt_tunnus") and tarjous:
+        def verkkolasku():
+            try:
+                laskun_nro = tilaus["id"][:8].upper()
+                xml = luo_finvoice(dict(tilaus), dict(tarjous), laskun_nro)
+                tulos = laheta_maventa(xml, laskun_nro)
+                if not tulos["ok"]:
+                    print(f"[VERKKOLASKU VIRHE] {tulos['virhe']}")
+            except Exception as ex:
+                print(f"[VERKKOLASKU VIRHE] {ex}")
+        threading.Thread(target=verkkolasku, daemon=True).start()
+
     flash("Tarjous hyväksytty! Kuljettajalle lähetetty ilmoitus.", "ok")
     return redirect(url_for("rahtari.seuranta", token=token))
 
