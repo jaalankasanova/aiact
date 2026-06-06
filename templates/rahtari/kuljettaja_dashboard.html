@@ -27,6 +27,7 @@
         <div style="margin-top:.75rem"><span class="badge badge-hyvaksytty">TARJOUS JÄTETTY</span></div>
       {% else %}
         <form method="POST" action="{{ url_for('rahtari.tee_tarjous', tilaus_id=t.id) }}" style="margin-top:1rem">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end">
             <div class="form-group" style="margin:0">
               <label>Hinta (€) *</label>

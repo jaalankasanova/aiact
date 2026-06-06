@@ -4,6 +4,7 @@
 <div style="max-width:620px;margin:2rem auto">
   <div class="section-title">Rekisteröidy kuljettajaksi</div>
   <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="grid-2">
       <div class="form-group"><label>Nimi *</label><input type="text" name="nimi" required></div>
       <div class="form-group"><label>Puhelin * <span style="font-weight:400;text-transform:none">(SMS-ilmoitukset)</span></label><input type="tel" name="puhelin" required placeholder="+358..."></div>

@@ -8,6 +8,7 @@
   <div class="section-title">Kuljetustilaus</div>
 
   <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div class="card" style="margin-bottom:1.5rem">
       <div class="card-head">Tilaaja</div>

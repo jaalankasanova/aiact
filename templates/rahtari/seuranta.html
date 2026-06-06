@@ -36,6 +36,7 @@
   {% if tilaus.tila == 'hyvaksytty' %}
   <div style="display:flex;gap:1rem;flex-wrap:wrap">
     <form method="POST" action="{{ url_for('rahtari.toimitettu', token=token) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button class="btn btn-primary">✓ Merkitse toimitetuksi</button>
     </form>
     <a href="{{ url_for('rahtari.lasku', token=token) }}" class="btn btn-yellow">↓ Lataa lasku PDF</a>
@@ -72,6 +73,7 @@
         <span class="badge badge-hyvaksytty">VALITTU</span>
       {% elif tilaus.tila == 'avoin' %}
         <form method="POST" action="{{ url_for('rahtari.hyvaksy', token=token, tarjous_id=t.id) }}" style="margin-top:.5rem">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button class="btn btn-primary btn-sm">HYVÄKSY</button>
         </form>
       {% endif %}

@@ -4,6 +4,7 @@
 <div style="max-width:400px;margin:3rem auto">
   <div class="section-title">Kuljettajan kirjautuminen</div>
   <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="form-group"><label>Sähköposti</label><input type="email" name="email" required></div>
     <div class="form-group"><label>Salasana</label><input type="password" name="salasana" required></div>
     <button class="btn btn-primary" style="width:100%">KIRJAUDU</button>
