@@ -1,0 +1,69 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Admin — RAHTARI{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0 1rem">
+  <div class="section-title" style="margin:0">Admin-paneeli</div>
+  <a href="{{ url_for('rahtari.admin_ulos') }}" class="btn btn-sm" style="border-color:#555;color:#aaa">Kirjaudu ulos</a>
+</div>
+
+<div class="grid-3" style="margin-bottom:2rem">
+  <div class="card">
+    <div class="card-head">Tilaukset</div>
+    <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:var(--kelt)">{{ stats.avoimet }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Avoimet</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900">{{ stats.tilaukset }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Yhteensä</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">Kuljettajat & tarjoukset</div>
+    <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:var(--kelt)">{{ stats.kuljettajat }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Kuljettajat</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900">{{ stats.tarjoukset }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Tarjoukset</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">Tila</div>
+    <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:#22c55e">{{ stats.hyvaksytyt }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Hyväksytyt</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:#888">{{ stats.toimitetut }}</div>
+        <div style="font-size:.75rem;text-transform:uppercase;color:var(--muted)">Toimitetut</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+  <a href="{{ url_for('rahtari.admin_tilaukset') }}" class="btn btn-primary btn-sm">Kaikki tilaukset</a>
+  <a href="{{ url_for('rahtari.admin_tilaukset', tila='avoin') }}" class="btn btn-sm">Avoimet</a>
+  <a href="{{ url_for('rahtari.admin_kuljettajat') }}" class="btn btn-sm">Kuljettajat</a>
+</div>
+
+<div class="section-title">Viimeisimmät tilaukset</div>
+{% for t in tilaukset %}
+<div style="border:2px solid #333;border-top:none;padding:.75rem 1rem;display:grid;grid-template-columns:1fr auto auto;gap:1rem;align-items:center;{% if loop.first %}border-top:2px solid #333;{% endif %}">
+  <div>
+    <strong>{{ t.yritys }}</strong> <span style="color:var(--muted);font-size:.85rem">· {{ t.lahto_kaupunki }} → {{ t.toimitus }}</span>
+    <div style="font-size:.8rem;color:var(--muted)">{{ t.tuote }} · {{ t.luotu[:10] }}</div>
+  </div>
+  <span class="badge badge-{{ t.tila }}">{{ {'avoin':'AVOIN','hyvaksytty':'HYVÄKS.','toimitettu':'TOIMITETTU'}.get(t.tila,t.tila) }}</span>
+  <a href="{{ url_for('rahtari.admin_tilaus', tilaus_id=t.id) }}" class="btn btn-sm">Avaa</a>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Admin — RAHTARI{% endblock %}
+{% block content %}
+<div style="max-width:360px;margin:4rem auto">
+  <div class="section-title">Admin-kirjautuminen</div>
+  <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-group"><label>Tunnus</label><input type="text" name="tunnus" required autofocus></div>
+    <div class="form-group"><label>Salasana</label><input type="password" name="salasana" required></div>
+    <button class="btn btn-primary" style="width:100%">KIRJAUDU</button>
+  </form>
+</div>
+{% endblock %}

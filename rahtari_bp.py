@@ -11,6 +11,11 @@ bp = Blueprint("rahtari", __name__,
                url_prefix="/rahtari",
                template_folder="templates/rahtari")
 
+@bp.app_template_filter("fromjson")
+def fromjson_filter(s):
+    try: return json.loads(s or "[]")
+    except: return []
+
 DB = os.path.join(os.path.dirname(__file__), "rahtari.db")
 
 SMTP_HOST  = os.environ.get("SMTP_HOST", "smtp.gmail.com")
@@ -403,6 +408,100 @@ def kuljettaja_profiili():
     db.close()
     return render_template("rahtari/kuljettaja_profiili.html",
                            k=k, maakunnat=MAAKUNNAT, valitut=valitut)
+
+# ── ADMIN ─────────────────────────────────────────────────────────────────────
+
+ADMIN_USER = os.environ.get("RAHTARI_ADMIN_USER", "admin")
+ADMIN_PASS = os.environ.get("RAHTARI_ADMIN_PASS", "rahtari2026")
+
+def admin_vaaditaan(f):
+    @wraps(f)
+    def d(*a, **kw):
+        if not session.get("r_admin"):
+            return redirect(url_for("rahtari.admin_kirjaudu"))
+        return f(*a, **kw)
+    return d
+
+@bp.route("/admin/kirjaudu", methods=["GET","POST"])
+def admin_kirjaudu():
+    if request.method == "POST":
+        if (request.form.get("tunnus") == ADMIN_USER and
+                request.form.get("salasana") == ADMIN_PASS):
+            session["r_admin"] = True
+            return redirect(url_for("rahtari.admin_dashboard"))
+        flash("Väärät tunnukset.", "error")
+    return render_template("rahtari/admin_kirjaudu.html")
+
+@bp.route("/admin/ulos")
+def admin_ulos():
+    session.pop("r_admin", None)
+    return redirect(url_for("rahtari.admin_kirjaudu"))
+
+@bp.route("/admin")
+@admin_vaaditaan
+def admin_dashboard():
+    db = get_db()
+    stats = {
+        "tilaukset":   db.execute("SELECT COUNT(*) FROM r_tilaukset").fetchone()[0],
+        "avoimet":     db.execute("SELECT COUNT(*) FROM r_tilaukset WHERE tila='avoin'").fetchone()[0],
+        "hyvaksytyt":  db.execute("SELECT COUNT(*) FROM r_tilaukset WHERE tila='hyvaksytty'").fetchone()[0],
+        "toimitetut":  db.execute("SELECT COUNT(*) FROM r_tilaukset WHERE tila='toimitettu'").fetchone()[0],
+        "kuljettajat": db.execute("SELECT COUNT(*) FROM r_kuljettajat").fetchone()[0],
+        "tarjoukset":  db.execute("SELECT COUNT(*) FROM r_tarjoukset").fetchone()[0],
+    }
+    tilaukset = db.execute("""
+        SELECT t.*,
+               (SELECT COUNT(*) FROM r_tarjoukset WHERE tilaus_id=t.id) as tarjouksia
+        FROM r_tilaukset t ORDER BY t.luotu DESC LIMIT 20
+    """).fetchall()
+    db.close()
+    return render_template("rahtari/admin_dashboard.html", stats=stats, tilaukset=tilaukset)
+
+@bp.route("/admin/tilaukset")
+@admin_vaaditaan
+def admin_tilaukset():
+    tila = request.args.get("tila", "")
+    db = get_db()
+    q = "SELECT t.*, (SELECT COUNT(*) FROM r_tarjoukset WHERE tilaus_id=t.id) as tarjouksia FROM r_tilaukset t"
+    q += " WHERE t.tila=?" if tila else ""
+    q += " ORDER BY t.luotu DESC"
+    tilaukset = db.execute(q, (tila,) if tila else ()).fetchall()
+    db.close()
+    return render_template("rahtari/admin_tilaukset.html", tilaukset=tilaukset, tila=tila)
+
+@bp.route("/admin/tilaus/<tilaus_id>")
+@admin_vaaditaan
+def admin_tilaus(tilaus_id):
+    db = get_db()
+    tilaus = db.execute("SELECT * FROM r_tilaukset WHERE id=?", (tilaus_id,)).fetchone()
+    tarjoukset = db.execute("""
+        SELECT t.*, k.nimi as knimi, k.yritys as kyritys, k.puhelin as kpuh, k.email as kemail
+        FROM r_tarjoukset t JOIN r_kuljettajat k ON k.id=t.kuljettaja_id
+        WHERE t.tilaus_id=? ORDER BY t.hinta ASC
+    """, (tilaus_id,)).fetchall()
+    db.close()
+    return render_template("rahtari/admin_tilaus.html", tilaus=tilaus, tarjoukset=tarjoukset)
+
+@bp.route("/admin/kuljettajat")
+@admin_vaaditaan
+def admin_kuljettajat():
+    db = get_db()
+    kuljettajat = db.execute("""
+        SELECT k.*, (SELECT COUNT(*) FROM r_tarjoukset WHERE kuljettaja_id=k.id) as tarjouksia
+        FROM r_kuljettajat k ORDER BY k.luotu DESC
+    """).fetchall()
+    db.close()
+    return render_template("rahtari/admin_kuljettajat.html", kuljettajat=kuljettajat)
+
+@bp.route("/admin/poista_kuljettaja/<kid>", methods=["POST"])
+@admin_vaaditaan
+def admin_poista_kuljettaja(kid):
+    db = get_db()
+    db.execute("DELETE FROM r_kuljettajat WHERE id=?", (kid,))
+    db.commit(); db.close()
+    flash("Kuljettaja poistettu.", "ok")
+    return redirect(url_for("rahtari.admin_kuljettajat"))
+
 
 @bp.route("/kuljettaja/tarjous/<tilaus_id>", methods=["POST"])
 @kuljettaja_vaaditaan

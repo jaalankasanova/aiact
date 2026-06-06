@@ -1,0 +1,66 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Tilaus — Admin RAHTARI{% endblock %}
+{% block content %}
+
+<div style="margin:1.5rem 0 1rem;display:flex;gap:1rem;align-items:center">
+  <a href="{{ url_for('rahtari.admin_tilaukset') }}" class="btn btn-sm" style="border-color:#555;color:#aaa">← Tilaukset</a>
+  <span class="badge badge-{{ tilaus.tila }}">{{ {'avoin':'AVOIN','hyvaksytty':'HYVÄKSYTTY','toimitettu':'TOIMITETTU'}.get(tilaus.tila,tilaus.tila) }}</span>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start">
+
+<div>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-head">Tilaajan tiedot</div>
+    <div class="card-body" style="display:grid;grid-template-columns:130px 1fr;gap:.4rem .8rem;font-size:.9rem">
+      <span style="color:var(--muted)">Yritys</span>      <strong>{{ tilaus.yritys }}</strong>
+      <span style="color:var(--muted)">Y-tunnus</span>    <span>{{ tilaus.ytunnus }}</span>
+      <span style="color:var(--muted)">Yhteyshenkilö</span><span>{{ tilaus.yhteyshenk }}</span>
+      <span style="color:var(--muted)">Sähköposti</span>  <span>{{ tilaus.email }}</span>
+      {% if tilaus.puhelin %}<span style="color:var(--muted)">Puhelin</span><span>{{ tilaus.puhelin }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">Kuljetuksen tiedot</div>
+    <div class="card-body" style="display:grid;grid-template-columns:130px 1fr;gap:.4rem .8rem;font-size:.9rem">
+      <span style="color:var(--muted)">Nouto</span>       <strong>{{ tilaus.lahto_kaupunki }} ({{ tilaus.lahto_maakunta }})</strong>
+      <span style="color:var(--muted)">Toimitus</span>    <strong>{{ tilaus.toimitus }}</strong>
+      <span style="color:var(--muted)">Tavara</span>      <span>{{ tilaus.tuote }}</span>
+      {% if tilaus.paino %}<span style="color:var(--muted)">Paino</span><span>{{ tilaus.paino }}</span>{% endif %}
+      {% if tilaus.mitat %}<span style="color:var(--muted)">Mitat</span><span>{{ tilaus.mitat }}</span>{% endif %}
+      {% if tilaus.deadline %}<span style="color:var(--muted)">Deadline</span><span>{{ tilaus.deadline[:16] }}</span>{% endif %}
+      {% if tilaus.max_budjetti %}<span style="color:var(--muted)">Max tarjous</span><span>{{ tilaus.max_budjetti|int }}€</span>{% endif %}
+      {% if tilaus.ovt_tunnus %}<span style="color:var(--muted)">OVT</span><span>{{ tilaus.ovt_tunnus }}</span>{% endif %}
+    </div>
+  </div>
+  <div style="margin-top:.75rem;display:flex;gap:.75rem">
+    <a href="{{ url_for('rahtari.seuranta', token=tilaus.token) }}" class="btn btn-sm btn-primary" target="_blank">Avaa seurantasivu</a>
+    {% if tilaus.tila in ('hyvaksytty','toimitettu') %}
+    <a href="{{ url_for('rahtari.lasku', token=tilaus.token) }}" class="btn btn-sm">↓ Lasku PDF</a>
+    {% endif %}
+  </div>
+</div>
+
+<div>
+  <div class="section-title">Tarjoukset ({{ tarjoukset|length }})</div>
+  {% if not tarjoukset %}
+    <div style="border:2px solid #333;padding:1.5rem;text-align:center;color:var(--muted);font-size:.9rem">Ei tarjouksia.</div>
+  {% endif %}
+  {% for t in tarjoukset %}
+  <div style="border:2px solid {% if t.id == tilaus.hyvaksytty_tarjous %}var(--kelt){% else %}#333{% endif %};border-top:none;padding:.8rem 1rem;{% if loop.first %}border-top:2px solid #333;{% endif %}{% if t.id == tilaus.hyvaksytty_tarjous %}background:#1a1a00;{% endif %}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <strong>{{ t.kyritys or t.knimi }}</strong>
+        {% if t.id == tilaus.hyvaksytty_tarjous %}<span class="badge badge-hyvaksytty" style="font-size:.7rem;margin-left:.5rem">VALITTU</span>{% endif %}
+        <div style="font-size:.8rem;color:var(--muted)">{{ t.kemail }} · {{ t.kpuh or '–' }}</div>
+        {% if t.eta %}<div style="font-size:.8rem">ETA: {{ t.eta[:16] }}</div>{% endif %}
+        {% if t.viesti %}<div style="font-size:.85rem;font-style:italic;margin-top:.3rem">{{ t.viesti }}</div>{% endif %}
+      </div>
+      <div style="font-size:1.4rem;font-weight:900;color:var(--kelt)">{{ t.hinta|int }}€</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</div>
+{% endblock %}

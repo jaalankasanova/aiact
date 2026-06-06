@@ -1,0 +1,35 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Tilaukset — Admin RAHTARI{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0 1rem;flex-wrap:wrap;gap:.75rem">
+  <div class="section-title" style="margin:0">Tilaukset ({{ tilaukset|length }})</div>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <a href="{{ url_for('rahtari.admin_tilaukset') }}" class="btn btn-sm {% if not tila %}btn-primary{% endif %}">Kaikki</a>
+    <a href="{{ url_for('rahtari.admin_tilaukset', tila='avoin') }}" class="btn btn-sm {% if tila=='avoin' %}btn-primary{% endif %}">Avoimet</a>
+    <a href="{{ url_for('rahtari.admin_tilaukset', tila='hyvaksytty') }}" class="btn btn-sm {% if tila=='hyvaksytty' %}btn-primary{% endif %}">Hyväksytyt</a>
+    <a href="{{ url_for('rahtari.admin_tilaukset', tila='toimitettu') }}" class="btn btn-sm {% if tila=='toimitettu' %}btn-primary{% endif %}">Toimitetut</a>
+    <a href="{{ url_for('rahtari.admin_dashboard') }}" class="btn btn-sm" style="border-color:#555;color:#aaa">← Dashboard</a>
+  </div>
+</div>
+
+{% if not tilaukset %}
+<div style="border:2px solid #333;padding:2rem;text-align:center;color:var(--muted)">Ei tilauksia.</div>
+{% endif %}
+
+{% for t in tilaukset %}
+<div style="border:2px solid #333;border-top:none;padding:.8rem 1rem;display:grid;grid-template-columns:1fr auto auto;gap:1rem;align-items:center;{% if loop.first %}border-top:2px solid #333;{% endif %}">
+  <div>
+    <strong>{{ t.yritys }}</strong> <span style="color:var(--muted);font-size:.8rem">Y: {{ t.ytunnus }}</span>
+    <div style="font-weight:700;margin:.2rem 0">{{ t.lahto_kaupunki }} → {{ t.toimitus }}</div>
+    <div style="font-size:.8rem;color:var(--muted)">
+      {{ t.tuote }}{% if t.paino %} · {{ t.paino }}{% endif %}
+      {% if t.max_budjetti %} · max {{ t.max_budjetti|int }}€{% endif %}
+      · {{ t.luotu[:10] }} · <strong>{{ t.tarjouksia }} tarjousta</strong>
+    </div>
+  </div>
+  <span class="badge badge-{{ t.tila }}">{{ {'avoin':'AVOIN','hyvaksytty':'HYVÄKS.','toimitettu':'TOIMITETTU'}.get(t.tila,t.tila) }}</span>
+  <a href="{{ url_for('rahtari.admin_tilaus', tilaus_id=t.id) }}" class="btn btn-sm">Avaa</a>
+</div>
+{% endfor %}
+{% endblock %}

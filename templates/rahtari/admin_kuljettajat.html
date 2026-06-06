@@ -1,0 +1,35 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Kuljettajat — Admin RAHTARI{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:1.5rem 0 1rem">
+  <div class="section-title" style="margin:0">Kuljettajat ({{ kuljettajat|length }})</div>
+  <a href="{{ url_for('rahtari.admin_dashboard') }}" class="btn btn-sm" style="border-color:#555;color:#aaa">← Dashboard</a>
+</div>
+
+{% if not kuljettajat %}
+<div style="border:2px solid #333;padding:2rem;text-align:center;color:var(--muted)">Ei rekisteröityneitä kuljettajia.</div>
+{% endif %}
+
+{% for k in kuljettajat %}
+<div style="border:2px solid #333;border-top:none;padding:.8rem 1rem;{% if loop.first %}border-top:2px solid #333;{% endif %}">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start">
+    <div>
+      <strong>{{ k.yritys or k.nimi }}</strong>
+      {% if k.yritys %}<span style="color:var(--muted);font-size:.85rem"> · {{ k.nimi }}</span>{% endif %}
+      {% if k.ytunnus %}<span style="color:var(--muted);font-size:.8rem"> · Y: {{ k.ytunnus }}</span>{% endif %}
+      <div style="font-size:.85rem;margin-top:.2rem">{{ k.email }} · {{ k.puhelin }}</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:.2rem">
+        Alueet: <span style="color:var(--teksti)">{{ (k.alueet|fromjson)|join(', ') if k.alueet else '—' }}</span>
+        · {{ k.tarjouksia }} tarjousta · rekist. {{ k.luotu[:10] }}
+      </div>
+    </div>
+    <form method="POST" action="{{ url_for('rahtari.admin_poista_kuljettaja', kid=k.id) }}"
+          onsubmit="return confirm('Poistetaanko kuljettaja {{ k.nimi }}?')">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn-sm" style="border-color:#c00;color:#c00">Poista</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
