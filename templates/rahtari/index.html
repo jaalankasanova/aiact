@@ -1,14 +1,20 @@
 {% extends "rahtari/base.html" %}
 {% block content %}
 
-<div class="hero" style="margin: 0 -2rem 2rem -2rem;
-  background-image: url('{{ url_for('static', filename='rahtari_logo.png') }}');
-  background-size: cover; background-position: center;">
-  <h1>B2B<br>KULJETUKSET</h1>
-  <p>Tilaa kuljetus Y-tunnuksella. Kuljettajat kilpailuttavat hinnan. Laskutus verkkolaskulla.</p>
-  <a href="{{ url_for('rahtari.tilaa') }}" class="btn btn-primary" style="font-size:1.1rem;padding:1rem 3rem">
-    TILAA KULJETUS →
-  </a>
+<div class="hero" style="margin: 0 -2rem 2rem -2rem">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">B2B KULJETUSMARKKINAPAIKKA</div>
+      <h1>TILAA<br>KULJETUS</h1>
+      <p>Kilpailuta kuljetus Y-tunnuksella — ei rekisteröitymistä. Kuljettajat tarjoavat, sinä valitset. Laskutus verkkolaskulla.</p>
+      <a href="{{ url_for('rahtari.tilaa') }}" class="btn btn-primary" style="font-size:1rem;padding:.9rem 2.5rem">
+        TILAA NOPEIN KULJETUS →
+      </a>
+    </div>
+    <div class="hero-img">
+      <img src="{{ url_for('static', filename='rahtari_logo.png') }}" alt="Rahtari">
+    </div>
+  </div>
 </div>
 
 <div class="grid-3" style="margin-bottom:3rem">
