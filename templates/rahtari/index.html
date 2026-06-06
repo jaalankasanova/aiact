@@ -2,6 +2,8 @@
 {% block content %}
 
 <div class="hero" style="margin: 0 -2rem 2rem -2rem">
+  <img src="{{ url_for('static', filename='rahtari_logo.png') }}" alt="RAHTARI"
+       style="height:140px;width:auto;margin:0 auto 1.5rem;display:block;filter:drop-shadow(0 4px 24px rgba(255,224,0,.3))">
   <h1>B2B<br>KULJETUKSET</h1>
   <p>Tilaa kuljetus Y-tunnuksella. Kuljettajat kilpailuttavat hinnan. Laskutus verkkolaskulla.</p>
   <a href="{{ url_for('rahtari.tilaa') }}" class="btn btn-primary" style="font-size:1.1rem;padding:1rem 3rem">

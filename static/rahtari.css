@@ -38,12 +38,18 @@ body {
   z-index: 100;
 }
 .nav-logo {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--kelt);
   text-decoration: none;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.nav-logo img {
+  height: 42px;
+  width: auto;
+  transition: filter .2s;
+}
+.nav-logo:hover img {
+  filter: drop-shadow(0 0 8px rgba(255,224,0,.5));
 }
 .nav-links { display: flex; gap: 2rem; align-items: center; }
 .nav-links a {

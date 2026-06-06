@@ -8,7 +8,9 @@
 </head>
 <body>
 <nav class="nav">
-  <a href="{{ url_for('rahtari.index') }}" class="nav-logo">RAHTARI</a>
+  <a href="{{ url_for('rahtari.index') }}" class="nav-logo">
+    <img src="{{ url_for('static', filename='rahtari_logo.png') }}" alt="RAHTARI" style="height:42px;width:auto;display:block">
+  </a>
   <button class="nav-toggle" onclick="document.getElementById('rnav').classList.toggle('open')" aria-label="Valikko">
     <span></span><span></span><span></span>
   </button>
