@@ -223,8 +223,100 @@ footer {
   border-top: 4px solid var(--kelt);
 }
 
-@media (max-width: 640px) {
+/* HAMBURGER */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: .4rem;
+  background: none;
+  border: none;
+}
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--kelt);
+}
+
+@media (max-width: 768px) {
+  /* Nav */
+  .nav { padding: 0 1rem; flex-wrap: wrap; height: auto; min-height: 56px; }
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: .75rem 0 1rem;
+    gap: .25rem;
+    border-top: 1px solid #333;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    padding: .6rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid #222;
+  }
+
+  /* Container */
+  .container { padding: 1rem; }
+
+  /* Hero */
+  .hero { padding: 2rem 1rem; margin: 0 -1rem 1.5rem -1rem; }
+  .hero h1 { font-size: 1.8rem; letter-spacing: 1px; }
+  .hero p { font-size: .95rem; }
+  .hero .btn { width: 100%; text-align: center; padding: .9rem 1rem; }
+
+  /* Grids */
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2rem; }
-  .nav { padding: 0 1rem; }
+
+  /* Sivupalkit — kaikki inline grid-templateit yhdeksi sarakkeeksi */
+  [style*="grid-template-columns: 1fr 380px"],
+  [style*="grid-template-columns: 1fr 340px"],
+  [style*="grid-template-columns: 1fr 360px"],
+  [style*="grid-template-columns: 1fr auto"],
+  [style*="grid-template-columns:1fr 380px"],
+  [style*="grid-template-columns:1fr 340px"],
+  [style*="grid-template-columns:1fr auto"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tilaajan tiedot -grid */
+  [style*="grid-template-columns: 140px 1fr"] {
+    grid-template-columns: 100px 1fr !important;
+    font-size: .85rem !important;
+  }
+
+  /* Kuljettajan dashboard tarjouslomake */
+  [style*="grid-template-columns: 1fr 1fr auto"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Maakunta-checkbox-grid */
+  [style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="grid-template-columns: repeat(3,1fr)"],
+  [style*="grid-template-columns: repeat(3, 1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Kortit */
+  .card-body { padding: .75rem; }
+
+  /* Napit */
+  .btn { padding: .8rem 1.2rem; font-size: .9rem; }
+  .btn-sm { padding: .5rem .9rem; }
+
+  /* Hinta */
+  .hinta-iso { font-size: 1.3rem; }
+
+  /* Tarjous- ja tilausrivit */
+  .tarjous-rivi, .tilaus-rivi { grid-template-columns: 1fr; }
+  .tarjous-rivi > div:last-child { text-align: left; }
+
+  /* Seurantasivu — napit */
+  [style*="display:flex;gap:1rem;flex-wrap:wrap"] { flex-direction: column; }
+
+  /* Tilauskortti kuljettajan dashboardissa */
+  .card { margin-bottom: .8rem; }
 }
