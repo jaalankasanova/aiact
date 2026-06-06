@@ -56,7 +56,8 @@
         {% if t.eta %}<div style="font-size:.8rem">ETA: {{ t.eta[:16] }}</div>{% endif %}
         {% if t.viesti %}<div style="font-size:.85rem;font-style:italic;margin-top:.3rem">{{ t.viesti }}</div>{% endif %}
       </div>
-      <div style="font-size:1.4rem;font-weight:900;color:var(--kelt)">{{ t.hinta|int }}€</div>
+      <div style="font-size:1.4rem;font-weight:900;color:var(--kelt)">{{ (t.hinta_asiakkaalle or t.hinta)|int }}€</div>
+      <div style="font-size:.75rem;color:var(--muted)">kuljettajalle {{ t.hinta|int }}€</div>
     </div>
   </div>
   {% endfor %}

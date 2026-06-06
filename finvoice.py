@@ -32,7 +32,7 @@ def luo_finvoice(tilaus: dict, tarjous: dict, laskun_numero: str) -> str:
     pvm_fmt   = nyt.strftime("%Y%m%d")
     era_fmt   = erapaiva.strftime("%Y%m%d")
 
-    veroton   = round(tarjous["hinta"], 2)
+    veroton   = round(tarjous.get("hinta_asiakkaalle") or tarjous["hinta"], 2)
     alv_pros  = 25.5
     alv       = round(veroton * alv_pros / 100, 2)
     yht       = round(veroton + alv, 2)

@@ -61,14 +61,15 @@ def init_rahtari_db():
         luotu           TEXT DEFAULT (datetime('now'))
     );
     CREATE TABLE IF NOT EXISTS r_tarjoukset (
-        id            TEXT PRIMARY KEY,
-        tilaus_id     TEXT NOT NULL,
-        kuljettaja_id TEXT NOT NULL,
-        hinta         REAL NOT NULL,
-        eta           TEXT,
-        viesti        TEXT,
-        tila          TEXT DEFAULT 'odottaa',
-        luotu         TEXT DEFAULT (datetime('now'))
+        id                TEXT PRIMARY KEY,
+        tilaus_id         TEXT NOT NULL,
+        kuljettaja_id     TEXT NOT NULL,
+        hinta             REAL NOT NULL,
+        hinta_asiakkaalle REAL NOT NULL,
+        eta               TEXT,
+        viesti            TEXT,
+        tila              TEXT DEFAULT 'odottaa',
+        luotu             TEXT DEFAULT (datetime('now'))
     );
     CREATE TABLE IF NOT EXISTS r_kuljettajat (
         id        TEXT PRIMARY KEY,
@@ -85,6 +86,12 @@ def init_rahtari_db():
     db.commit()
     try:
         db.execute("ALTER TABLE r_tilaukset ADD COLUMN lahto_osoite TEXT")
+        db.commit()
+    except sqlite3.OperationalError:
+        pass
+    try:
+        db.execute("ALTER TABLE r_tarjoukset ADD COLUMN hinta_asiakkaalle REAL")
+        db.execute("UPDATE r_tarjoukset SET hinta_asiakkaalle = ROUND(hinta * 1.15, 2) WHERE hinta_asiakkaalle IS NULL")
         db.commit()
     except sqlite3.OperationalError:
         pass
@@ -448,8 +455,12 @@ def kuljettaja_profiili():
 
 # ── ADMIN ─────────────────────────────────────────────────────────────────────
 
-ADMIN_USER = os.environ.get("RAHTARI_ADMIN_USER", "admin")
-ADMIN_PASS = os.environ.get("RAHTARI_ADMIN_PASS", "rahtari2026")
+ADMIN_USER  = os.environ.get("RAHTARI_ADMIN_USER", "admin")
+ADMIN_PASS  = os.environ.get("RAHTARI_ADMIN_PASS", "rahtari2026")
+KATE_PROS   = float(os.environ.get("RAHTARI_KATE_PROS", "15"))
+
+def lisaa_kate(hinta: float) -> float:
+    return round(hinta * (1 + KATE_PROS / 100), 2)
 
 def admin_vaaditaan(f):
     @wraps(f)
@@ -552,10 +563,11 @@ def tee_tarjous(tilaus_id):
     if not t or t["tila"] != "avoin":
         db.close(); flash("Tilaus ei ole enää avoin.", "error")
         return redirect(url_for("rahtari.kuljettaja_dashboard"))
-    db.execute("""INSERT INTO r_tarjoukset (id,tilaus_id,kuljettaja_id,hinta,eta,viesti)
-                  VALUES (?,?,?,?,?,?)""",
+    hinta = float(request.form["hinta"])
+    db.execute("""INSERT INTO r_tarjoukset (id,tilaus_id,kuljettaja_id,hinta,hinta_asiakkaalle,eta,viesti)
+                  VALUES (?,?,?,?,?,?,?)""",
                (str(uuid.uuid4()), tilaus_id, session["r_kuljettaja_id"],
-                float(request.form["hinta"]),
+                hinta, lisaa_kate(hinta),
                 request.form.get("eta") or None,
                 request.form.get("viesti") or None))
     db.commit(); db.close()

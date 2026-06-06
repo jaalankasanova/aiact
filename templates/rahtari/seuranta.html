@@ -71,7 +71,7 @@
       {% if t.viesti %}<div style="font-size:.85rem;font-style:italic;margin-top:.3rem">{{ t.viesti }}</div>{% endif %}
     </div>
     <div style="text-align:right">
-      <div class="hinta-iso">{{ t.hinta|int }}€</div>
+      <div class="hinta-iso">{{ (t.hinta_asiakkaalle or t.hinta)|int }}€</div>
       {% if t.id == tilaus.hyvaksytty_tarjous %}
         <span class="badge badge-hyvaksytty">VALITTU</span>
       {% elif tilaus.tila == 'avoin' %}
