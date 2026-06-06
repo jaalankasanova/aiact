@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}RAHTARI — B2B Kuljetusmarkkinapaikka{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='rahtari.css') }}">
+</head>
+<body>
+<nav class="nav">
+  <a href="{{ url_for('rahtari.index') }}" class="nav-logo">RAHTARI</a>
+  <div class="nav-links">
+    <a href="{{ url_for('rahtari.tilaa') }}">Tilaa kuljetus</a>
+    {% if session.r_kuljettaja_id %}
+      <a href="{{ url_for('rahtari.kuljettaja_dashboard') }}">{{ session.r_kuljettaja_nimi }}</a>
+      <a href="{{ url_for('rahtari.kuljettaja_profiili') }}">Alueet</a>
+      <a href="{{ url_for('rahtari.kuljettaja_ulos') }}">Ulos</a>
+    {% else %}
+      <a href="{{ url_for('rahtari.kuljettaja_kirjaudu') }}">Kuljettajat</a>
+    {% endif %}
+  </div>
+</nav>
+<div class="container">
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}
+    <div class="flash flash-{{ cat }}" style="margin-top:1rem">{{ msg }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</div>
+<footer>RAHTARI &copy; 2026 &nbsp;·&nbsp; B2B kuljetusmarkkinapaikka</footer>
+</body>
+</html>

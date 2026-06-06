@@ -1,0 +1,84 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Seuranta — RAHTARI{% endblock %}
+{% block content %}
+{% set tila_label = {'avoin':'AVOIN','hyvaksytty':'HYVÄKSYTTY','toimitettu':'TOIMITETTU'}.get(tilaus.tila, tilaus.tila) %}
+
+<div style="margin-top:2rem;display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start">
+
+<div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+    <div class="section-title" style="margin:0">Tilauksesi tiedot</div>
+    <span class="badge badge-{{ tilaus.tila }}">{{ tila_label }}</span>
+  </div>
+
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-body" style="display:grid;grid-template-columns:140px 1fr;gap:.4rem .8rem;font-size:.95rem">
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Yritys</span>     <span>{{ tilaus.yritys }}</span>
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Y-tunnus</span>   <span>{{ tilaus.ytunnus }}</span>
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Nouto</span>      <span><strong>{{ tilaus.nouto }}</strong></span>
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Toimitus</span>   <span><strong>{{ tilaus.toimitus }}</strong></span>
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Tavara</span>     <span>{{ tilaus.tuote }}</span>
+      {% if tilaus.paino %}
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Paino</span>      <span>{{ tilaus.paino }}</span>
+      {% endif %}
+      {% if tilaus.mitat %}
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Mitat</span>      <span>{{ tilaus.mitat }}</span>
+      {% endif %}
+      {% if tilaus.deadline %}
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Deadline</span>   <span>{{ tilaus.deadline[:16] }}</span>
+      {% endif %}
+      {% if tilaus.max_budjetti %}
+      <span style="font-weight:700;text-transform:uppercase;font-size:.8rem">Max tarjous</span><span>{{ tilaus.max_budjetti|int }}€</span>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if tilaus.tila == 'hyvaksytty' %}
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <form method="POST" action="{{ url_for('rahtari.toimitettu', token=token) }}">
+      <button class="btn btn-primary">✓ Merkitse toimitetuksi</button>
+    </form>
+    <a href="{{ url_for('rahtari.lasku', token=token) }}" class="btn btn-yellow">↓ Lataa lasku PDF</a>
+  </div>
+  {% elif tilaus.tila == 'toimitettu' %}
+  <a href="{{ url_for('rahtari.lasku', token=token) }}" class="btn btn-yellow">↓ Lataa lasku PDF</a>
+  {% endif %}
+
+  <div style="margin-top:1.5rem;padding:.8rem;background:var(--harmaa);border:2px solid var(--musta);font-size:.8rem;word-break:break-all">
+    <strong>SEURANTALINKKI:</strong> {{ request.host_url }}seuranta/{{ token }}
+  </div>
+</div>
+
+<div>
+  <div class="section-title">Tarjoukset ({{ tarjoukset|length }})</div>
+
+  {% if not tarjoukset %}
+    <div style="border:2px solid var(--musta);padding:2rem;text-align:center;color:var(--muted);font-size:.9rem">
+      Ei tarjouksia vielä.<br>Kuljettajat näkevät tilauksesi ja jättävät tarjouksia pian.
+    </div>
+  {% endif %}
+
+  {% for t in tarjoukset %}
+  <div class="tarjous-rivi {% if t.id == tilaus.hyvaksytty_tarjous %}tarjous-valittu{% endif %}">
+    <div>
+      <div style="font-weight:700">{{ t.kuljettaja_yritys or t.kuljettaja_nimi }}</div>
+      {% if t.kuljettaja_puhelin %}<div style="font-size:.85rem;color:var(--muted)">{{ t.kuljettaja_puhelin }}</div>{% endif %}
+      {% if t.eta %}<div style="font-size:.85rem">ETA: {{ t.eta[:16] }}</div>{% endif %}
+      {% if t.viesti %}<div style="font-size:.85rem;font-style:italic;margin-top:.3rem">{{ t.viesti }}</div>{% endif %}
+    </div>
+    <div style="text-align:right">
+      <div class="hinta-iso">{{ t.hinta|int }}€</div>
+      {% if t.id == tilaus.hyvaksytty_tarjous %}
+        <span class="badge badge-hyvaksytty">VALITTU</span>
+      {% elif tilaus.tila == 'avoin' %}
+        <form method="POST" action="{{ url_for('rahtari.hyvaksy', token=token, tarjous_id=t.id) }}" style="margin-top:.5rem">
+          <button class="btn btn-primary btn-sm">HYVÄKSY</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</div>
+{% endblock %}

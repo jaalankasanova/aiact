@@ -1,0 +1,230 @@
+:root {
+  --kelt: #FFE000;
+  --musta: #111111;
+  --valko: #1C1C1C;
+  --harmaa: #252525;
+  --teksti: #EEEEEE;
+  --muted: #AAAAAA;
+  --border: #FFE000;
+  --accent: #FFE000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  background: #141414;
+  color: var(--teksti);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* NAV */
+.nav {
+  background: var(--musta);
+  border-bottom: 4px solid var(--kelt);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--kelt);
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  color: #DDDDDD;
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.nav-links a:hover { color: var(--kelt); }
+
+/* HERO */
+.hero {
+  background: var(--kelt);
+  border-bottom: 4px solid var(--musta);
+  padding: 3.5rem 2rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--musta);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: var(--musta);
+  margin: 1rem auto 2rem;
+  max-width: 520px;
+  font-weight: 600;
+}
+
+/* CONTAINER */
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  padding: .75rem 2rem;
+  font-weight: 900;
+  font-size: .95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  border: 3px solid #444;
+  transition: background .1s, color .1s;
+}
+.btn-primary {
+  background: var(--kelt);
+  color: #111;
+  border-color: var(--kelt);
+}
+.btn-primary:hover { background: #f0d000; border-color: #f0d000; }
+.btn-yellow {
+  background: transparent;
+  color: var(--kelt);
+  border-color: var(--kelt);
+}
+.btn-yellow:hover { background: var(--kelt); color: #111; }
+.btn-sm { padding: .4rem 1rem; font-size: .8rem; }
+
+/* FORMS */
+.form-group { margin-bottom: 1.2rem; }
+label {
+  display: block;
+  font-weight: 700;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: .35rem;
+}
+input, textarea, select {
+  width: 100%;
+  padding: .65rem .9rem;
+  border: 2px solid #444;
+  background: #222;
+  color: var(--teksti);
+  font-size: .95rem;
+  font-family: inherit;
+  outline: none;
+  border-radius: 0;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--kelt); background: #1a1a00; }
+select option { background: #222; color: #eee; }
+textarea { resize: vertical; }
+
+/* CARDS */
+.card {
+  border: 2px solid #333;
+  background: var(--valko);
+  margin-bottom: 1.2rem;
+}
+.card-head {
+  background: var(--musta);
+  color: var(--kelt);
+  padding: .6rem 1rem;
+  font-weight: 900;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.card-body { padding: 1rem; }
+
+/* STATUS BADGES */
+.badge {
+  display: inline-block;
+  padding: .2rem .7rem;
+  font-size: .75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  border: 2px solid var(--musta);
+}
+.badge-avoin    { background: var(--kelt); color: var(--musta); }
+.badge-hyvaksytty { background: var(--musta); color: var(--kelt); }
+.badge-toimitettu { background: #444; color: #fff; }
+.badge-hylatty  { background: #ddd; color: #555; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+
+/* FLASH */
+.flash {
+  padding: .8rem 1.2rem;
+  border: 2px solid var(--musta);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.flash-ok    { background: var(--kelt); color: var(--musta); }
+.flash-error { background: #2a0000; border-color: #c00; color: #ff6666; }
+
+/* TILAUSLISTA */
+.tilaus-rivi {
+  border: 2px solid #333;
+  border-top: none;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+.tilaus-rivi:first-child { border-top: 2px solid #333; }
+.tilaus-rivi:hover { background: #222200; }
+.tilaus-reitti { font-size: 1.05rem; font-weight: 700; }
+.tilaus-meta   { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid var(--kelt);
+  padding-bottom: .4rem;
+  margin-bottom: 1.2rem;
+}
+
+/* TARJOUS-RIVI */
+.tarjous-rivi {
+  border: 2px solid #333;
+  border-top: none;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+.tarjous-rivi:first-child { border-top: 2px solid var(--musta); }
+.tarjous-valittu { background: #1a1a00; border-color: var(--kelt) !important; }
+.hinta-iso { font-size: 1.6rem; font-weight: 900; }
+
+/* FOOTER */
+footer {
+  background: #0a0a0a;
+  color: #666;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .8rem;
+  margin-top: 4rem;
+  border-top: 4px solid var(--kelt);
+}
+
+@media (max-width: 640px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2rem; }
+  .nav { padding: 0 1rem; }
+}

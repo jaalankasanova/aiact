@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
 from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_DEPLOYER, VAATIMUKSET_RAJATTU, TOIMENPITEET
+from rahtari_bp import bp as rahtari_blueprint, init_rahtari_db
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,6 +31,8 @@ if os.path.exists(env_path):
 app = Flask(__name__,
             template_folder=os.path.join(BASE_DIR, "templates"),
             static_folder=os.path.join(BASE_DIR, "static"))
+
+app.register_blueprint(rahtari_blueprint)
 
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-vaihda-tuotannossa")
 
@@ -1111,6 +1114,7 @@ def kuljetus_kuljettaja_ulos():
 # ── Käynnistys ─────────────────────────────────────────────────────────────────
 
 init_db()
+init_rahtari_db()
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

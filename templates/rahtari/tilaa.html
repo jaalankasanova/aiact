@@ -1,0 +1,151 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Tilaa kuljetus — RAHTARI{% endblock %}
+{% block content %}
+
+<div style="display:grid;grid-template-columns:1fr 340px;gap:2rem;align-items:start;margin-top:2rem">
+
+<div>
+  <div class="section-title">Kuljetustilaus</div>
+
+  <form method="POST">
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-head">Tilaaja</div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Y-tunnus *</label>
+            <input type="text" name="ytunnus" placeholder="1234567-8" required pattern="\d{7}-\d">
+          </div>
+          <div class="form-group">
+            <label>Yrityksen nimi *</label>
+            <input type="text" name="yritys" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Yhteyshenkilö *</label>
+            <input type="text" name="yhteyshenk" required>
+          </div>
+          <div class="form-group">
+            <label>Puhelin</label>
+            <input type="tel" name="puhelin">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Sähköposti * <span style="font-weight:400;text-transform:none">(saat seurantaLinkin tähän)</span></label>
+          <input type="email" name="email" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-head">Kuljetuksen tiedot</div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Lähtökaupunki *</label>
+            <select name="lahto_kaupunki" id="lahto_kaupunki" required onchange="paivitaMaakunta(this)">
+              <option value="">— Valitse maakunta ensin —</option>
+            </select>
+            <input type="hidden" name="lahto_maakunta" id="lahto_maakunta">
+          </div>
+          <div class="form-group">
+            <label>Toimitusosoite *</label>
+            <input type="text" name="toimitus" placeholder="Katu tai kaupunki" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Maakunta</label>
+          <select id="maakunta_valitsin" onchange="paivitaKaupungit(this.value)" style="margin-bottom:.5rem">
+            <option value="">— Valitse maakunta —</option>
+            {% for mk in maakunnat %}
+            <option value="{{ mk }}">{{ mk }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tavaran kuvaus *</label>
+          <textarea name="tuote" rows="2" placeholder="Mitä kuljetetaan?" required></textarea>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>Paino</label>
+            <input type="text" name="paino" placeholder="esim. 500 kg">
+          </div>
+          <div class="form-group">
+            <label>Mitat</label>
+            <input type="text" name="mitat" placeholder="cm: P×L×K">
+          </div>
+          <div class="form-group">
+            <label>Deadline</label>
+            <input type="datetime-local" name="deadline">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Maksimitarjous (€)</label>
+          <input type="number" name="max_budjetti" placeholder="esim. 800" step="0.01" min="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-head">Verkkolasku</div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="form-group">
+            <label>OVT-tunnus</label>
+            <input type="text" name="ovt_tunnus" placeholder="003712345678">
+          </div>
+          <div class="form-group">
+            <label>Operaattori</label>
+            <input type="text" name="operaattori" placeholder="esim. Maventa, Apix">
+          </div>
+        </div>
+        <div style="font-size:.85rem;color:var(--muted)">
+          Jos OVT-tunnus jätetään tyhjäksi, lähetämme PDF-laskun sähköpostiin.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:100%;font-size:1rem;padding:1rem">
+      JULKAISE TILAUS →
+    </button>
+  </form>
+</div>
+
+<div>
+  <div class="card">
+    <div class="card-head">Miten toimii?</div>
+    <div class="card-body" style="font-size:.9rem;line-height:1.8">
+      <strong>1.</strong> Täytä tilaus Y-tunnuksella<br>
+      <strong>2.</strong> Saat seurantaLinkin sähköpostiisi<br>
+      <strong>3.</strong> Kuljettajat jättävät tarjouksia<br>
+      <strong>4.</strong> Hyväksy paras tarjous<br>
+      <strong>5.</strong> Kuljetus hoidetaan<br>
+      <strong>6.</strong> Lasku verkkolaskuna tai PDF:nä
+    </div>
+  </div>
+  <div class="card" style="background:var(--kelt)">
+    <div class="card-body" style="font-size:.9rem">
+      <strong>Ei rekisteröitymistä.</strong><br>
+      Tilaus onnistuu pelkällä Y-tunnuksella ja sähköpostilla.
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const MAAKUNNAT = {{ maakunnat|tojson }};
+function paivitaKaupungit(mk) {
+  const sel = document.getElementById('lahto_kaupunki');
+  sel.innerHTML = '<option value="">— Valitse kaupunki —</option>';
+  if (!mk) return;
+  document.getElementById('lahto_maakunta').value = mk;
+  (MAAKUNNAT[mk]||[]).sort().forEach(k => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = k; sel.appendChild(o);
+  });
+}
+</script>
+{% endblock %}

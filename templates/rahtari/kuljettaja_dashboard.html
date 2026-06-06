@@ -1,0 +1,74 @@
+{% extends "rahtari/base.html" %}
+{% block title %}Dashboard — RAHTARI{% endblock %}
+{% block content %}
+
+<div style="display:grid;grid-template-columns:1fr 360px;gap:2rem;margin-top:2rem;align-items:start">
+
+<div>
+  <div class="section-title">Avoimet tilaukset</div>
+  {% if not avoimet %}
+    <div style="border:2px solid var(--musta);padding:2rem;text-align:center;color:var(--muted)">Ei avoimia tilauksia.</div>
+  {% endif %}
+  {% for t in avoimet %}
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-head" style="display:flex;justify-content:space-between">
+      <span>{{ t.yritys }}</span>
+      <span style="font-weight:400;font-size:.8rem">{{ t.luotu[:10] }} · {{ t.tarjouksia }} tarjousta</span>
+    </div>
+    <div class="card-body">
+      <div class="tilaus-reitti">{{ t.nouto }} → {{ t.toimitus }}</div>
+      <div class="tilaus-meta">
+        {{ t.tuote }}
+        {% if t.paino %} · {{ t.paino }}{% endif %}
+        {% if t.deadline %} · Deadline: {{ t.deadline[:16] }}{% endif %}
+        {% if t.max_budjetti %} · <strong>Max {{ t.max_budjetti|int }}€</strong>{% endif %}
+      </div>
+      {% if t.oma %}
+        <div style="margin-top:.75rem"><span class="badge badge-hyvaksytty">TARJOUS JÄTETTY</span></div>
+      {% else %}
+        <form method="POST" action="{{ url_for('rahtari.tee_tarjous', tilaus_id=t.id) }}" style="margin-top:1rem">
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end">
+            <div class="form-group" style="margin:0">
+              <label>Hinta (€) *</label>
+              <input type="number" name="hinta" step="0.01" min="0" required placeholder="esim. 350">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>ETA</label>
+              <input type="datetime-local" name="eta">
+            </div>
+            <button class="btn btn-primary" style="height:42px">TARJOA</button>
+          </div>
+          <div class="form-group" style="margin-top:.75rem;margin-bottom:0">
+            <label>Viesti (vapaaehtoinen)</label>
+            <input type="text" name="viesti" placeholder="Lisätiedot asiakkaalle...">
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div>
+  <div class="section-title">Omat tarjoukseni</div>
+  {% if not omat %}
+    <div style="border:2px solid var(--musta);padding:1.5rem;text-align:center;color:var(--muted);font-size:.9rem">Ei tarjouksia vielä.</div>
+  {% endif %}
+  {% for t in omat %}
+  <div style="border:2px solid var(--musta);border-top:none;padding:.8rem 1rem;display:grid;grid-template-columns:1fr auto;gap:.5rem;{% if loop.first %}border-top:2px solid var(--musta);{% endif %}">
+    <div>
+      <div style="font-weight:700;font-size:.9rem">{{ t.nouto[:20] }}... → {{ t.toimitus[:20] }}...</div>
+      <div style="font-size:.8rem;color:var(--muted)">{{ t.yritys }}</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-weight:900;font-size:1.1rem">{{ t.hinta|int }}€</div>
+      <span class="badge badge-{{ t.tila }}" style="font-size:.7rem">
+        {{ {'odottaa':'ODOTTAA','hyvaksytty':'VALITTU','hylatty':'HYLÄTTY'}.get(t.tila,t.tila) }}
+      </span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</div>
+{% endblock %}
