@@ -44,25 +44,25 @@
       <div class="card-body">
         <div class="grid-2">
           <div class="form-group">
-            <label>Lähtökaupunki *</label>
-            <select name="lahto_kaupunki" id="lahto_kaupunki" required onchange="paivitaMaakunta(this)">
-              <option value="">— Valitse maakunta ensin —</option>
+            <label>Lähtömaakunta *</label>
+            <select id="maakunta_valitsin" onchange="paivitaKaupungit(this.value)" required>
+              <option value="">— Valitse maakunta —</option>
+              {% for mk in maakunnat %}
+              <option value="{{ mk }}">{{ mk }}</option>
+              {% endfor %}
             </select>
             <input type="hidden" name="lahto_maakunta" id="lahto_maakunta">
           </div>
           <div class="form-group">
-            <label>Toimitusosoite *</label>
-            <input type="text" name="toimitus" placeholder="Katu tai kaupunki" required>
+            <label>Lähtökaupunki *</label>
+            <select name="lahto_kaupunki" id="lahto_kaupunki" required>
+              <option value="">— Valitse maakunta ensin —</option>
+            </select>
           </div>
         </div>
         <div class="form-group">
-          <label>Maakunta</label>
-          <select id="maakunta_valitsin" onchange="paivitaKaupungit(this.value)" style="margin-bottom:.5rem">
-            <option value="">— Valitse maakunta —</option>
-            {% for mk in maakunnat %}
-            <option value="{{ mk }}">{{ mk }}</option>
-            {% endfor %}
-          </select>
+          <label>Toimitusosoite *</label>
+          <input type="text" name="toimitus" placeholder="Katu tai kaupunki" required>
         </div>
         <div class="form-group">
           <label>Tavaran kuvaus *</label>
