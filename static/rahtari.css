@@ -132,9 +132,8 @@ body {
   max-width: 520px;
   height: auto;
   display: block;
-  filter: drop-shadow(0 0 40px rgba(255,224,0,.25));
-  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 30px rgba(255,224,0,.3));
 }
 
 /* ── CONTAINER ───────────────────────────────────────────────────── */
