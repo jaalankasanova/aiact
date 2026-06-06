@@ -45,8 +45,11 @@
   <a href="{{ url_for('rahtari.lasku', token=token) }}" class="btn btn-yellow">↓ Lataa lasku PDF</a>
   {% endif %}
 
-  <div style="margin-top:1.5rem;padding:.8rem;background:var(--harmaa);border:2px solid var(--musta);font-size:.8rem;word-break:break-all">
-    <strong>SEURANTALINKKI:</strong> {{ request.host_url }}seuranta/{{ token }}
+  <div style="margin-top:1.5rem;border:2px solid var(--kelt);padding:1rem;background:#1a1a00">
+    <div style="font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--kelt);margin-bottom:.4rem">Seurantalinkki — tallenna tämä</div>
+    <div style="font-size:.85rem;word-break:break-all;color:#eee">{{ request.url_root }}rahtari/seuranta/{{ token }}</div>
+    <button onclick="navigator.clipboard.writeText('{{ request.url_root }}rahtari/seuranta/{{ token }}');this.textContent='✓ Kopioitu!';setTimeout(()=>this.textContent='Kopioi',2000)"
+            class="btn btn-sm" style="margin-top:.6rem;border-color:var(--kelt);color:var(--kelt)">Kopioi</button>
   </div>
 </div>
 

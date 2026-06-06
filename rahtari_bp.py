@@ -199,6 +199,22 @@ def tilaa():
         tilaus = db.execute("SELECT * FROM r_tilaukset WHERE id=?", (tid,)).fetchone()
         db.close()
         ilmoita_kuljettajille(tilaus)
+        # Sähköposti tilaajalle seurantaLinkin kanssa
+        app_url = os.environ.get("APP_URL", "https://aiact.onrender.com")
+        seuranta_url = f"{app_url}/rahtari/seuranta/{token}"
+        laheta_email(
+            tilaus["email"],
+            "Rahtari — tilauksesi on vastaanotettu",
+            f"Hei {tilaus['yhteyshenk']},\n\n"
+            f"Kuljetustilauksesi on vastaanotettu.\n\n"
+            f"Lähtö: {tilaus['lahto_osoite'] + ', ' if tilaus['lahto_osoite'] else ''}"
+            f"{tilaus['lahto_kaupunki']} ({tilaus['lahto_maakunta']})\n"
+            f"Toimitus: {tilaus['toimitus']}\n"
+            f"Tavara: {tilaus['tuote']}\n\n"
+            f"Seuraa tarjouksia ja hyväksy paras tästä linkistä:\n{seuranta_url}\n\n"
+            f"Tallenna tämä linkki — se on ainoa tapa päästä seurantasivulle.\n\n"
+            f"RAHTARI"
+        )
         return redirect(url_for("rahtari.seuranta", token=token))
     return render_template("rahtari/tilaa.html", maakunnat=MAAKUNNAT)
 
