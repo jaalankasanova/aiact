@@ -82,10 +82,14 @@ body {
   position: relative;
   overflow: hidden;
   margin-top: -60px;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
   background: #0a0a0a;
   background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop');
   background-size: cover;
-  background-position: center 40%;
+  background-position: center center;
+  background-attachment: fixed;
 }
 .hero::after {
   content: '';
@@ -368,7 +372,12 @@ footer {
   .nav-links a::after { display: none; }
 
   .container { padding: 1rem; }
-  .hero { margin: 0 -1rem 1.5rem; }
+  .hero {
+    margin: 0 -1rem 1.5rem;
+    min-height: 85vh;
+    background-attachment: scroll;
+    background-position: 60% center;
+  }
   .hero-inner { padding: 7rem 1.2rem 3rem; }
   .hero h1 { font-size: 2.4rem; }
   .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
