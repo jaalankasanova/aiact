@@ -17,11 +17,18 @@
 
 body {
   font-family: 'Inter', 'Arial Narrow', Arial, sans-serif;
-  background: var(--bg);
+  background: transparent;
   color: var(--teksti);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #0a0a0a url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop') center/cover no-repeat;
 }
 
 /* ── NAV ─────────────────────────────────────────────────────────── */
@@ -79,11 +86,7 @@ body {
   min-height: 95vh;
   display: flex;
   align-items: center;
-  background: #0a0a0a;
-  background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
+  background: transparent;
 }
 .hero::after {
   content: '';
@@ -163,7 +166,7 @@ body {
 }
 
 /* ── CONTAINER ───────────────────────────────────────────────────── */
-.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; background: transparent; }
 
 /* ── BUTTONS ─────────────────────────────────────────────────────── */
 .btn {
@@ -233,7 +236,9 @@ textarea { resize: vertical; }
 .card {
   border: 1px solid var(--border);
   border-left: 3px solid var(--kelt);
-  background: var(--bg2);
+  background: rgba(18,18,18,.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   margin-bottom: 1rem;
   transition: border-color .15s;
 }
@@ -369,8 +374,6 @@ footer {
   .hero {
     margin: 0 -1rem 1.5rem;
     min-height: 85vh;
-    background-attachment: scroll;
-    background-position: 60% center;
   }
   .hero-inner { padding: 7rem 1.2rem 3rem; }
   .hero h1 { font-size: 2.4rem; }
