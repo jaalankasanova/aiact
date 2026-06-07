@@ -26,6 +26,7 @@
     {% endif %}
   </div>
 </nav>
+{% block hero %}{% endblock %}
 <div class="container">
   {% for cat, msg in get_flashed_messages(with_categories=true) %}
     <div class="flash flash-{{ cat }}" style="margin-top:1rem">{{ msg }}</div>
