@@ -9,7 +9,7 @@
 <body>
 <nav class="nav">
   <a href="{{ url_for('rahtari.index') }}" class="nav-logo">RAHTARI</a>
-  <button class="nav-toggle" onclick="document.getElementById('rnav').classList.toggle('open')" aria-label="Valikko">
+  <button class="nav-toggle" onclick="document.getElementById('rnav').classList.toggle('open');document.body.classList.toggle('nav-open')" aria-label="Valikko">
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="rnav">
