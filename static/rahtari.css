@@ -407,19 +407,7 @@ body { overflow-x: hidden; max-width: 100vw; }
   .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
   .hero-stat-num { font-size: 1.4rem; }
 
-  /* Mobiilissa: hero saa oman taustan, ei fixed-elementin hyppimistä */
-  body::before, body::after { display: none; }
-  .hero {
-    background: #0a0a0a url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=80&auto=format&fit=crop') 55% center / cover no-repeat;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,.65);
-    z-index: 0;
-  }
-  .hero-inner { position: relative; z-index: 1; }
+  body::before { background-position: 55% center; }
 
   /* CONTAINER & GRID */
   .container { padding: 1rem; }
