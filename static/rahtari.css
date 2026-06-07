@@ -26,9 +26,12 @@ body {
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  top: -15%;
+  left: -5%;
+  width: 110%;
+  height: 130%;
   z-index: -2;
-  background: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop') center/100vw auto no-repeat;
+  background: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop') center/cover no-repeat;
   background-color: #0a0a0a;
 }
 body::after {
