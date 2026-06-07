@@ -33,5 +33,13 @@
   {% block content %}{% endblock %}
 </div>
 <footer>RAHTARI &copy; 2026 &nbsp;·&nbsp; B2B kuljetusmarkkinapaikka</footer>
+<script>
+(function(){
+  var nav = document.querySelector('.nav');
+  function upd(){ nav.classList.toggle('scrolled', window.scrollY > 20); }
+  window.addEventListener('scroll', upd, {passive:true});
+  upd();
+})();
+</script>
 </body>
 </html>

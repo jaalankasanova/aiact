@@ -26,16 +26,24 @@ body {
 
 /* ── NAV ─────────────────────────────────────────────────────────── */
 .nav {
-  background: var(--musta);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: 1px solid transparent;
   padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 60px;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  transition: background .3s, border-color .3s;
+}
+.nav.scrolled {
+  background: rgba(10,10,10,.95);
+  border-bottom-color: var(--border);
+  backdrop-filter: blur(8px);
 }
 .nav-logo {
   font-size: 1.3rem;
@@ -73,6 +81,7 @@ body {
 .hero {
   position: relative;
   overflow: hidden;
+  margin-top: -60px;
   background: #0a0a0a;
   background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop');
   background-size: cover;
@@ -92,12 +101,11 @@ body {
 .hero-inner {
   position: relative;
   z-index: 1;
-  max-width: 1100px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 7rem 2rem;
+  padding: 10rem 2rem 7rem;
   display: grid;
   grid-template-columns: 1fr;
-  max-width: 700px;
 }
 .hero-tag {
   font-size: .7rem;
@@ -360,8 +368,8 @@ footer {
   .nav-links a::after { display: none; }
 
   .container { padding: 1rem; }
-  .hero { margin: 0 -1rem 1.5rem -1rem; }
-  .hero-inner { padding: 4rem 1.2rem 3rem; }
+  .hero { margin: 0 -1rem 1.5rem; }
+  .hero-inner { padding: 7rem 1.2rem 3rem; }
   .hero h1 { font-size: 2.4rem; }
   .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
   .hero-stat-num { font-size: 1.4rem; }
