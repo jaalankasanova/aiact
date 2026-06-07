@@ -412,8 +412,18 @@ body { overflow-x: hidden; max-width: 100vw; }
   .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
   .hero-stat-num { font-size: 1.4rem; }
 
-  /* Taustakuva mobiilissa */
-  body::before { background-position: 55% center; }
+  /* Taustakuva mobiilissa — ei fixed, estää nytkähtelyn */
+  body::before {
+    position: absolute;
+    background-position: 55% top;
+    background-attachment: scroll;
+    height: 100%;
+  }
+  body::after {
+    position: absolute;
+    height: 100%;
+  }
+  html { position: relative; }
 
   /* CONTAINER & GRID */
   .container { padding: 1rem; }
