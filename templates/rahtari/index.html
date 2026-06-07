@@ -2,17 +2,14 @@
 {% block content %}
 
 <div class="hero" style="margin: 0 -2rem 2rem -2rem">
-  <div class="hero-inner">
+  <div class="hero-inner" style="grid-template-columns:1fr;text-align:center;max-width:700px">
     <div class="hero-text">
-      <div class="hero-tag">B2B KULJETUSMARKKINAPAIKKA</div>
+      <div class="hero-tag" style="justify-content:center">B2B KULJETUSMARKKINAPAIKKA</div>
       <h1>TILAA<br>KULJETUS</h1>
-      <p>Kilpailuta kuljetus Y-tunnuksella — ei rekisteröitymistä. Kuljettajat tarjoavat, sinä valitset. Laskutus verkkolaskulla.</p>
+      <p style="margin:1.2rem auto 2rem">Kilpailuta kuljetus Y-tunnuksella — ei rekisteröitymistä. Kuljettajat tarjoavat, sinä valitset. Laskutus verkkolaskulla.</p>
       <a href="{{ url_for('rahtari.tilaa') }}" class="btn btn-primary" style="font-size:1rem;padding:.9rem 2.5rem">
         TILAA KULJETUS →
       </a>
-    </div>
-    <div class="hero-img">
-      <img src="{{ url_for('static', filename='rahtari_logo.png') }}" alt="Rahtari">
     </div>
   </div>
 </div>
