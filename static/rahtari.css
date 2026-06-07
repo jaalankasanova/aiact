@@ -27,8 +27,15 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
+  z-index: -2;
+  background: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop') center/cover no-repeat;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
   z-index: -1;
-  background: #0a0a0a url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80&auto=format&fit=crop') center/cover no-repeat;
+  background: rgba(0,0,0,.72);
 }
 
 /* ── NAV ─────────────────────────────────────────────────────────── */
@@ -87,17 +94,6 @@ body::before {
   display: flex;
   align-items: center;
   background: transparent;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    rgba(0,0,0,.88) 0%,
-    rgba(0,0,0,.70) 50%,
-    rgba(0,0,0,.50) 100%
-  );
 }
 .hero-inner {
   position: relative;
