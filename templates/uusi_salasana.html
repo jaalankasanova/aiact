@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Uusi salasana — ComplianceAI{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Aseta uusi salasana</h1>
+  <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-group">
+      <label>Uusi salasana</label>
+      <div class="password-wrap">
+        <input type="password" name="salasana" required minlength="8" placeholder="Vähintään 8 merkkiä" id="pw-uusi" autofocus>
+        <button type="button" class="pw-toggle" onclick="togglePw('pw-uusi', this)">Näytä</button>
+      </div>
+      <small>Vähintään 8 merkkiä</small>
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Vaihda salasana →</button>
+  </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function togglePw(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Piilota'; }
+  else { input.type = 'password'; btn.textContent = 'Näytä'; }
+}
+</script>
+{% endblock %}

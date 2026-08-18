@@ -526,7 +526,7 @@ body {
   padding: 11px 14px;
   border: 1.5px solid var(--reunaviiva);
   border-radius: 10px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   outline: none;
   transition: border 0.15s, box-shadow 0.15s;
   font-family: inherit;
@@ -766,7 +766,8 @@ body {
 .toimenpide-box p { font-size: 0.86rem; color: var(--teksti-harmaa); margin: 0 0 8px; }
 .toimenpide-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--teksti-harmaa); font-weight: 600; }
 .vaaditut-osio { margin-bottom: 36px; }
-.vaatimus-taulukko { width: 100%; border-collapse: collapse; font-size: 0.88rem; border-radius: 10px; overflow: hidden; }
+.taulukko-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; }
+.vaatimus-taulukko { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.88rem; border-radius: 10px; overflow: hidden; }
 .vaatimus-taulukko th { background: var(--tumma); color: #fff; padding: 11px 16px; text-align: left; font-size: 0.82rem; letter-spacing: 0.3px; }
 .vaatimus-taulukko td { padding: 11px 16px; border-bottom: 1px solid var(--reunaviiva); }
 .rivi-ok { background: #f0fdf4; }
@@ -809,6 +810,8 @@ body {
 .bar-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #6d28d9); border-radius: 6px; transition: width 0.3s; }
 .bar-fill-green { background: linear-gradient(90deg, #059669, #047857); }
 .bar-val { width: 28px; font-size: 0.82rem; font-weight: 700; text-align: right; flex-shrink: 0; }
+.dash-summary-6 { grid-template-columns: repeat(6, 1fr); }
+.admin-charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
 
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.2rem; }
@@ -816,6 +819,8 @@ body {
   .urgency-grid { grid-template-columns: 1fr; }
   .hinta-grid { grid-template-columns: 1fr; }
   .dash-summary { grid-template-columns: 1fr 1fr; }
+  .dash-summary-6 { grid-template-columns: repeat(3, 1fr); }
+  .admin-charts-grid { grid-template-columns: 1fr; }
   .tulos-header-inner { flex-direction: column; }
   .tulos-body { padding: 24px; }
   .tulos-header { padding: 28px 24px; }
@@ -835,4 +840,8 @@ body {
   }
   .nav-links.nav-open { display: flex; }
   .nav-inner { position: relative; }
+}
+
+@media (max-width: 480px) {
+  .dash-summary-6 { grid-template-columns: 1fr 1fr; }
 }

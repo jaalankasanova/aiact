@@ -22,6 +22,7 @@
     </div>
     <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px" data-i18n="login.btn">Kirjaudu sisään →</button>
   </form>
+  <p class="form-footer"><a href="{{ url_for('unohdin_salasanan') }}" style="color:var(--teksti-harmaa);font-size:.9rem;">Unohditko salasanasi?</a></p>
   <p class="form-footer"><span data-i18n="login.no_account">Ei tiliä vielä?</span> <a href="{{ url_for('rekisteri') }}" data-i18n="login.register">Rekisteröidy ilmaiseksi</a></p>
 </div>
 {% endblock %}

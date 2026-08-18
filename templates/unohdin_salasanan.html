@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Unohdin salasanan — ComplianceAI{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+{% block content %}
+<div class="form-page">
+  <h1>Unohditko salasanasi?</h1>
+  <p class="form-sub">Syötä sähköpostiosoitteesi, lähetämme palautuslinkin.</p>
+  <form method="post" class="form-card">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-group">
+      <label>Sähköposti</label>
+      <input type="email" name="email" required placeholder="nimi@yritys.fi" autofocus>
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">Lähetä palautuslinkki →</button>
+  </form>
+  <p class="form-footer"><a href="{{ url_for('kirjaudu') }}">← Takaisin kirjautumiseen</a></p>
+</div>
+{% endblock %}

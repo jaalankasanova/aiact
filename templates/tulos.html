@@ -70,6 +70,7 @@
     {% if riski.vaaditut %}
     <div class="vaaditut-osio">
       <h2 data-i18n="tulos.all_req_h2">Kaikki vaatimukset</h2>
+      <div class="taulukko-scroll">
       <table class="vaatimus-taulukko">
         <thead>
           <tr><th data-i18n="tulos.th_req">Vaatimus</th><th data-i18n="tulos.th_art">Artikkeli</th><th data-i18n="tulos.th_prio">Prioriteetti</th><th data-i18n="tulos.th_status">Tila</th><th data-i18n="tulos.th_guide">Ohje</th></tr>
@@ -98,6 +99,7 @@
           {% endfor %}
         </tbody>
       </table>
+      </div>
       <p style="font-size:.85rem;color:#6b7280;margin-top:.75rem;">
         Lisätietoa vaatimuksista: <a href="{{ url_for('opas') }}#artikkelit" style="color:var(--primary);">AI Act -opas → Mitä artiklat tarkoittavat?</a>
       </p>
@@ -112,6 +114,15 @@
       {% else %}
       <a href="{{ url_for('tilaus') }}" class="btn btn-primary" data-i18n="tulos.upgrade_pdf">PDF-raportti — päivitä Pro</a>
       {% endif %}
+    </div>
+    <div class="seuraava-askel" style="margin-top:2rem;">
+      <div class="seuraava-otsikko" data-i18n="tulos.after_pdf_title">📄 Mitä teet raportin kanssa?</div>
+      <ol style="margin:.75rem 0 0 1.25rem;line-height:1.9;">
+        <li data-i18n="tulos.after_pdf_1"><strong>Arkistoi raportti</strong> — tallenna yrityksen dokumentaatioon (esim. SharePoint, Google Drive). Viranomaiset voivat pyytää sitä tarkastuksessa.</li>
+        <li data-i18n="tulos.after_pdf_2"><strong>Jaa johdolle</strong> — lähetä raportti toimitusjohtajalle tai lakiasioista vastaavalle. He vastaavat vaatimustenmukaisuudesta.</li>
+        <li data-i18n="tulos.after_pdf_3"><strong>Tee puuttuvat toimenpiteet</strong> — raportissa listatut puutteet on korjattava ennen deadlinea (2.8.2026). Aloita kriittisimmistä.</li>
+        <li data-i18n="tulos.after_pdf_4"><strong>Päivitä 6kk välein</strong> — AI-järjestelmät muuttuvat, vaatimukset tarkentuvat. Kartoita uudelleen aina kun järjestelmään tehdään muutoksia.</li>
+      </ol>
     </div>
     <p class="disclaimer" data-i18n="tulos.disclaimer">Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.</p>
   </div>

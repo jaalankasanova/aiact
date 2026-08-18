@@ -68,8 +68,10 @@ const translations = {
     "faq.a4": "Yhden AI-järjestelmän kartoitus vie noin 10–15 minuuttia. Saat heti riskiluokituksen ja listan puuttuvista vaatimuksista. Kartoituksia voi tehdä niin monta kuin yrityksellä on AI-järjestelmiä.",
     "faq.q5": "Korvataanko tällä lakimies?",
     "faq.a5": "Ei. ComplianceAI auttaa tunnistamaan riskit ja tekemään pohjatyön, mutta ennen viranomaisdokumentointia suosittelemme tarkistuttamaan materiaalit lakimiehellä. Työkalu säästää huomattavasti aikaa ja rahaa koska pohjatyö on jo tehty.",
-    "faq.q6": "Onko data turvassa?",
-    "faq.a6": "Kartoitustietoja ei jaeta kolmansille osapuolille. Data tallennetaan suojatusti ja sitä käytetään vain compliance-analyysin tuottamiseen.",
+    "faq.q6": "Pitääkö raportti lähettää viranomaiselle?",
+    "faq.a6": "Ei — raporttia ei lähetetä minnekään. Se on sisäistä dokumentaatiota joka todistaa, että yrityksesi on tehnyt compliance-työn. Valvontaviranomainen (Traficom) voi pyytää sitä tarkastuksessa tai jos tulee valitus, mutta proaktiivista ilmoittamista ei vaadita. Raportti toimii vakuutuksena.",
+    "faq.q7": "Onko data turvassa?",
+    "faq.a7": "Kartoitustietoja ei jaeta kolmansille osapuolille. Data tallennetaan suojatusti ja sitä käytetään vain compliance-analyysin tuottamiseen.",
 
     // Hinnoittelu
     "price.h2": "Hinnoittelu",
@@ -272,6 +274,11 @@ const translations = {
     "tulos.next_system": "+ Kartoita seuraava järjestelmä",
     "tulos.open_pdf": "Avaa PDF-raportti",
     "tulos.upgrade_pdf": "PDF-raportti — päivitä Pro",
+    "tulos.after_pdf_title": "📄 Mitä teet raportin kanssa?",
+    "tulos.after_pdf_1": "<strong>Arkistoi raportti</strong> — tallenna yrityksen dokumentaatioon (esim. SharePoint, Google Drive). Viranomaiset voivat pyytää sitä tarkastuksessa.",
+    "tulos.after_pdf_2": "<strong>Jaa johdolle</strong> — lähetä raportti toimitusjohtajalle tai lakiasioista vastaavalle. He vastaavat vaatimustenmukaisuudesta.",
+    "tulos.after_pdf_3": "<strong>Tee puuttuvat toimenpiteet</strong> — raportissa listatut puutteet on korjattava ennen deadlinea (2.8.2026). Aloita kriittisimmistä.",
+    "tulos.after_pdf_4": "<strong>Päivitä 6kk välein</strong> — AI-järjestelmät muuttuvat, vaatimukset tarkentuvat. Kartoita uudelleen aina kun järjestelmään tehdään muutoksia.",
     "tulos.disclaimer": "Tämä analyysi ei korvaa juridista neuvontaa. Suosittelemme tarkistuttamaan dokumentit lakimiehellä ennen viranomaisraportointia.",
 
     // Tilaus
@@ -472,8 +479,10 @@ const translations = {
     "faq.a4": "Assessing one AI system takes about 10–15 minutes. You immediately get a risk classification and a list of missing requirements. You can do as many assessments as your company has AI systems.",
     "faq.q5": "Does this replace a lawyer?",
     "faq.a5": "No. ComplianceAI helps identify risks and do the groundwork, but we recommend having the materials reviewed by a lawyer before submitting to authorities. The tool saves significant time and money because the groundwork is already done.",
-    "faq.q6": "Is the data secure?",
-    "faq.a6": "Assessment data is not shared with third parties. Data is stored securely and used only for compliance analysis.",
+    "faq.q6": "Do I need to submit the report to authorities?",
+    "faq.a6": "No — the report is not submitted anywhere. It is internal documentation that proves your company has done its compliance work. The supervisory authority (in Finland: Traficom) may request it during an inspection or if a complaint is filed, but no proactive reporting is required. The report acts as insurance.",
+    "faq.q7": "Is the data secure?",
+    "faq.a7": "Assessment data is not shared with third parties. Data is stored securely and used only for compliance analysis.",
 
     // Hinnoittelu
     "price.h2": "Pricing",
@@ -678,6 +687,11 @@ const translations = {
     "tulos.next_system": "+ Assess next system",
     "tulos.open_pdf": "Open PDF report",
     "tulos.upgrade_pdf": "PDF report — upgrade to Pro",
+    "tulos.after_pdf_title": "📄 What to do with the report?",
+    "tulos.after_pdf_1": "<strong>Archive the report</strong> — save it to your company documentation (e.g. SharePoint, Google Drive). Authorities may request it during an inspection.",
+    "tulos.after_pdf_2": "<strong>Share with management</strong> — send the report to the CEO or person responsible for legal matters. They are responsible for compliance.",
+    "tulos.after_pdf_3": "<strong>Address missing requirements</strong> — gaps listed in the report must be resolved before the deadline (2.8.2026). Start with the most critical ones.",
+    "tulos.after_pdf_4": "<strong>Review every 6 months</strong> — AI systems change, requirements evolve. Re-assess whenever the system is updated.",
     "tulos.disclaimer": "This analysis does not replace legal advice. We recommend having the documents reviewed by a lawyer before regulatory reporting.",
 
     // Tilaus
