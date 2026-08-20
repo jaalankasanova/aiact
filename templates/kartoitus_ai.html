@@ -16,6 +16,18 @@
           <small>Mitä tarkemmin kuvailet käyttötarkoituksen, sitä osuvampi esitäyttö on.</small>
         </div>
 
+        <div class="ohje-kortti" style="margin-top:-8px;margin-bottom:20px">
+          <div class="ohje-otsikko">📝 Mainitse kuvauksessa jos mahdollista</div>
+          <ul class="ohje-lista">
+            <li>Minkä työkalun tai järjestelmän nimi (esim. ChatGPT, Teamtailor, oma malli)</li>
+            <li>Onko se ostettu valmis työkalu vai itse kehitetty</li>
+            <li>Mihin toimintoon sitä käytetään (rekrytointi, asiakaspalvelu, luotto, terveys...)</li>
+            <li>Tekeekö se päätöksiä automaattisesti vai avustaako vain ihmistä</li>
+            <li>Vaikuttavatko sen tulokset suoraan yksittäisiin ihmisiin</li>
+            <li>Käsitteleekö se biometrisiä tietoja (kasvot, ääni, sormenjälki)</li>
+          </ul>
+        </div>
+
         <div class="form-actions">
           <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-ghost">Täytä manuaalisesti sen sijaan</a>
           <button type="submit" class="btn btn-primary">Analysoi tekoälyllä →</button>

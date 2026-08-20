@@ -13,6 +13,16 @@
       <h1 data-i18n="k1.h1">Mikä AI-järjestelmä kartoitetaan?</h1>
       <p class="kartoitus-ohje" data-i18n="k1.ohje">Kartoita yksi järjestelmä kerrallaan. Voit lisätä lisää järjestelmiä myöhemmin dashboardilta.</p>
 
+      {% if not muokkaus.get('muokkaa_id') %}
+      <div class="ohje-kortti ohje-kortti-info" style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div>
+          <div class="ohje-otsikko">✨ Nopeampi tapa: kuvaile vapaasti</div>
+          <p style="margin:0">Kirjoita muutama lause siitä miten käytätte tekoälyä, niin AI täyttää alla olevat kentät puolestasi. Voit vielä tarkistaa ja muokata kaiken ennen tallennusta.</p>
+        </div>
+        <a href="{{ url_for('kartoitus_ai') }}" class="btn btn-outline" style="white-space:nowrap">Kuvaile AI:lla →</a>
+      </div>
+      {% endif %}
+
       <form method="post" class="form-card">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="form-group">
