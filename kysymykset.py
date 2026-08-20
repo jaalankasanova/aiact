@@ -186,7 +186,7 @@ TOIMENPITEET = {
     },
     "eu_rekisteri": {
         "otsikko": "Rekisteröi järjestelmä EU:n tietokantaan",
-        "ohje": "Korkean riskin järjestelmät rekisteröidään EU:n AI-tietokantaan (ai-act.eu). Rekisteröinti avautuu virallisesti ennen deadline-päivää. Valmistaudu keräämällä tarvittavat tekniset tiedot.",
+        "ohje": "Korkean riskin järjestelmät rekisteröidään EU:n AI-tietokantaan (ai-act.eu). Deadline-päivä on jo ohittunut, joten tarkista rekisteröinnin tila mahdollisimman pian. Kerää tarvittavat tekniset tiedot valmiiksi.",
         "aika": "1–2 päivää",
         "vastuu": "Compliance-vastaava",
     },
@@ -262,7 +262,7 @@ def luokittele_riski(vastaukset: dict) -> dict:
             "päävastuut ovat järjestelmän toimittajalla. Teidän vastuullanne on Art. 26 velvoitteet."
             if on_deployer else
             "Järjestelmä luokitellaan korkean riskin AI-järjestelmäksi (Annex III). "
-            "Täydet compliance-vaatimukset voimassa 2.8.2026."
+            "Täydet compliance-vaatimukset voimassa 2.8.2026 lähtien."
         )
         return {
             "taso": "korkea",
@@ -279,7 +279,7 @@ def luokittele_riski(vastaukset: dict) -> dict:
         ]
         return {
             "taso": "rajattu",
-            "selitys": "Järjestelmä on rajatun riskin AI. Avoimuusvaatimukset voimassa 2.8.2026.",
+            "selitys": "Järjestelmä on rajatun riskin AI. Avoimuusvaatimukset voimassa 2.8.2026 lähtien.",
             "puuttuvat": puuttuvat,
             "vaaditut": VAATIMUKSET_RAJATTU,
         }
