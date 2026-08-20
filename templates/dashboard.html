@@ -25,8 +25,13 @@
       <p data-i18n="dash.score_label">Compliance-pistemäärä</p>
     </div>
     <div class="summary-card">
+      {% if paivat_jaljella >= 0 %}
       <div class="summary-big">{{ paivat_jaljella }}</div>
       <p data-i18n-html="dash.days_label">päivää deadline:iin<br><small>2.8.2026</small></p>
+      {% else %}
+      <div class="summary-big">⚠️</div>
+      <p data-i18n-html="dash.days_label_ohi">Deadline ohittunut<br><small>2.8.2026</small></p>
+      {% endif %}
     </div>
     <div class="summary-card">
       <div class="summary-big">{{ jarjestelmat|length }}</div>

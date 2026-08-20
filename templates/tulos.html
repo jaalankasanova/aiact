@@ -21,7 +21,11 @@
     <div class="tulos-selitys">
       <h2 data-i18n="tulos.risk_h2">Riskiluokitus</h2>
       <p>{{ riski.selitys }}</p>
+      {% if paivat_jaljella >= 0 %}
       <p><strong>{{ paivat_jaljella }} </strong><span data-i18n="tulos.days_to_deadline">päivää</span> deadlineen (2.8.2026)</p>
+      {% else %}
+      <p data-i18n="tulos.deadline_ohi">⚠️ Deadline (2.8.2026) on jo ohittunut — toimenpiteet kannattaa tehdä heti</p>
+      {% endif %}
     </div>
 
     {% if riski.puuttuvat %}

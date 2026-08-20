@@ -15,6 +15,7 @@ const translations = {
 
     // Hero
     "hero.badge": "⏳ Deadline: 2.8.2026 — enää {n} päivää",
+    "hero.badge_ohi": "⚠️ Deadline 2.8.2026 on ohittunut — tarkista yrityksesi tilanne heti",
     "hero.h1": "EU pakottaa yritykset<br>auditoimaan AI-käyttönsä",
     "hero.sub": "EU AI Act velvoittaa kaikkia yrityksiä — myös pk-yrityksiä — selvittämään mitä tekoälyjärjestelmiä ne käyttävät ja ovatko ne lain mukaisia. Sakot rikkomuksista ovat jopa <strong>15 miljoonaa euroa tai 3% liikevaihdosta</strong>.<br><br>ComplianceAI auttaa sinua kartoittamaan tilanne, tunnistamaan riskit ja tekemään tarvittavat dokumentit — 15 minuutissa, suomeksi.",
     "hero.cta1": "Tarkista yrityksesi tilanne ilmaiseksi",
@@ -149,6 +150,7 @@ const translations = {
     "dash.add_system": "+ Lisää järjestelmä",
     "dash.score_label": "Compliance-pistemäärä",
     "dash.days_label": "päivää deadline:iin<br><small>2.8.2026</small>",
+    "dash.days_label_ohi": "Deadline ohittunut<br><small>2.8.2026</small>",
     "dash.systems_label": "kartoitettua järjestelmää",
     "dash.free_title": "Ilmainen tili:",
     "dash.free_body": "olet käyttänyt 1/1 kartoituksesta. Uusia kartoituksia varten tarvitset Pro-tilauksen.",
@@ -253,6 +255,7 @@ const translations = {
     // Tulos
     "tulos.risk_h2": "Riskiluokitus",
     "tulos.days_to_deadline": "päivää",
+    "tulos.deadline_ohi": "⚠️ Deadline (2.8.2026) on jo ohittunut — toimenpiteet kannattaa tehdä heti",
     "tulos.missing_h2": "Puuttuvat vaatimukset",
     "tulos.what_to_do": "Mitä tehdä:",
     "tulos.deadline_label": "Deadline:",
@@ -426,6 +429,7 @@ const translations = {
 
     // Hero
     "hero.badge": "⏳ Deadline: 2 Aug 2026 — {n} days left",
+    "hero.badge_ohi": "⚠️ Deadline 2 Aug 2026 has passed — check your company's status now",
     "hero.h1": "The EU requires companies<br>to audit their AI usage",
     "hero.sub": "The EU AI Act obligates all companies — including SMEs — to identify which AI systems they use and whether they comply with the law. Fines for non-compliance can reach <strong>€15 million or 3% of annual turnover</strong>.<br><br>ComplianceAI helps you map your situation, identify risks and prepare the required documentation — in 15 minutes.",
     "hero.cta1": "Check your company's status for free",
@@ -562,6 +566,7 @@ const translations = {
     "dash.add_system": "+ Add system",
     "dash.score_label": "Compliance score",
     "dash.days_label": "days until deadline<br><small>2 Aug 2026</small>",
+    "dash.days_label_ohi": "Deadline passed<br><small>2 Aug 2026</small>",
     "dash.systems_label": "assessed systems",
     "dash.free_title": "Free account:",
     "dash.free_body": "you have used 1/1 assessment. A Pro subscription is required for more assessments.",
@@ -666,6 +671,7 @@ const translations = {
     // Tulos
     "tulos.risk_h2": "Risk classification",
     "tulos.days_to_deadline": "days",
+    "tulos.deadline_ohi": "⚠️ Deadline (2 Aug 2026) has already passed — action is recommended immediately",
     "tulos.missing_h2": "Missing requirements",
     "tulos.what_to_do": "What to do:",
     "tulos.deadline_label": "Deadline:",
