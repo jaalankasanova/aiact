@@ -9,7 +9,10 @@
       <h1>{{ kayttaja.yritys }}</h1>
       <p class="dash-sub" data-i18n="dash.sub">AI Act compliance -tilanne</p>
     </div>
-    <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary" data-i18n="dash.add_system">+ Lisää järjestelmä</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="{{ url_for('kartoitus_ai') }}" class="btn btn-outline">✨ Kuvaile AI:lla</a>
+      <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-primary" data-i18n="dash.add_system">+ Lisää järjestelmä</a>
+    </div>
   </div>
 
   <!-- Yhteenveto -->

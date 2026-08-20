@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
 from kysymykset import luokittele_riski, laske_compliance_pisteet, TOIMIALAT, VAATIMUKSET, VAATIMUKSET_DEPLOYER, VAATIMUKSET_RAJATTU, TOIMENPITEET
+from ai_kartoitus import analysoi_kuvaus
 from rahtari_bp import bp as rahtari_blueprint, init_rahtari_db
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -393,6 +394,49 @@ def dashboard():
 
 # ── Kartoituslomake ────────────────────────────────────────────────────────────
 
+@app.route("/kartoitus/ai", methods=["GET", "POST"])
+@vaadi_kirjautuminen
+def kartoitus_ai():
+    kid = session["kayttaja_id"]
+    with get_db() as db:
+        set_schema(db)
+        k = db.execute("SELECT tilaaja FROM kayttajat WHERE id=%s", [kid]).fetchone()
+        if not k or not k["tilaaja"]:
+            maara = db.execute("SELECT COUNT(*) as n FROM jarjestelmat WHERE kayttaja_id=%s", [kid]).fetchone()["n"]
+            if maara >= 1:
+                flash("Ilmainen tili on rajoitettu yhteen kartoitukseen. Päivitä Pro jatkaaksesi.", "warning")
+                return redirect(url_for("tilaus"))
+
+    if request.method == "POST":
+        kuvaus_teksti = request.form.get("kuvaus_teksti", "").strip()
+        if len(kuvaus_teksti) < 15:
+            flash("Kirjoita hieman tarkempi kuvaus tekoälyn käytöstä.", "error")
+            return render_template("kartoitus_ai.html", kuvaus_teksti=kuvaus_teksti)
+
+        try:
+            tulos = analysoi_kuvaus(kuvaus_teksti)
+        except Exception:
+            flash("AI-analyysi epäonnistui juuri nyt. Yritä hetken päästä uudelleen, tai täytä kartoitus manuaalisesti.", "error")
+            return render_template("kartoitus_ai.html", kuvaus_teksti=kuvaus_teksti)
+
+        session["kartoitus"] = {
+            "nimi": (tulos.get("nimi") or "")[:120],
+            "kuvaus": (tulos.get("kuvaus") or kuvaus_teksti)[:500],
+            "toimiala": tulos.get("toimiala", "muu"),
+            "rooli": tulos.get("rooli", "deployer"),
+            "autonominen": bool(tulos.get("autonominen")),
+            "biometria": bool(tulos.get("biometria")),
+            "kohdistuu_henkiloihin": bool(tulos.get("kohdistuu_henkiloihin")),
+            "chatbot": bool(tulos.get("chatbot")),
+            "generoi_sisaltoa": bool(tulos.get("generoi_sisaltoa")),
+            "kielletty": bool(tulos.get("kielletty")),
+        }
+        flash(f"Tekoäly esitäytti kartoituksen: {tulos.get('perustelu', '')} Tarkista ja täydennä tiedot.", "success")
+        return redirect(url_for("uusi_jarjestelma"))
+
+    return render_template("kartoitus_ai.html")
+
+
 @app.route("/kartoitus/uusi", methods=["GET", "POST"])
 @vaadi_kirjautuminen
 def uusi_jarjestelma():
@@ -744,6 +788,27 @@ def admin():
                            tilaajat_yht=tilaajat_yht,
                            jarjestelmat_yht=jarjestelmat_yht,
                            uudet=[dict(r) for r in uudet])
+
+
+@app.route("/admin/tilaaja", methods=["POST"])
+def admin_tilaaja():
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    email  = request.form.get("email", "").strip().lower()
+    toiminto = request.form.get("toiminto")
+
+    with get_db() as db:
+        set_schema(db)
+        k = db.execute("SELECT id FROM kayttajat WHERE email=%s", [email]).fetchone()
+        if not k:
+            flash(f"Käyttäjää {email} ei löydy.", "error")
+        else:
+            db.execute("UPDATE kayttajat SET tilaaja=%s WHERE email=%s",
+                       [1 if toiminto == "myonna" else 0, email])
+            flash(f"Pro-oikeus {'myönnetty' if toiminto == 'myonna' else 'poistettu'} käyttäjältä {email}.", "success")
+
+    return redirect(url_for("admin"))
 
 
 @app.route("/sitemap.xml")

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Kuvaile AI:lla — Kartoitus{% endblock %}
+{% block content %}
+<div class="kartoitus-page">
+  <div class="kartoitus-layout">
+    <div class="kartoitus-main">
+      <h1>✨ Kuvaile tekoälyn käyttö — AI täyttää kartoituksen puolestasi</h1>
+      <p class="kartoitus-ohje">Kirjoita muutamalla lauseella miten tätä AI-järjestelmää käytetään yrityksessänne. Tekoäly poimii kuvauksesta toimialan ja ominaisuudet valmiiksi seuraavaan vaiheeseen — voit vielä tarkistaa ja muokata jokaisen kentän ennen tallennusta.</p>
+
+      <form method="post" class="form-card">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+          <label>Kuvaus *</label>
+          <textarea name="kuvaus_teksti" rows="6" required
+            placeholder="Esim. Käytämme Teamtailoria hakemusten esikarsintaan rekrytoinnissa. Se pisteyttää hakijat automaattisesti CV:n perusteella, ja rekrytoija katsoo vain parhaat pisteet saaneet.">{{ kuvaus_teksti or "" }}</textarea>
+          <small>Mitä tarkemmin kuvailet käyttötarkoituksen, sitä osuvampi esitäyttö on.</small>
+        </div>
+
+        <div class="form-actions">
+          <a href="{{ url_for('uusi_jarjestelma') }}" class="btn btn-ghost">Täytä manuaalisesti sen sijaan</a>
+          <button type="submit" class="btn btn-primary">Analysoi tekoälyllä →</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="kartoitus-ohje-paneeli">
+      <div class="ohje-kortti ohje-kortti-info">
+        <div class="ohje-otsikko">💡 Miten tämä toimii?</div>
+        <ol class="ohje-lista">
+          <li>Kuvailet vapaasti miten AI:ta käytetään</li>
+          <li>Tekoäly päättelee toimialan, roolin ja riskiin vaikuttavat ominaisuudet</li>
+          <li>Näet tulokset esitäytettynä tavallisessa kartoituslomakkeessa ja voit korjata ne</li>
+        </ol>
+        <p style="margin-top:8px;font-size:.85rem;color:var(--teksti-harmaa)">AI ei tallenna mitään automaattisesti — tarkistat ja hyväksyt jokaisen vaiheen itse.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

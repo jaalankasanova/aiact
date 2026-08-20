@@ -80,6 +80,20 @@
 
   </div>
 
+  <!-- Pro-oikeuden hallinta -->
+  <div class="admin-kortti" style="margin-top:24px">
+    <h2>Myönnä / poista Pro-oikeus</h2>
+    <form method="post" action="{{ url_for('admin_tilaaja') }}" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-top:12px">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="form-group" style="margin:0;flex:1;min-width:220px">
+        <label>Käyttäjän sähköposti</label>
+        <input type="email" name="email" required placeholder="esim. asiakas@yritys.fi">
+      </div>
+      <button type="submit" name="toiminto" value="myonna" class="btn btn-primary">Myönnä Pro</button>
+      <button type="submit" name="toiminto" value="poista" class="btn btn-danger">Poista Pro</button>
+    </form>
+  </div>
+
   <!-- Suosituimmat sivut -->
   <div class="admin-kortti" style="margin-top:24px">
     <h2>Suosituimmat sivut</h2>
