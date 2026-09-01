@@ -296,6 +296,13 @@ def index():
     paivat_jaljella = (datetime(2026, 8, 2) - datetime.now()).days
     return render_template("index.html", paivat_jaljella=paivat_jaljella)
 
+# ei linkitetty mihinkään navigaatioon - vain Play Consolelle annettava suora linkki
+# Sword Jump -mobiilipelin tietosuojaselosteelle, isännöity täällä koska aiactilla on
+# jo pystyssä oleva domain eikä pelille tarvinnut perustaa erillistä hostausta
+@app.route("/privacy/swordjump")
+def swordjump_privacy():
+    return render_template("swordjump_privacy.html")
+
 
 @app.route("/rekisteri", methods=["GET", "POST"])
 def rekisteri():
