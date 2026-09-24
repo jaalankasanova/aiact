@@ -3,67 +3,238 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sword Jump - Privacy Policy</title>
+<title>Aeterna Ascensus - Privacy Policy / Tietosuojaseloste</title>
+<script>
+  // language: ?lang=fi or ?lang=en, otherwise the browser language (Finnish -> fi, everything else -> en). Without JavaScript both languages are shown.
+  (function () {
+    var p = new URLSearchParams(location.search).get('lang');
+    var lang = p || (navigator.language || 'en').slice(0, 2);
+    document.documentElement.setAttribute('data-lang', lang === 'fi' ? 'fi' : 'en');
+  })();
+</script>
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    max-width: 720px; margin: 0 auto; padding: 32px 20px 80px;
+    max-width: 760px; margin: 0 auto; padding: 32px 20px 80px;
     line-height: 1.7; color: #222; background: #fff;
   }
   h1 { font-size: 26px; margin-bottom: 4px; }
-  .updated { color: #666; font-size: 14px; margin-bottom: 32px; }
+  .updated { color: #666; font-size: 14px; margin-bottom: 12px; }
+  .langswitch { font-size: 14px; margin-bottom: 28px; }
   h2 { font-size: 18px; margin: 28px 0 8px; }
+  h3 { font-size: 15px; margin: 18px 0 4px; }
   ul { margin: 8px 0 8px 20px; }
+  li { margin: 3px 0; }
   a { color: #1a56db; }
+  .summary { background: #f4f7fb; border-left: 4px solid #1a56db; padding: 10px 16px; margin: 16px 0; }
+  hr.sep { border: 0; border-top: 2px solid #ccd; margin: 56px 0 32px; }
+  html[data-lang="fi"] #en { display: none; }
+  html[data-lang="en"] #fi { display: none; }
+  html[data-lang="fi"] #fi hr.sep { display: none; }
 </style>
 </head>
 <body>
-  <h1>Sword Jump - Privacy Policy</h1>
-  <p class="updated">Last updated: September 1, 2026</p>
 
-  <p>This privacy policy describes how the mobile game "Sword Jump" ("the App") collects, uses, and protects information when you play.</p>
+<!-- ============================== ENGLISH ============================== -->
+<div id="en" lang="en">
+  <h1>Aeterna Ascensus - Privacy Policy</h1>
+  <p class="updated">Last updated: September 24, 2026</p>
+  <p class="langswitch"><a href="?lang=fi">Suomeksi</a></p>
 
-  <h2>1. Who operates this app</h2>
-  <p>Sword Jump is developed and operated by an independent developer. Contact: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+  <p>This privacy policy describes how the mobile game "Aeterna Ascensus" (formerly named "Sword Jump"; "the App") collects, uses, shares and protects information when you play.</p>
 
-  <h2>2. Information we collect</h2>
-  <p>If you choose to sign in with Google (optional, required only to use the global leaderboard):</p>
+  <h2>1. Who is responsible</h2>
+  <p>The App is developed and operated by an independent developer, Nikandatech ("we", "us"). Contact: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+
+  <div class="summary">
+    <strong>In short</strong>
+    <ul>
+      <li>You can play without an account. Without signing in, the App does not send your game progress or any personal information to us.</li>
+      <li>Signing in with Google is optional. It enables the global leaderboard and the cloud save.</li>
+      <li>The App shows optional rewarded ads (Google AdMob) and offers optional in-app purchases (Google Play Billing, managed with RevenueCat). Those services process some technical data, described below.</li>
+      <li>You can delete your account and cloud data at any time in the App: <em>Settings &rarr; Delete account &amp; data</em> (see section 8).</li>
+    </ul>
+  </div>
+
+  <h2>2. Information we process</h2>
+
+  <h3>2.1 Google sign-in (optional)</h3>
+  <p>If you choose to sign in with Google (via Firebase Authentication), Google provides us with your Google account name, email address and profile picture URL, and a unique user ID is created for your account. If you never sign in, none of this is collected.</p>
+
+  <h3>2.2 Global leaderboard (only when signed in)</h3>
+  <p>When you finish a run while signed in, an entry is stored in our database (Google Firebase Firestore) containing your user ID, your display name, your score and a timestamp. Your display name is the name you choose in the App or, by default, your Google account name. <strong>Leaderboard entries are visible to other players</strong>; they do not contain your email address. (Entries created by early test versions may also contain your profile picture URL; it is removed the next time your entry is updated or when you delete your data.)</p>
+
+  <h3>2.3 Cloud save (only when signed in)</h3>
+  <p>Your game progress (coins, unlocked weapons and characters, best score, chosen options and settings) is stored in your own cloud save so that you can restore it on a new device or after reinstalling. The cloud save is readable only by your account.</p>
+
+  <h3>2.4 Advertising (Google AdMob)</h3>
+  <p>The App offers optional rewarded video ads. To show and measure ads, Google AdMob may collect and process, among other things, your device's advertising ID, IP address, device and operating-system information, and information about ad interactions. We receive only aggregated ad performance reports.</p>
   <ul>
-    <li>Your Google account name</li>
-    <li>Your Google account email address</li>
-    <li>Your Google account profile picture URL</li>
+    <li>In the European Economic Area, the United Kingdom and Switzerland we ask for your consent through Google's consent form before any ads are requested. You can review or change your choice at any time in <em>Settings &rarr; Ad privacy options</em> (shown where required).</li>
+    <li>You can reset your advertising ID or opt out of ads personalization in your Android settings (Settings &rarr; Google &rarr; Ads).</li>
+    <li>If you have purchased "Remove ads", the App does not request ads.</li>
+    <li>More information: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">How Google uses information from sites or apps that use its services</a></li>
   </ul>
-  <p>This is provided to us by Google's Sign-In service (via Firebase Authentication) when you explicitly choose to sign in. If you never sign in, none of this is collected.</p>
-  <p>Gameplay data:</p>
+
+  <h3>2.5 In-app purchases (Google Play Billing and RevenueCat)</h3>
+  <p>Purchases are processed by Google Play; we never receive your payment card details. We use RevenueCat to verify purchases and manage what you have bought ("Remove ads", coin packs). RevenueCat receives purchase information (product, price, time, purchase token), an anonymous app user ID and technical data such as IP address, device and app version. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's privacy policy</a>.</p>
+
+  <h3>2.6 Device features</h3>
+  <p>The App uses your device's motion (tilt) sensor to steer the game and the vibration motor for feedback. This data is used only on your device at that moment and is not stored or sent anywhere.</p>
+
+  <h3>2.7 Data stored only on your device</h3>
+  <p>Your progress and settings are stored in the App's local storage on your device. If you are not signed in, this data never leaves your device.</p>
+
+  <h3>2.8 Technical data of our service providers</h3>
+  <p>We do not use our own analytics or crash-reporting tools. Google (Firebase, AdMob, Google Play) and RevenueCat may process technical data such as IP addresses and installation identifiers as part of providing their services.</p>
+
+  <h2>3. Why we process data (legal bases)</h2>
   <ul>
-    <li>Your best score, coins, and unlocked characters/weapons - stored locally on your device only, not sent anywhere unless noted below.</li>
-    <li>If signed in and you finish a run, your score and display name are sent to our database (Firebase Firestore) to power the optional global leaderboard. Leaderboard entries (display name and score) are visible to other players.</li>
+    <li><strong>Providing the features you ask for</strong> (contract): sign-in, cloud save, leaderboard, purchases.</li>
+    <li><strong>Consent</strong>: ad personalization/advertising in the EEA, UK and Switzerland. You can withdraw consent at any time (section 2.4).</li>
+    <li><strong>Legitimate interests</strong>: keeping the leaderboard fair (rejecting implausible scores), securing and operating the service.</li>
   </ul>
+  <p>We do not sell your personal data.</p>
 
-  <h2>3. How we use this information</h2>
+  <h2>4. Who we share data with</h2>
+  <p>Only with service providers that help us run the App: Google (Firebase Authentication and Firestore, AdMob, Google Play) and RevenueCat. Leaderboard entries are visible to other players as described in section 2.2. We do not share your data with anyone else, except where the law requires.</p>
+
+  <h2>5. International transfers</h2>
+  <p>Google and RevenueCat may process data on servers outside your country, including in the United States. They rely on safeguards such as the EU Standard Contractual Clauses or the EU-US Data Privacy Framework.</p>
+
+  <h2>6. How long we keep data</h2>
   <ul>
-    <li>To let you sign in and identify your account across sessions</li>
-    <li>To show your ranking on the global leaderboard (weekly, monthly, all-time)</li>
-    <li>To prevent obviously implausible scores from appearing on the leaderboard</li>
+    <li>Data stored only on your device stays until you uninstall the App or clear its data.</li>
+    <li>Your account, cloud save and leaderboard entries are kept until you delete them (section 8).</li>
+    <li>Ad and purchase data held by Google and RevenueCat is kept according to their own policies and legal obligations (for example accounting).</li>
   </ul>
-  <p>We do not sell your data, and we do not use it for advertising or marketing.</p>
-
-  <h2>4. Third-party services</h2>
-  <p>The App uses Google Firebase (Authentication and Firestore database) to provide sign-in and the leaderboard. Google's own privacy policy governs how Firebase infrastructure handles data in transit and at rest: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a></p>
-
-  <h2>5. Data retention and deletion</h2>
-  <p>Locally stored gameplay data stays on your device until you uninstall the App or clear its data. Leaderboard entries and account data linked to your Google sign-in are kept until you request deletion. To request deletion of your data, email <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a> and we will remove your leaderboard entries and associated account data.</p>
-
-  <h2>6. Children's privacy</h2>
-  <p>The App is not directed at children under 13, and we do not knowingly collect personal information from children under 13.</p>
 
   <h2>7. Security</h2>
-  <p>Data sent to our servers is transmitted using standard encrypted connections (HTTPS/TLS) via Google Firebase's infrastructure.</p>
+  <p>Data is transmitted over encrypted connections (HTTPS/TLS) to Google Firebase's infrastructure, and database security rules restrict access (for example, only you can read your cloud save). No method of storage or transmission is completely secure.</p>
 
-  <h2>8. Changes to this policy</h2>
-  <p>We may update this policy from time to time. Changes will be posted on this page with an updated "Last updated" date.</p>
+  <h2 id="delete">8. Deleting your account and data</h2>
+  <p><strong>In the App:</strong> open <em>Settings &rarr; Delete account &amp; data</em> (visible when you are signed in) and confirm. This permanently deletes:</p>
+  <ul>
+    <li>your account (name, email address and user ID),</li>
+    <li>your cloud save, and</li>
+    <li>all your leaderboard entries.</li>
+  </ul>
+  <p><strong>What is not deleted:</strong> progress stored only on your device (uninstall the App or clear its data to remove it), and purchase records that Google Play must keep for accounting and legal reasons. Purchase records at RevenueCat are linked only to an anonymous ID; if you want them removed, email us your Google Play order number and we will delete them where possible.</p>
+  <p><strong>By email:</strong> if you cannot use the App, email <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a> from the address linked to your Google account with the subject "Delete my data". We will delete your data within 30 days.</p>
 
-  <h2>9. Contact</h2>
+  <h2>9. Your rights and choices</h2>
+  <p>If you live in the European Economic Area or the United Kingdom, you have the right to access your data, correct it, have it erased, restrict or object to its processing, receive it in a portable form, and withdraw consent at any time (this does not affect processing that took place before). Residents of some other regions (for example some US states) have similar rights. To use your rights, use the in-App options above or email us. You may also complain to your local data protection authority; in Finland this is the Office of the Data Protection Ombudsman (<a href="https://tietosuoja.fi" target="_blank" rel="noopener">tietosuoja.fi</a>).</p>
+
+  <h2>10. Children</h2>
+  <p>The App is not directed at children under 13 (or under the age of digital consent in your country), and we do not knowingly collect personal information from them. If you believe a child has provided personal information, contact us and we will delete it.</p>
+
+  <h2>11. Changes to this policy</h2>
+  <p>We may update this policy from time to time, for example when we add features that collect data. Changes are posted on this page with an updated "Last updated" date.</p>
+
+  <h2>12. Contact</h2>
   <p>Questions about this policy or your data: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+</div>
+
+<!-- ============================== SUOMI ============================== -->
+<div id="fi" lang="fi">
+  <hr class="sep" id="fi-alku">
+  <h1>Aeterna Ascensus - Tietosuojaseloste</h1>
+  <p class="updated">Päivitetty viimeksi: 24. syyskuuta 2026</p>
+  <p class="langswitch"><a href="?lang=en">English</a></p>
+
+  <p>Tässä tietosuojaselosteessa kerrotaan, miten mobiilipeli "Aeterna Ascensus" (aiemmin nimeltään "Sword Jump"; "sovellus") kerää, käyttää, luovuttaa ja suojaa tietoja pelatessasi.</p>
+
+  <h2>1. Rekisterinpitäjä</h2>
+  <p>Sovelluksen kehittää ja ylläpitää yksityinen kehittäjä Nikandatech ("me"). Yhteystiedot: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+
+  <div class="summary">
+    <strong>Lyhyesti</strong>
+    <ul>
+      <li>Voit pelata ilman tiliä. Jos et kirjaudu sisään, sovellus ei lähetä meille pelietenemistäsi eikä mitään henkilötietoja.</li>
+      <li>Google-kirjautuminen on vapaaehtoinen. Se mahdollistaa maailmanlaajuisen tulostaulukon ja pilvitallennuksen.</li>
+      <li>Sovellus näyttää vapaaehtoisia palkkiomainoksia (Google AdMob) ja tarjoaa vapaaehtoisia sovelluksensisäisiä ostoja (Google Play Billing, hallinnoi RevenueCat). Nämä palvelut käsittelevät alla kuvattuja teknisiä tietoja.</li>
+      <li>Voit poistaa tilisi ja pilvitietosi milloin tahansa sovelluksessa: <em>Asetukset &rarr; Poista tili ja tiedot</em> (ks. kohta 8).</li>
+    </ul>
+  </div>
+
+  <h2>2. Käsittelemämme tiedot</h2>
+
+  <h3>2.1 Google-kirjautuminen (vapaaehtoinen)</h3>
+  <p>Jos kirjaudut sisään Googlella (Firebase Authenticationin kautta), Google antaa meille Google-tilisi nimen, sähköpostiosoitteen ja profiilikuvan osoitteen, ja tilillesi luodaan yksilöllinen käyttäjätunnus. Jos et koskaan kirjaudu sisään, mitään näistä ei kerätä.</p>
+
+  <h3>2.2 Maailmanlaajuinen tulostaulukko (vain kirjautuneena)</h3>
+  <p>Kun päätät pelikierroksen kirjautuneena, tietokantaamme (Google Firebase Firestore) tallennetaan merkintä, jossa on käyttäjätunnuksesi, näyttönimesi, pisteesi ja aikaleima. Näyttönimesi on sovelluksessa valitsemasi nimi tai oletuksena Google-tilisi nimi. <strong>Tulostaulukon merkinnät näkyvät muille pelaajille</strong>; ne eivät sisällä sähköpostiosoitettasi. (Varhaisten testiversioiden luomat merkinnät voivat sisältää myös profiilikuvasi osoitteen; se poistuu, kun merkintäsi päivitetään seuraavan kerran tai kun poistat tietosi.)</p>
+
+  <h3>2.3 Pilvitallennus (vain kirjautuneena)</h3>
+  <p>Pelietenemisesi (kolikot, avatut aseet ja hahmot, ennätys, valitut vaihtoehdot ja asetukset) tallennetaan omaan pilvitallennukseesi, jotta voit palauttaa sen uudella laitteella tai uudelleenasennuksen jälkeen. Pilvitallennus on luettavissa vain omalla tililläsi.</p>
+
+  <h3>2.4 Mainonta (Google AdMob)</h3>
+  <p>Sovellus tarjoaa vapaaehtoisia palkkiovideomainoksia. Mainosten näyttämiseksi ja mittaamiseksi Google AdMob voi kerätä ja käsitellä muun muassa laitteesi mainostunnuksen, IP-osoitteen, laite- ja käyttöjärjestelmätietoja sekä tietoja mainosvuorovaikutuksesta. Saamme itse vain koottuja mainosten suorituskykyraportteja.</p>
+  <ul>
+    <li>Euroopan talousalueella, Isossa-Britanniassa ja Sveitsissä pyydämme suostumuksesi Googlen suostumuslomakkeella ennen kuin mainoksia pyydetään. Voit tarkistaa tai muuttaa valintasi milloin tahansa kohdassa <em>Asetukset &rarr; Mainosten tietosuoja</em> (näkyy, kun se vaaditaan).</li>
+    <li>Voit nollata mainostunnuksesi tai kieltää mainosten personoinnin Android-asetuksissa (Asetukset &rarr; Google &rarr; Mainokset).</li>
+    <li>Jos olet ostanut "Poista mainokset", sovellus ei pyydä mainoksia.</li>
+    <li>Lisätietoa: <a href="https://policies.google.com/technologies/partner-sites?hl=fi" target="_blank" rel="noopener">Miten Google käyttää tietoja sivustoilta tai sovelluksista, joissa käytetään sen palveluja</a></li>
+  </ul>
+
+  <h3>2.5 Sovelluksensisäiset ostot (Google Play Billing ja RevenueCat)</h3>
+  <p>Ostokset käsittelee Google Play; emme koskaan saa maksukorttitietojasi. Käytämme RevenueCatia ostosten vahvistamiseen ja sen hallintaan, mitä olet ostanut ("Poista mainokset", kolikkopaketit). RevenueCat saa ostotiedot (tuote, hinta, aika, ostotunniste), anonyymin sovelluskäyttäjätunnuksen sekä teknisiä tietoja, kuten IP-osoitteen, laitteen ja sovelluksen version. Ks. <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCatin tietosuojakäytäntö</a>.</p>
+
+  <h3>2.6 Laitteen ominaisuudet</h3>
+  <p>Sovellus käyttää laitteesi liikeanturia (kallistus) pelin ohjaamiseen ja värinämoottoria palautteeseen. Tietoa käytetään vain laitteellasi sillä hetkellä, eikä sitä tallenneta tai lähetetä minnekään.</p>
+
+  <h3>2.7 Vain laitteellasi säilytettävät tiedot</h3>
+  <p>Etenemisesi ja asetuksesi tallennetaan sovelluksen paikalliseen tallennustilaan laitteellasi. Jos et ole kirjautunut sisään, nämä tiedot eivät koskaan poistu laitteeltasi.</p>
+
+  <h3>2.8 Palveluntarjoajien tekniset tiedot</h3>
+  <p>Emme käytä omia analytiikka- tai kaatumisraportointityökaluja. Google (Firebase, AdMob, Google Play) ja RevenueCat voivat käsitellä teknisiä tietoja, kuten IP-osoitteita ja asennustunnisteita, palvelujensa tuottamiseksi.</p>
+
+  <h2>3. Miksi käsittelemme tietoja (oikeusperusteet)</h2>
+  <ul>
+    <li><strong>Pyytämiesi ominaisuuksien tarjoaminen</strong> (sopimus): kirjautuminen, pilvitallennus, tulostaulukko, ostot.</li>
+    <li><strong>Suostumus</strong>: mainonta ja mainosten personointi ETA-alueella, Isossa-Britanniassa ja Sveitsissä. Voit peruuttaa suostumuksen milloin tahansa (kohta 2.4).</li>
+    <li><strong>Oikeutettu etu</strong>: tulostaulukon oikeudenmukaisuuden turvaaminen (epäuskottavien pisteiden hylkääminen), palvelun turvaaminen ja ylläpito.</li>
+  </ul>
+  <p>Emme myy henkilötietojasi.</p>
+
+  <h2>4. Kenelle tietoja luovutetaan</h2>
+  <p>Vain palveluntarjoajille, jotka auttavat sovelluksen ylläpidossa: Google (Firebase Authentication ja Firestore, AdMob, Google Play) ja RevenueCat. Tulostaulukon merkinnät näkyvät muille pelaajille kohdan 2.2 mukaisesti. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
+
+  <h2>5. Siirrot EU:n ulkopuolelle</h2>
+  <p>Google ja RevenueCat voivat käsitellä tietoja palvelimilla oman maasi ulkopuolella, myös Yhdysvalloissa. Ne käyttävät suojatoimia, kuten EU:n vakiosopimuslausekkeita tai EU:n ja Yhdysvaltojen tietosuojakehystä (Data Privacy Framework).</p>
+
+  <h2>6. Kuinka kauan tietoja säilytetään</h2>
+  <ul>
+    <li>Vain laitteellasi olevat tiedot säilyvät, kunnes poistat sovelluksen tai tyhjennät sen tiedot.</li>
+    <li>Tilisi, pilvitallennuksesi ja tulostaulukkomerkintäsi säilyvät, kunnes poistat ne (kohta 8).</li>
+    <li>Googlen ja RevenueCatin hallussa olevia mainos- ja ostotietoja säilytetään niiden omien käytäntöjen ja lakisääteisten velvoitteiden (esim. kirjanpito) mukaisesti.</li>
+  </ul>
+
+  <h2>7. Tietoturva</h2>
+  <p>Tiedot siirretään salattuja yhteyksiä (HTTPS/TLS) pitkin Google Firebasen infrastruktuuriin, ja tietokannan suojaussäännöt rajoittavat pääsyä (esimerkiksi vain sinä voit lukea pilvitallennuksesi). Mikään tallennus- tai siirtotapa ei ole täysin turvallinen.</p>
+
+  <h2 id="poisto">8. Tilin ja tietojen poistaminen</h2>
+  <p><strong>Sovelluksessa:</strong> avaa <em>Asetukset &rarr; Poista tili ja tiedot</em> (näkyy, kun olet kirjautuneena) ja vahvista. Tämä poistaa pysyvästi:</p>
+  <ul>
+    <li>tilisi (nimi, sähköpostiosoite ja käyttäjätunnus),</li>
+    <li>pilvitallennuksesi ja</li>
+    <li>kaikki tulostaulukkomerkintäsi.</li>
+  </ul>
+  <p><strong>Mitä ei poisteta:</strong> vain laitteellasi säilytettävä eteneminen (poista sovellus tai tyhjennä sen tiedot poistaaksesi sen) sekä ostotiedot, jotka Google Playn on säilytettävä kirjanpito- ja lakisyistä. RevenueCatin ostotiedot on liitetty vain anonyymiin tunnukseen; jos haluat ne poistettavaksi, lähetä meille Google Play -tilausnumerosi, niin poistamme ne mahdollisuuksien mukaan.</p>
+  <p><strong>Sähköpostilla:</strong> jos et voi käyttää sovellusta, lähetä sähköpostia osoitteeseen <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a> Google-tiliisi liitetystä osoitteesta otsikolla "Poista tietoni". Poistamme tietosi 30 päivän kuluessa.</p>
+
+  <h2>9. Oikeutesi ja valintasi</h2>
+  <p>Jos asut Euroopan talousalueella tai Isossa-Britanniassa, sinulla on oikeus saada pääsy tietoihisi, oikaista ne, poistaa ne, rajoittaa tai vastustaa niiden käsittelyä, saada ne siirrettävässä muodossa ja peruuttaa suostumuksesi milloin tahansa (tämä ei vaikuta ennen peruutusta tehtyyn käsittelyyn). Joidenkin muiden alueiden (esim. tiettyjen Yhdysvaltain osavaltioiden) asukkailla on vastaavia oikeuksia. Käytä oikeuksiasi yllä kuvatuilla sovelluksen valinnoilla tai lähettämällä meille sähköpostia. Voit myös tehdä valituksen paikalliselle tietosuojaviranomaiselle; Suomessa se on tietosuojavaltuutetun toimisto (<a href="https://tietosuoja.fi" target="_blank" rel="noopener">tietosuoja.fi</a>).</p>
+
+  <h2>10. Lapset</h2>
+  <p>Sovellus ei ole suunnattu alle 13-vuotiaille (tai maasi digitaalisen suostumuksen ikärajaa nuoremmille), emmekä tietoisesti kerää heiltä henkilötietoja. Jos uskot lapsen antaneen henkilötietoja, ota yhteyttä, niin poistamme ne.</p>
+
+  <h2>11. Muutokset tähän selosteeseen</h2>
+  <p>Voimme päivittää tätä selostetta aika ajoin, esimerkiksi kun lisäämme tietoja kerääviä ominaisuuksia. Muutokset julkaistaan tällä sivulla päivitetyllä "Päivitetty viimeksi" -päivämäärällä.</p>
+
+  <h2>12. Yhteystiedot</h2>
+  <p>Kysymykset tästä selosteesta tai tiedoistasi: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+</div>
+
 </body>
 </html>
