@@ -303,6 +303,12 @@ def index():
 def swordjump_privacy():
     return render_template("swordjump_privacy.html")
 
+# Aeterna Ascensus (ent. Sword Jump) -pelin kuukausipalkinnon kilpailusäännöt - linkitetään
+# pelin tulostaulusta ja mainoksista (Google Play / Ads vaativat säännöt rahapalkinnoille)
+@app.route("/rules/swordjump")
+def swordjump_rules():
+    return render_template("swordjump_rules.html")
+
 
 @app.route("/rekisteri", methods=["GET", "POST"])
 def rekisteri():
