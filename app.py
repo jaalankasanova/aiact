@@ -309,6 +309,15 @@ def swordjump_privacy():
 def swordjump_rules():
     return render_template("swordjump_rules.html")
 
+# AdMob app-ads.txt (2026-10-06): Aeterna Ascensuksen kauppasivun "developer website" on tämä domain, joten AdMob
+# hakee tiedoston tämän domainin juuresta (onrender.com on Public Suffix Listillä -> aiact.onrender.com on oma juuri).
+# Rivi = Googlen AdMob-julkaisijatunnus + Googlen sertifiointitunnus (TAG-ID f08c47fec0942fa0).
+APP_ADS_TXT = "google.com, pub-4873563459520804, DIRECT, f08c47fec0942fa0\n"
+
+@app.route("/app-ads.txt")
+def app_ads_txt():
+    return APP_ADS_TXT, 200, {"Content-Type": "text/plain; charset=utf-8"}
+
 
 @app.route("/rekisteri", methods=["GET", "POST"])
 def rekisteri():
