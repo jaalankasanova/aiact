@@ -38,7 +38,7 @@
 <!-- ============================== ENGLISH ============================== -->
 <div id="en" lang="en">
   <h1>Aeterna Ascensus - Privacy Policy</h1>
-  <p class="updated">Last updated: October 30, 2026</p>
+  <p class="updated">Last updated: November 6, 2026</p>
   <p class="langswitch"><a href="?lang=fi">Suomeksi</a></p>
 
   <p>This privacy policy describes how the mobile game "Aeterna Ascensus" (formerly named "Sword Jump"; "the App") collects, uses, shares and protects information when you play.</p>
@@ -65,7 +65,7 @@
   <p><strong>Monthly prize:</strong> if you win the monthly leaderboard competition, we use the email address of your Google account to contact you about the prize, and the payment details you then give us to pay it. They are used only for this purpose and deleted when no longer needed for it or for accounting obligations. See the <a href="/rules/swordjump">competition rules</a>.</p>
 
   <h3>2.2 Global leaderboard</h3>
-  <p>When you finish a run, an entry is stored in our database (Google Firebase Firestore) containing your user ID, your display name, your score and a timestamp; when your player account is created, your best scores stored on the device are added. Your display name is the name you choose in the App or, by default, your Google account name or, without Google, "Player" followed by four characters of your user ID. Names containing offensive words are not shown. <strong>Leaderboard entries are visible to other players</strong>; they do not contain your email address. (Entries created by early test versions may also contain your profile picture URL; it is removed the next time your entry is updated or when you delete your data.)</p>
+  <p>When you finish a run, an entry is stored in our database (Google Firebase Firestore) containing your user ID, your display name, your score and a timestamp; for Adam's Adventure it also contains your character's appearance (equipment, hairstyle and weapons, shown on the leaderboard podium) and your duel trophy count (shown on the trophy leaderboard); when your player account is created, your best scores stored on the device are added. Your display name is the name you choose in the App or, by default, your Google account name or, without Google, "Player" followed by four characters of your user ID. Names containing offensive words are not shown. <strong>Leaderboard entries are visible to other players</strong>; they do not contain your email address. (Entries created by early test versions may also contain your profile picture URL; it is removed the next time your entry is updated or when you delete your data.)</p>
 
   <h3>2.3 Cloud save (only when signed in with Google)</h3>
   <p>Your game progress (coins, unlocked weapons and characters, best score, chosen options and settings) is stored in your own cloud save so that you can restore it on a new device or after reinstalling. The cloud save is readable only by your account.</p>
@@ -89,7 +89,7 @@
   <p>Your progress and settings are stored in the App's local storage on your device. Unless you sign in with Google (cloud save, section 2.3), this data stays on your device; only your best scores are sent to the leaderboard (section 2.2) and online duel data as described in section 2.10 (usage statistics are described separately in section 2.9).</p>
 
   <h3>2.8 Technical data of our service providers</h3>
-  <p>Apart from Google Analytics for Firebase (section 2.9), we do not use analytics or crash-reporting tools. Google (Firebase, AdMob, Google Play) and RevenueCat may process technical data such as IP addresses and installation identifiers as part of providing their services.</p>
+  <p>Apart from Google Analytics for Firebase (section 2.9) and Firebase Crashlytics (section 2.11), we do not use analytics or crash-reporting tools. Google (Firebase, AdMob, Google Play) and RevenueCat may process technical data such as IP addresses and installation identifiers as part of providing their services.</p>
 
   <h3>2.9 Usage statistics (Google Analytics for Firebase)</h3>
   <p>To understand how the game is played, fix problems and measure how well our ad campaigns work, the App uses Google Analytics for Firebase. It records events such as app opens, game starts and ends (score, game mode, chosen character and weapon), level results, which screens are opened (shop, leaderboard, levels, duel, settings), rewarded-ad outcomes, sign-in attempts and coin purchases in the shop. Google Analytics also processes an app-instance identifier, device and operating-system information, the app version and an approximate location (country or region) derived from your IP address; where you have consented, it may also use your device's advertising ID. It does not receive your name or email address, and we see only aggregated reports.</p>
@@ -100,18 +100,21 @@
   </ul>
 
   <h3>2.10 Online duels (beta)</h3>
-  <p>If you play an online duel, the App sends your chosen player name, your character's appearance and equipment, strength figures and live game data (position, moves, health) to your opponent. Matchmaking and duel rooms use Google Firebase Realtime Database; the game data travels over a direct connection between the two devices (WebRTC) or, if a direct connection is not possible, through Cloudflare's relay (TURN) service. <strong>In a direct connection your device's IP address is visible to your opponent's device</strong>, as is usual in online games. Matchmaking and room data are temporary and deleted after the match. Duel results (trophies, wins and losses) are stored only on your device. Online duels have no chat.</p>
+  <p>If you play an online duel, the App sends your chosen player name, your character's appearance and equipment, strength figures and live game data (position, moves, health) to your opponent. Matchmaking and duel rooms use Google Firebase Realtime Database; the game data travels over a direct connection between the two devices (WebRTC) or, if a direct connection is not possible, through Cloudflare's relay (TURN) service. <strong>In a direct connection your device's IP address is visible to your opponent's device</strong>, as is usual in online games. Matchmaking and room data are temporary and deleted after the match. Your wins and losses are stored on your device (and in your cloud save when signed in with Google); your trophy count is also added to your leaderboard entry (section 2.2). While the App is open, it stores your user ID with a timestamp in Realtime Database so that the number of players online can be counted; the entry is removed when you leave the App and expires after a few minutes. Online duels have no chat.</p>
+
+  <h3>2.11 Crash reports (Firebase Crashlytics)</h3>
+  <p>If the App crashes or runs into an error, it sends a crash report through Google Firebase Crashlytics: the error and its stack trace, your device model, the Android and Android System WebView versions, memory, processor and screen information, the App version, the game mode at the time of the crash and the in-game events leading up to it (for example the start of a run or a duel), together with a random installation identifier. Crash reports do not contain your name, email address or player account ID. We use them only to find and fix bugs.</p>
 
   <h2>3. Why we process data (legal bases)</h2>
   <ul>
     <li><strong>Providing the features you ask for</strong> (contract): player account, leaderboard, online duels, sign-in, cloud save, purchases.</li>
     <li><strong>Consent</strong>: ad personalization/advertising and usage statistics in the EEA, UK and Switzerland. You can withdraw consent at any time (sections 2.4 and 2.9).</li>
-    <li><strong>Legitimate interests</strong>: keeping the leaderboard fair, securing and operating the service, and (outside the EEA, UK and Switzerland) understanding how the App is used through usage statistics.</li>
+    <li><strong>Legitimate interests</strong>: keeping the leaderboard fair, securing and operating the service, finding and fixing crashes (section 2.11), and (outside the EEA, UK and Switzerland) understanding how the App is used through usage statistics.</li>
   </ul>
   <p>We do not sell your personal data.</p>
 
   <h2>4. Who we share data with</h2>
-  <p>Only with service providers that help us run the App: Google (Firebase Authentication, Firestore, Realtime Database and Analytics, AdMob, Google Play), Cloudflare (relay for online duels) and RevenueCat. Leaderboard entries are visible to other players as described in section 2.2, and in online duels your opponent receives the data described in section 2.10. We do not share your data with anyone else, except where the law requires.</p>
+  <p>Only with service providers that help us run the App: Google (Firebase Authentication, Firestore, Realtime Database, Analytics and Crashlytics, AdMob, Google Play), Cloudflare (relay for online duels) and RevenueCat. Leaderboard entries are visible to other players as described in section 2.2, and in online duels your opponent receives the data described in section 2.10. We do not share your data with anyone else, except where the law requires.</p>
 
   <h2>5. International transfers</h2>
   <p>Google, Cloudflare and RevenueCat may process data on servers outside your country, including in the United States. They rely on safeguards such as the EU Standard Contractual Clauses or the EU-US Data Privacy Framework.</p>
@@ -122,6 +125,7 @@
     <li>Your player account (anonymous or Google), cloud save and leaderboard entries are kept until you delete them (section 8).</li>
     <li>Online duel matchmaking and room data are deleted after the match.</li>
     <li>Usage statistics (Google Analytics for Firebase) are kept at the user or device level for at most 14 months; after that only aggregated reports remain.</li>
+    <li>Crash reports (Firebase Crashlytics) are kept for at most 90 days.</li>
     <li>Ad and purchase data held by Google and RevenueCat is kept according to their own policies and legal obligations (for example accounting).</li>
   </ul>
 
@@ -156,7 +160,7 @@
 <div id="fi" lang="fi">
   <hr class="sep" id="fi-alku">
   <h1>Aeterna Ascensus - Tietosuojaseloste</h1>
-  <p class="updated">Päivitetty viimeksi: 30. lokakuuta 2026</p>
+  <p class="updated">Päivitetty viimeksi: 6. marraskuuta 2026</p>
   <p class="langswitch"><a href="?lang=en">English</a></p>
 
   <p>Tässä tietosuojaselosteessa kerrotaan, miten mobiilipeli "Aeterna Ascensus" (aiemmin nimeltään "Sword Jump"; "sovellus") kerää, käyttää, luovuttaa ja suojaa tietoja pelatessasi.</p>
@@ -183,7 +187,7 @@
   <p><strong>Kuukausipalkinto:</strong> jos voitat kuukauden tulostaulukilpailun, käytämme Google-tilisi sähköpostiosoitetta ottaaksemme sinuun yhteyttä palkinnosta ja silloin antamiasi maksutietoja palkinnon maksamiseen. Tietoja käytetään vain tähän tarkoitukseen, ja ne poistetaan, kun niitä ei enää tarvita siihen tai kirjanpitovelvoitteisiin. Katso <a href="/rules/swordjump?lang=fi">kilpailun säännöt</a>.</p>
 
   <h3>2.2 Maailmanlaajuinen tulostaulukko</h3>
-  <p>Kun päätät pelikierroksen, tietokantaamme (Google Firebase Firestore) tallennetaan merkintä, jossa on käyttäjätunnuksesi, näyttönimesi, pisteesi ja aikaleima; pelaajatilin luonnin yhteydessä lisätään laitteelle tallennetut parhaat tuloksesi. Näyttönimesi on sovelluksessa valitsemasi nimi tai oletuksena Google-tilisi nimi tai, ilman Googlea, "Player" ja neljä merkkiä käyttäjätunnuksestasi. Loukkaavia sanoja sisältäviä nimiä ei näytetä. <strong>Tulostaulukon merkinnät näkyvät muille pelaajille</strong>; ne eivät sisällä sähköpostiosoitettasi. (Varhaisten testiversioiden luomat merkinnät voivat sisältää myös profiilikuvasi osoitteen; se poistuu, kun merkintäsi päivitetään seuraavan kerran tai kun poistat tietosi.)</p>
+  <p>Kun päätät pelikierroksen, tietokantaamme (Google Firebase Firestore) tallennetaan merkintä, jossa on käyttäjätunnuksesi, näyttönimesi, pisteesi ja aikaleima; Adam's Adventuressa myös hahmosi ulkonäkö (varusteet, kampaus ja aseet, näkyy tulostaulukon palkintopalleilla) ja kaksintaistelujen pokaalimääräsi (näkyy pokaalitulostaulukossa); pelaajatilin luonnin yhteydessä lisätään laitteelle tallennetut parhaat tuloksesi. Näyttönimesi on sovelluksessa valitsemasi nimi tai oletuksena Google-tilisi nimi tai, ilman Googlea, "Player" ja neljä merkkiä käyttäjätunnuksestasi. Loukkaavia sanoja sisältäviä nimiä ei näytetä. <strong>Tulostaulukon merkinnät näkyvät muille pelaajille</strong>; ne eivät sisällä sähköpostiosoitettasi. (Varhaisten testiversioiden luomat merkinnät voivat sisältää myös profiilikuvasi osoitteen; se poistuu, kun merkintäsi päivitetään seuraavan kerran tai kun poistat tietosi.)</p>
 
   <h3>2.3 Pilvitallennus (vain Google-kirjautuneena)</h3>
   <p>Pelietenemisesi (kolikot, avatut aseet ja hahmot, ennätys, valitut vaihtoehdot ja asetukset) tallennetaan omaan pilvitallennukseesi, jotta voit palauttaa sen uudella laitteella tai uudelleenasennuksen jälkeen. Pilvitallennus on luettavissa vain omalla tililläsi.</p>
@@ -207,7 +211,7 @@
   <p>Etenemisesi ja asetuksesi tallennetaan sovelluksen paikalliseen tallennustilaan laitteellasi. Ellei kirjaudu Googlella (pilvitallennus, kohta 2.3), nämä tiedot pysyvät laitteellasi; vain parhaat tuloksesi lähetetään tulostaulukkoon (kohta 2.2) ja online-kaksintaistelun tiedot kohdan 2.10 mukaisesti (käyttötilastoista kerrotaan erikseen kohdassa 2.9).</p>
 
   <h3>2.8 Palveluntarjoajien tekniset tiedot</h3>
-  <p>Google Analytics for Firebasea (kohta 2.9) lukuun ottamatta emme käytä analytiikka- tai kaatumisraportointityökaluja. Google (Firebase, AdMob, Google Play) ja RevenueCat voivat käsitellä teknisiä tietoja, kuten IP-osoitteita ja asennustunnisteita, palvelujensa tuottamiseksi.</p>
+  <p>Google Analytics for Firebasea (kohta 2.9) ja Firebase Crashlyticsia (kohta 2.11) lukuun ottamatta emme käytä analytiikka- tai kaatumisraportointityökaluja. Google (Firebase, AdMob, Google Play) ja RevenueCat voivat käsitellä teknisiä tietoja, kuten IP-osoitteita ja asennustunnisteita, palvelujensa tuottamiseksi.</p>
 
   <h3>2.9 Käyttötilastot (Google Analytics for Firebase)</h3>
   <p>Ymmärtääksemme, miten peliä pelataan, korjataksemme ongelmia ja mitataksemme mainoskampanjoidemme toimivuutta sovellus käyttää Google Analytics for Firebasea. Se kirjaa tapahtumia, kuten sovelluksen avaukset, pelikierrosten alut ja loput (pisteet, pelitila, valittu hahmo ja ase), tasojen tulokset, avatut näkymät (kauppa, tulostaulukko, tasot, kaksintaistelu, asetukset), palkkiomainosten lopputulokset, kirjautumisyritykset ja kaupan kolikko-ostot. Google Analytics käsittelee lisäksi sovellusasennuksen tunnisteen, laite- ja käyttöjärjestelmätiedot, sovelluksen version sekä IP-osoitteesta päätellyn likimääräisen sijainnin (maa tai alue); jos olet antanut suostumuksen, se voi käyttää myös laitteesi mainostunnusta. Se ei saa nimeäsi eikä sähköpostiosoitettasi, ja me näemme vain koottuja raportteja.</p>
@@ -218,18 +222,21 @@
   </ul>
 
   <h3>2.10 Online-kaksintaistelut (beta)</h3>
-  <p>Jos pelaat online-kaksintaistelun, sovellus lähettää vastustajallesi valitsemasi pelaajanimen, hahmosi ulkonäön ja varusteet, voimalukemat sekä reaaliaikaiset pelitiedot (sijainti, liikkeet, terveys). Vastustajan haku ja ottelupaikat käyttävät Google Firebase Realtime Databasea; pelitiedot kulkevat laitteiden välisen suoran yhteyden (WebRTC) kautta tai, jos suora yhteys ei onnistu, Cloudflaren välityspalvelun (TURN) kautta. <strong>Suorassa yhteydessä laitteesi IP-osoite näkyy vastustajan laitteelle</strong>, kuten verkkopeleissä yleensä. Haku- ja ottelupaikan tiedot ovat väliaikaisia ja poistetaan ottelun jälkeen. Kaksintaistelujen tulokset (pokaalit, voitot ja häviöt) tallennetaan vain laitteellesi. Online-kaksintaisteluissa ei ole chattia.</p>
+  <p>Jos pelaat online-kaksintaistelun, sovellus lähettää vastustajallesi valitsemasi pelaajanimen, hahmosi ulkonäön ja varusteet, voimalukemat sekä reaaliaikaiset pelitiedot (sijainti, liikkeet, terveys). Vastustajan haku ja ottelupaikat käyttävät Google Firebase Realtime Databasea; pelitiedot kulkevat laitteiden välisen suoran yhteyden (WebRTC) kautta tai, jos suora yhteys ei onnistu, Cloudflaren välityspalvelun (TURN) kautta. <strong>Suorassa yhteydessä laitteesi IP-osoite näkyy vastustajan laitteelle</strong>, kuten verkkopeleissä yleensä. Haku- ja ottelupaikan tiedot ovat väliaikaisia ja poistetaan ottelun jälkeen. Voitot ja häviöt tallennetaan laitteellesi (ja Google-kirjautuneena pilvitallennukseesi); pokaalimääräsi lisätään myös tulostaulukkomerkintääsi (kohta 2.2). Kun sovellus on auki, se tallentaa käyttäjätunnuksesi ja aikaleiman Realtime Databaseen, jotta paikalla olevien pelaajien määrä voidaan laskea; merkintä poistetaan, kun poistut sovelluksesta, ja se vanhenee muutamassa minuutissa. Online-kaksintaisteluissa ei ole chattia.</p>
+
+  <h3>2.11 Kaatumisraportit (Firebase Crashlytics)</h3>
+  <p>Jos sovellus kaatuu tai siinä tapahtuu virhe, se lähettää Google Firebase Crashlyticsin kautta kaatumisraportin: virheen ja sen pinon jäljen, laitteesi mallin, Androidin ja Android System WebView'n versiot, muisti-, suoritin- ja näyttötiedot, sovelluksen version, kaatumishetken pelitilan sekä sitä edeltäneet pelin tapahtumat (esimerkiksi juoksun tai kaksintaistelun alku) ja satunnaisen asennustunnisteen. Kaatumisraportit eivät sisällä nimeäsi, sähköpostiosoitettasi eikä pelaajatilisi tunnusta. Käytämme niitä vain virheiden löytämiseen ja korjaamiseen.</p>
 
   <h2>3. Miksi käsittelemme tietoja (oikeusperusteet)</h2>
   <ul>
     <li><strong>Pyytämiesi ominaisuuksien tarjoaminen</strong> (sopimus): pelaajatili, tulostaulukko, online-kaksintaistelut, kirjautuminen, pilvitallennus, ostot.</li>
     <li><strong>Suostumus</strong>: mainonta ja mainosten personointi sekä käyttötilastot ETA-alueella, Isossa-Britanniassa ja Sveitsissä. Voit peruuttaa suostumuksen milloin tahansa (kohdat 2.4 ja 2.9).</li>
-    <li><strong>Oikeutettu etu</strong>: tulostaulukon oikeudenmukaisuuden turvaaminen, palvelun turvaaminen ja ylläpito sekä (ETA-alueen, Ison-Britannian ja Sveitsin ulkopuolella) sovelluksen käytön ymmärtäminen käyttötilastojen avulla.</li>
+    <li><strong>Oikeutettu etu</strong>: tulostaulukon oikeudenmukaisuuden turvaaminen, palvelun turvaaminen ja ylläpito, kaatumisten selvittäminen ja korjaaminen (kohta 2.11) sekä (ETA-alueen, Ison-Britannian ja Sveitsin ulkopuolella) sovelluksen käytön ymmärtäminen käyttötilastojen avulla.</li>
   </ul>
   <p>Emme myy henkilötietojasi.</p>
 
   <h2>4. Kenelle tietoja luovutetaan</h2>
-  <p>Vain palveluntarjoajille, jotka auttavat sovelluksen ylläpidossa: Google (Firebase Authentication, Firestore, Realtime Database ja Analytics, AdMob, Google Play), Cloudflare (online-kaksintaistelujen välityspalvelu) ja RevenueCat. Tulostaulukon merkinnät näkyvät muille pelaajille kohdan 2.2 mukaisesti, ja online-kaksintaistelussa vastustajasi saa kohdassa 2.10 kuvatut tiedot. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
+  <p>Vain palveluntarjoajille, jotka auttavat sovelluksen ylläpidossa: Google (Firebase Authentication, Firestore, Realtime Database, Analytics ja Crashlytics, AdMob, Google Play), Cloudflare (online-kaksintaistelujen välityspalvelu) ja RevenueCat. Tulostaulukon merkinnät näkyvät muille pelaajille kohdan 2.2 mukaisesti, ja online-kaksintaistelussa vastustajasi saa kohdassa 2.10 kuvatut tiedot. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
 
   <h2>5. Siirrot EU:n ulkopuolelle</h2>
   <p>Google, Cloudflare ja RevenueCat voivat käsitellä tietoja palvelimilla oman maasi ulkopuolella, myös Yhdysvalloissa. Ne käyttävät suojatoimia, kuten EU:n vakiosopimuslausekkeita tai EU:n ja Yhdysvaltojen tietosuojakehystä (Data Privacy Framework).</p>
@@ -240,6 +247,7 @@
     <li>Pelaajatilisi (anonyymi tai Google), pilvitallennuksesi ja tulostaulukkomerkintäsi säilyvät, kunnes poistat ne (kohta 8).</li>
     <li>Online-kaksintaistelun haku- ja ottelupaikan tiedot poistetaan ottelun jälkeen.</li>
     <li>Käyttötilastoja (Google Analytics for Firebase) säilytetään käyttäjä- tai laitetasolla enintään 14 kuukautta; sen jälkeen jäljelle jää vain koottuja raportteja.</li>
+    <li>Kaatumisraportteja (Firebase Crashlytics) säilytetään enintään 90 päivää.</li>
     <li>Googlen ja RevenueCatin hallussa olevia mainos- ja ostotietoja säilytetään niiden omien käytäntöjen ja lakisääteisten velvoitteiden (esim. kirjanpito) mukaisesti.</li>
   </ul>
 
