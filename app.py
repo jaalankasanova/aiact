@@ -309,6 +309,13 @@ def swordjump_privacy():
 def swordjump_rules():
     return render_template("swordjump_rules.html")
 
+# Poop Pilot -mobiilipelin tietosuojaseloste (2026-11-13), sama malli kuin Sword Jumpilla: ei navigaatiossa,
+# linkki Play Consoleen ja pelin sisältä (How to play / Leaderboard -> PRIVACY POLICY). Data safety -lomakkeen
+# "Delete data URL" = /privacy/pooppilot#delete
+@app.route("/privacy/pooppilot")
+def pooppilot_privacy():
+    return render_template("pooppilot_privacy.html")
+
 # AdMob app-ads.txt (2026-10-06): Aeterna Ascensuksen kauppasivun "developer website" on tämä domain, joten AdMob
 # hakee tiedoston tämän domainin juuresta (onrender.com on Public Suffix Listillä -> aiact.onrender.com on oma juuri).
 # Rivi = Googlen AdMob-julkaisijatunnus + Googlen sertifiointitunnus (TAG-ID f08c47fec0942fa0).

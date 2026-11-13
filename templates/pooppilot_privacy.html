@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poop Pilot - Privacy Policy / Tietosuojaseloste</title>
+<script>
+  // language: ?lang=fi or ?lang=en, otherwise the browser language (Finnish -> fi, everything else -> en). Without JavaScript both languages are shown.
+  (function () {
+    var p = new URLSearchParams(location.search).get('lang');
+    var lang = p || (navigator.language || 'en').slice(0, 2);
+    document.documentElement.setAttribute('data-lang', lang === 'fi' ? 'fi' : 'en');
+  })();
+</script>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    max-width: 760px; margin: 0 auto; padding: 32px 20px 80px;
+    line-height: 1.7; color: #222; background: #fff;
+  }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  .updated { color: #666; font-size: 14px; margin-bottom: 12px; }
+  .langswitch { font-size: 14px; margin-bottom: 28px; }
+  h2 { font-size: 18px; margin: 28px 0 8px; }
+  h3 { font-size: 15px; margin: 18px 0 4px; }
+  ul { margin: 8px 0 8px 20px; }
+  li { margin: 3px 0; }
+  a { color: #1a56db; }
+  .summary { background: #f4f7fb; border-left: 4px solid #1a56db; padding: 10px 16px; margin: 16px 0; }
+  hr.sep { border: 0; border-top: 2px solid #ccd; margin: 56px 0 32px; }
+  html[data-lang="fi"] #en { display: none; }
+  html[data-lang="en"] #fi { display: none; }
+  html[data-lang="fi"] #fi hr.sep { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ============================== ENGLISH ============================== -->
+<div id="en" lang="en">
+  <h1>Poop Pilot - Privacy Policy</h1>
+  <p class="updated">Last updated: November 13, 2026</p>
+  <p class="langswitch"><a href="?lang=fi">Suomeksi</a></p>
+
+  <p>This privacy policy describes how the mobile game "Poop Pilot" ("the App") collects, uses, shares and protects information when you play.</p>
+
+  <h2>1. Who is responsible</h2>
+  <p>The App is developed and operated by an independent developer, Nikandatech ("we", "us"). Contact: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+
+  <div class="summary">
+    <strong>In short</strong>
+    <ul>
+      <li>There are no accounts and no sign-in. The App never asks for your name, email address or phone number.</li>
+      <li>For the online leaderboard the App creates a random player ID and a nickname on your device (you can change the nickname). Your nickname and best scores are visible to other players.</li>
+      <li>The App shows ads with Google AdMob: an optional rewarded ad ("+30 SEC") and a short ad between rounds. In the European Economic Area, the United Kingdom and Switzerland we ask for your consent first.</li>
+      <li>The App does not use analytics or crash-reporting tools and does not ask for location, contacts, camera, microphone or storage permissions.</li>
+      <li>You can delete your leaderboard data at any time in the App (<em>Leaderboard &rarr; Delete my data</em>) or by email, see section 8.</li>
+    </ul>
+  </div>
+
+  <h2>2. Information we process</h2>
+
+  <h3>2.1 Online leaderboard</h3>
+  <p>When a round ends with at least one hit, the App sends the following to our leaderboard server: a random player ID created by the App on your device (it is not linked to your identity, your Google account or your device's advertising ID), your nickname, your score, the bird you played with and, for cheat checks only, the number of hits and drops and the length of the round. The cheat-check figures are checked and not stored.</p>
+  <p>We store your player ID, nickname, best score, bird and the time of your best score, separately for the weekly leaderboard and the all-time leaderboard. <strong>Nicknames and scores are visible to other players</strong>; the player ID is never shown. Your nickname is generated automatically (for example "TurboBeak20") and you can change it in the App. Nicknames containing offensive words are replaced automatically.</p>
+  <p>The leaderboard runs on Cloudflare (Cloudflare Workers and Cloudflare D1). To deliver requests and to limit abuse (rate limiting), Cloudflare processes the IP address of your connection; we do not store IP addresses.</p>
+
+  <h3>2.2 Advertising (Google AdMob)</h3>
+  <p>The App shows an optional rewarded video ad (watch it to get 30 more seconds at the end of a round) and a short interstitial ad between some rounds. To show and measure ads, Google AdMob may collect and process, among other things, your device's advertising ID, IP address (which can be used to estimate an approximate location), device and operating-system information, diagnostic data and information about ad interactions. We receive only aggregated ad performance reports.</p>
+  <ul>
+    <li>In the European Economic Area, the United Kingdom and Switzerland we ask for your consent through Google's consent form before ads are requested. You can review or change your choice at any time in <em>How to play &rarr; Ad privacy options</em> (shown where required).</li>
+    <li>You can reset your advertising ID or opt out of ads personalization in your Android settings (Settings &rarr; Google &rarr; Ads, or Settings &rarr; Privacy &rarr; Ads).</li>
+    <li>More information: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">How Google uses information from sites or apps that use its services</a></li>
+  </ul>
+
+  <h3>2.3 Data stored only on your device</h3>
+  <p>Your best scores, chosen bird, sound setting, nickname, player ID and a counter used to space out ads are stored in the App's local storage on your device. Only the leaderboard data described in section 2.1 leaves your device.</p>
+
+  <h3>2.4 Device features</h3>
+  <p>The App uses your device's vibration motor for feedback when you hit something. This is used only on your device and nothing is stored or sent.</p>
+
+  <h3>2.5 No analytics or crash reporting</h3>
+  <p>We do not use analytics or crash-reporting tools. Google (AdMob, Google Play) and Cloudflare may process technical data such as IP addresses as part of providing their services.</p>
+
+  <h2>3. Why we process data (legal bases)</h2>
+  <ul>
+    <li><strong>Providing the game and its leaderboard</strong> (contract): storing and showing your nickname and best scores.</li>
+    <li><strong>Consent</strong>: ads and ad personalization in the EEA, the UK and Switzerland. You can withdraw consent at any time (section 2.2).</li>
+    <li><strong>Legitimate interests</strong>: keeping the leaderboard fair, protecting the service against abuse, and (outside the EEA, the UK and Switzerland) showing ads that fund the free game.</li>
+  </ul>
+  <p>We do not sell your personal data.</p>
+
+  <h2>4. Who we share data with</h2>
+  <p>Only with service providers that help us run the App: Google (AdMob, Google Play) and Cloudflare (leaderboard hosting). Nicknames and scores on the leaderboard are visible to other players. We do not share your data with anyone else, except where the law requires.</p>
+
+  <h2>5. International transfers</h2>
+  <p>Google and Cloudflare may process data on servers outside your country, including in the United States. They rely on safeguards such as the EU Standard Contractual Clauses or the EU-US Data Privacy Framework.</p>
+
+  <h2>6. How long we keep data</h2>
+  <ul>
+    <li>Data stored only on your device stays until you uninstall the App or clear its data.</li>
+    <li>Your all-time leaderboard entry is kept until you delete it (section 8).</li>
+    <li>Weekly leaderboard entries are deleted automatically 12 months after the week ends.</li>
+    <li>Ad data held by Google is kept according to Google's own policies.</li>
+  </ul>
+
+  <h2>7. Security</h2>
+  <p>Leaderboard data is transmitted over encrypted connections (HTTPS/TLS). The leaderboard server only accepts submissions that pass validity checks and limits the number of requests. No method of storage or transmission is completely secure.</p>
+
+  <h2 id="delete">8. Deleting your data</h2>
+  <p><strong>In the App:</strong> open the <em>Leaderboard</em> (trophy button), tap <em>DELETE MY DATA</em> and tap again to confirm. This permanently deletes all leaderboard entries (weekly and all-time) linked to your player ID. The App then creates a new random player ID; if you keep playing, your new scores create a new entry.</p>
+  <p>Data stored only on your device is removed when you uninstall the App or clear its data. Uninstalling does not delete your leaderboard entries; use the in-App option first, or email us.</p>
+  <p><strong>By email:</strong> email <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a> with the subject "Delete my data" and tell us your nickname (and roughly your best score and when you played). We will delete your data within 30 days.</p>
+  <p>Ad data held by Google can be managed in your Android settings (section 2.2) and your Google account.</p>
+
+  <h2>9. Your rights and choices</h2>
+  <p>If you live in the European Economic Area or the United Kingdom, you have the right to access your data, correct it, have it erased, restrict or object to its processing, receive it in a portable form, and withdraw consent at any time (this does not affect processing that took place before). Residents of some other regions (for example some US states) have similar rights. To use your rights, use the in-App options above or email us. You may also complain to your local data protection authority; in Finland this is the Office of the Data Protection Ombudsman (<a href="https://tietosuoja.fi" target="_blank" rel="noopener">tietosuoja.fi</a>).</p>
+
+  <h2>10. Children</h2>
+  <p>The App is not directed at children under 13 (or under the age of digital consent in your country), and we do not knowingly collect personal information from them. If you believe a child has provided personal information, contact us and we will delete it.</p>
+
+  <h2>11. Changes to this policy</h2>
+  <p>We may update this policy from time to time, for example when we add features that process data. Changes are posted on this page with an updated "Last updated" date.</p>
+
+  <h2>12. Contact</h2>
+  <p>Questions about this policy or your data: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+</div>
+
+<!-- ============================== SUOMI ============================== -->
+<div id="fi" lang="fi">
+  <hr class="sep" id="fi-alku">
+  <h1>Poop Pilot - Tietosuojaseloste</h1>
+  <p class="updated">Päivitetty viimeksi: 13. marraskuuta 2026</p>
+  <p class="langswitch"><a href="?lang=en">English</a></p>
+
+  <p>Tässä tietosuojaselosteessa kerrotaan, miten mobiilipeli "Poop Pilot" ("sovellus") kerää, käyttää, luovuttaa ja suojaa tietoja pelatessasi.</p>
+
+  <h2>1. Rekisterinpitäjä</h2>
+  <p>Sovelluksen kehittää ja ylläpitää yksityinen kehittäjä Nikandatech ("me"). Yhteystiedot: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+
+  <div class="summary">
+    <strong>Lyhyesti</strong>
+    <ul>
+      <li>Sovelluksessa ei ole käyttäjätilejä eikä kirjautumista. Sovellus ei koskaan kysy nimeäsi, sähköpostiosoitettasi tai puhelinnumeroasi.</li>
+      <li>Verkkotulostaulua varten sovellus luo laitteellesi satunnaisen pelaajatunnuksen ja nimimerkin (voit vaihtaa nimimerkin). Nimimerkkisi ja parhaat tuloksesi näkyvät muille pelaajille.</li>
+      <li>Sovellus näyttää Google AdMob -mainoksia: vapaaehtoisen palkkiomainoksen ("+30 SEC") ja lyhyen mainoksen kierrosten välissä. ETA-alueella, Isossa-Britanniassa ja Sveitsissä pyydämme ensin suostumuksesi.</li>
+      <li>Sovellus ei käytä analytiikka- tai kaatumisraportointityökaluja eikä pyydä sijainti-, yhteystieto-, kamera-, mikrofoni- tai tallennustilaoikeuksia.</li>
+      <li>Voit poistaa tulostaulutietosi milloin tahansa sovelluksessa (<em>Leaderboard &rarr; Delete my data</em>) tai sähköpostilla, ks. kohta 8.</li>
+    </ul>
+  </div>
+
+  <h2>2. Käsittelemämme tiedot</h2>
+
+  <h3>2.1 Verkkotulostaulu</h3>
+  <p>Kun kierros päättyy vähintään yhteen osumaan, sovellus lähettää tulostaulupalvelimellemme: sovelluksen laitteellasi luoman satunnaisen pelaajatunnuksen (sitä ei ole yhdistetty henkilöllisyyteesi, Google-tiliisi eikä laitteesi mainostunnisteeseen), nimimerkkisi, pistemääräsi, linnun jolla pelasit sekä huijausten tarkistusta varten osumien ja pudotusten määrän ja kierroksen keston. Tarkistusluvut tarkistetaan, mutta niitä ei tallenneta.</p>
+  <p>Tallennamme pelaajatunnuksesi, nimimerkkisi, parhaan tuloksesi, lintusi ja parhaan tuloksen ajankohdan erikseen viikon tulostaululle ja kaikkien aikojen tulostaululle. <strong>Nimimerkit ja tulokset näkyvät muille pelaajille</strong>; pelaajatunnusta ei koskaan näytetä. Nimimerkki luodaan automaattisesti (esimerkiksi "TurboBeak20") ja voit vaihtaa sen sovelluksessa. Loukkaavia sanoja sisältävät nimimerkit korvataan automaattisesti.</p>
+  <p>Tulostaulu toimii Cloudflaren palveluissa (Cloudflare Workers ja Cloudflare D1). Pyyntöjen välittämiseksi ja väärinkäytön rajoittamiseksi Cloudflare käsittelee yhteytesi IP-osoitetta; me emme tallenna IP-osoitteita.</p>
+
+  <h3>2.2 Mainonta (Google AdMob)</h3>
+  <p>Sovellus näyttää vapaaehtoisen palkkiovideomainoksen (katsomalla saat kierroksen lopussa 30 sekuntia lisää peliaikaa) ja lyhyen välimainoksen joidenkin kierrosten välissä. Mainosten näyttämiseksi ja mittaamiseksi Google AdMob voi kerätä ja käsitellä muun muassa laitteesi mainostunnistetta, IP-osoitetta (josta voidaan arvioida likimääräinen sijainti), laite- ja käyttöjärjestelmätietoja, diagnostiikkatietoja sekä tietoja mainosten käytöstä. Saamme vain koottuja raportteja mainosten toiminnasta.</p>
+  <ul>
+    <li>ETA-alueella, Isossa-Britanniassa ja Sveitsissä pyydämme suostumuksesi Googlen suostumuslomakkeella ennen mainosten pyytämistä. Voit tarkistaa tai muuttaa valintaasi milloin tahansa kohdassa <em>How to play &rarr; Ad privacy options</em> (näytetään, kun sitä edellytetään).</li>
+    <li>Voit nollata mainostunnisteesi tai kieltää mainosten personoinnin Androidin asetuksista (Asetukset &rarr; Google &rarr; Mainokset tai Asetukset &rarr; Yksityisyys &rarr; Mainokset).</li>
+    <li>Lisätietoja: <a href="https://policies.google.com/technologies/partner-sites?hl=fi" target="_blank" rel="noopener">Miten Google käyttää palveluitaan käyttävien sivustojen ja sovellusten tietoja</a></li>
+  </ul>
+
+  <h3>2.3 Vain laitteellesi tallennetut tiedot</h3>
+  <p>Parhaat tuloksesi, valitsemasi lintu, ääniasetus, nimimerkki, pelaajatunnus ja mainosten väliä säätelevä laskuri tallennetaan sovelluksen paikalliseen tallennustilaan laitteellesi. Laitteeltasi lähtevät vain kohdassa 2.1 kuvatut tulostaulutiedot.</p>
+
+  <h3>2.4 Laitteen ominaisuudet</h3>
+  <p>Sovellus käyttää laitteesi värinämoottoria palautteena osumista. Tätä käytetään vain laitteellasi, eikä mitään tallenneta tai lähetetä.</p>
+
+  <h3>2.5 Ei analytiikkaa eikä kaatumisraportointia</h3>
+  <p>Emme käytä analytiikka- tai kaatumisraportointityökaluja. Google (AdMob, Google Play) ja Cloudflare voivat käsitellä teknisiä tietoja, kuten IP-osoitteita, palveluidensa tarjoamisen yhteydessä.</p>
+
+  <h2>3. Käsittelyn perusteet</h2>
+  <ul>
+    <li><strong>Pelin ja sen tulostaulun tarjoaminen</strong> (sopimus): nimimerkkisi ja parhaiden tulostesi tallentaminen ja näyttäminen.</li>
+    <li><strong>Suostumus</strong>: mainokset ja mainosten personointi ETA-alueella, Isossa-Britanniassa ja Sveitsissä. Voit perua suostumuksesi milloin tahansa (kohta 2.2).</li>
+    <li><strong>Oikeutettu etu</strong>: tulostaulun reiluus, palvelun suojaaminen väärinkäytöltä ja (ETA-alueen, Ison-Britannian ja Sveitsin ulkopuolella) maksuttoman pelin rahoittavien mainosten näyttäminen.</li>
+  </ul>
+  <p>Emme myy henkilötietojasi.</p>
+
+  <h2>4. Kenelle tietoja luovutetaan</h2>
+  <p>Vain palveluntarjoajille, jotka auttavat meitä sovelluksen ylläpidossa: Google (AdMob, Google Play) ja Cloudflare (tulostaulun palvelin). Tulostaulun nimimerkit ja tulokset näkyvät muille pelaajille. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
+
+  <h2>5. Tietojen siirrot</h2>
+  <p>Google ja Cloudflare voivat käsitellä tietoja asuinmaasi ulkopuolella sijaitsevilla palvelimilla, myös Yhdysvalloissa. Ne käyttävät suojakeinoja, kuten EU:n vakiosopimuslausekkeita tai EU:n ja Yhdysvaltojen välistä tietosuojakehystä.</p>
+
+  <h2>6. Säilytysajat</h2>
+  <ul>
+    <li>Vain laitteellesi tallennetut tiedot säilyvät, kunnes poistat sovelluksen tai tyhjennät sen tiedot.</li>
+    <li>Kaikkien aikojen tulostaulumerkintäsi säilyy, kunnes poistat sen (kohta 8).</li>
+    <li>Viikkotulostaulujen merkinnät poistetaan automaattisesti 12 kuukauden kuluttua viikon päättymisestä.</li>
+    <li>Googlen hallussa olevat mainostiedot säilytetään Googlen omien käytäntöjen mukaisesti.</li>
+  </ul>
+
+  <h2>7. Tietoturva</h2>
+  <p>Tulostaulun tiedot siirretään salattuja yhteyksiä (HTTPS/TLS) pitkin. Tulostaulupalvelin hyväksyy vain tarkistukset läpäisevät tulokset ja rajoittaa pyyntöjen määrää. Mikään tallennus- tai siirtotapa ei ole täysin turvallinen.</p>
+
+  <h2 id="poisto">8. Tietojen poistaminen</h2>
+  <p><strong>Sovelluksessa:</strong> avaa <em>Leaderboard</em> (pokaalipainike), napauta <em>DELETE MY DATA</em> ja vahvista napauttamalla uudelleen. Tämä poistaa pysyvästi kaikki pelaajatunnukseesi liittyvät tulostaulumerkinnät (viikko ja kaikkien aikojen). Sovellus luo sen jälkeen uuden satunnaisen pelaajatunnuksen; jos jatkat pelaamista, uudet tuloksesi muodostavat uuden merkinnän.</p>
+  <p>Vain laitteellesi tallennetut tiedot poistuvat, kun poistat sovelluksen tai tyhjennät sen tiedot. Sovelluksen poistaminen ei poista tulostaulumerkintöjäsi; käytä ensin sovelluksen poistotoimintoa tai lähetä meille sähköpostia.</p>
+  <p><strong>Sähköpostilla:</strong> lähetä viesti osoitteeseen <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a> otsikolla "Delete my data" ja kerro nimimerkkisi (sekä suunnilleen paras tuloksesi ja milloin pelasit). Poistamme tietosi 30 päivän kuluessa.</p>
+  <p>Googlen hallussa olevia mainostietoja voit hallita Androidin asetuksista (kohta 2.2) ja Google-tililtäsi.</p>
+
+  <h2>9. Oikeutesi ja valintasi</h2>
+  <p>Jos asut Euroopan talousalueella tai Isossa-Britanniassa, sinulla on oikeus saada pääsy tietoihisi, oikaista ne, pyytää niiden poistamista, rajoittaa niiden käsittelyä tai vastustaa sitä, saada ne siirrettävässä muodossa sekä perua suostumuksesi milloin tahansa (peruminen ei vaikuta sitä ennen tapahtuneeseen käsittelyyn). Joidenkin muiden alueiden (esimerkiksi joidenkin Yhdysvaltojen osavaltioiden) asukkailla on vastaavia oikeuksia. Voit käyttää oikeuksiasi yllä kuvatuilla sovelluksen toiminnoilla tai sähköpostilla. Voit myös tehdä valituksen tietosuojaviranomaiselle; Suomessa se on tietosuojavaltuutetun toimisto (<a href="https://tietosuoja.fi" target="_blank" rel="noopener">tietosuoja.fi</a>).</p>
+
+  <h2>10. Lapset</h2>
+  <p>Sovellusta ei ole suunnattu alle 13-vuotiaille (tai omassa maassasi digitaalisen suostumusiän alittaville), emmekä tietoisesti kerää heidän henkilötietojaan. Jos uskot lapsen antaneen henkilötietoja, ota meihin yhteyttä, niin poistamme ne.</p>
+
+  <h2>11. Muutokset tähän selosteeseen</h2>
+  <p>Voimme päivittää tätä selostetta ajoittain, esimerkiksi kun lisäämme tietoja käsitteleviä ominaisuuksia. Muutokset julkaistaan tällä sivulla, ja "Päivitetty viimeksi" -päivämäärä päivitetään.</p>
+
+  <h2>12. Yhteystiedot</h2>
+  <p>Kysymykset tästä selosteesta tai tiedoistasi: <a href="mailto:nikandagames@gmail.com">nikandagames@gmail.com</a></p>
+</div>
+
+</body>
+</html>
