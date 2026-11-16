@@ -38,7 +38,7 @@
 <!-- ============================== ENGLISH ============================== -->
 <div id="en" lang="en">
   <h1>Aeterna Ascensus - Privacy Policy</h1>
-  <p class="updated">Last updated: November 6, 2026</p>
+  <p class="updated">Last updated: November 16, 2026</p>
   <p class="langswitch"><a href="?lang=fi">Suomeksi</a></p>
 
   <p>This privacy policy describes how the mobile game "Aeterna Ascensus" (formerly named "Sword Jump"; "the App") collects, uses, shares and protects information when you play.</p>
@@ -51,7 +51,7 @@
     <ul>
       <li>You can play without signing in. The App then creates an anonymous player account (a random user ID without your name or email address) so that your best scores can appear on the global leaderboard and you can play online duels. Your game progress stays on your device. Usage statistics are described in section 2.9 (in the EEA, UK and Switzerland only with your consent).</li>
       <li>Signing in with Google is optional. It keeps your scores and progress across devices (cloud save).</li>
-      <li>In online duels (beta) your player name and live game data are shared with your opponent (section 2.10).</li>
+      <li>In online duels and the online arena your player name and live game data are shared with the other players (section 2.10).</li>
       <li>The App shows optional rewarded ads (Google AdMob) and offers optional in-app purchases (Google Play Billing, managed with RevenueCat). Those services process some technical data, described below.</li>
       <li>You can delete your account, cloud data and leaderboard entries at any time in the App: <em>Settings &rarr; Delete account &amp; data</em> (signed in with Google) or <em>Delete my online data</em> (anonymous account), see section 8.</li>
     </ul>
@@ -99,8 +99,10 @@
     <li>More information: <a href="https://support.google.com/analytics/answer/6004245" target="_blank" rel="noopener">Google Analytics: safeguarding your data</a></li>
   </ul>
 
-  <h3>2.10 Online duels (beta)</h3>
-  <p>If you play an online duel, the App sends your chosen player name, your character's appearance and equipment, strength figures and live game data (position, moves, health) to your opponent. Matchmaking and duel rooms use Google Firebase Realtime Database; the game data travels over a direct connection between the two devices (WebRTC) or, if a direct connection is not possible, through Cloudflare's relay (TURN) service. <strong>In a direct connection your device's IP address is visible to your opponent's device</strong>, as is usual in online games. Matchmaking and room data are temporary and deleted after the match. Your wins and losses are stored on your device (and in your cloud save when signed in with Google); your trophy count is also added to your leaderboard entry (section 2.2). While the App is open, it stores your user ID with a timestamp in Realtime Database so that the number of players online can be counted; the entry is removed when you leave the App and expires after a few minutes. Online duels have no chat.</p>
+  <h3>2.10 Online play: duels and the online arena</h3>
+  <p><strong>Online duels.</strong> If you play an online duel, the App sends your chosen player name, your character's appearance and equipment, strength figures and live game data (position, moves, health) to your opponent. Matchmaking and duel rooms use Google Firebase Realtime Database. The game data always travels through Cloudflare's relay (TURN) service, so <strong>your opponent does not see your IP address</strong>; Cloudflare processes it to deliver the connection. To get relay access, the App sends a sign-in token of your player account (section 2.1) to our server on Cloudflare; the relay usage is recorded with your user ID and the amount of data relayed, and we use this only to control costs and prevent abuse (blocking records expire within 3 days). Matchmaking and room data are temporary and deleted after the match. Your wins and losses are stored on your device (and in your cloud save when signed in with Google); your trophy count is also added to your leaderboard entry (section 2.2).</p>
+  <p><strong>Online arena (Death Match, Fair fight and Co-op).</strong> If you enter the online arena, the App connects to our game server, which runs on Cloudflare (Workers and Durable Objects). It sends a sign-in token of your player account (to verify your user ID), your chosen player name, your character's appearance and equipment, strength figures and live game data (position, moves, health, knockouts and coins collected in the arena). The server forwards this data to the other players in the same room. The server processes your IP address to deliver the connection and to limit abuse (for example, the number of connections from one IP address); it keeps game data only while the room is open. Co-op room codes are temporary.</p>
+  <p>While the App is open, it stores your user ID with a timestamp in Realtime Database so that the number of players online can be counted; the entry is removed when you leave the App and expires after a few minutes. Online play has no chat.</p>
 
   <h3>2.11 Crash reports (Firebase Crashlytics)</h3>
   <p>If the App crashes or runs into an error, it sends a crash report through Google Firebase Crashlytics: the error and its stack trace, your device model, the Android and Android System WebView versions, memory, processor and screen information, the App version, the game mode at the time of the crash and the in-game events leading up to it (for example the start of a run or a duel), together with a random installation identifier. Crash reports do not contain your name, email address or player account ID. We use them only to find and fix bugs.</p>
@@ -114,7 +116,7 @@
   <p>We do not sell your personal data.</p>
 
   <h2>4. Who we share data with</h2>
-  <p>Only with service providers that help us run the App: Google (Firebase Authentication, Firestore, Realtime Database, Analytics and Crashlytics, AdMob, Google Play), Cloudflare (relay for online duels) and RevenueCat. Leaderboard entries are visible to other players as described in section 2.2, and in online duels your opponent receives the data described in section 2.10. We do not share your data with anyone else, except where the law requires.</p>
+  <p>Only with service providers that help us run the App: Google (Firebase Authentication, Firestore, Realtime Database, Analytics and Crashlytics, AdMob, Google Play), Cloudflare (relay for online duels and the online arena game server) and RevenueCat. Leaderboard entries are visible to other players as described in section 2.2, and in online play the other players receive the data described in section 2.10. We do not share your data with anyone else, except where the law requires.</p>
 
   <h2>5. International transfers</h2>
   <p>Google, Cloudflare and RevenueCat may process data on servers outside your country, including in the United States. They rely on safeguards such as the EU Standard Contractual Clauses or the EU-US Data Privacy Framework.</p>
@@ -123,7 +125,7 @@
   <ul>
     <li>Data stored only on your device stays until you uninstall the App or clear its data.</li>
     <li>Your player account (anonymous or Google), cloud save and leaderboard entries are kept until you delete them (section 8).</li>
-    <li>Online duel matchmaking and room data are deleted after the match.</li>
+    <li>Online duel matchmaking and room data are deleted after the match. Online arena rooms keep game data only while the room is open.</li>
     <li>Usage statistics (Google Analytics for Firebase) are kept at the user or device level for at most 14 months; after that only aggregated reports remain.</li>
     <li>Crash reports (Firebase Crashlytics) are kept for at most 90 days.</li>
     <li>Ad and purchase data held by Google and RevenueCat is kept according to their own policies and legal obligations (for example accounting).</li>
@@ -160,7 +162,7 @@
 <div id="fi" lang="fi">
   <hr class="sep" id="fi-alku">
   <h1>Aeterna Ascensus - Tietosuojaseloste</h1>
-  <p class="updated">Päivitetty viimeksi: 6. marraskuuta 2026</p>
+  <p class="updated">Päivitetty viimeksi: 16. marraskuuta 2026</p>
   <p class="langswitch"><a href="?lang=en">English</a></p>
 
   <p>Tässä tietosuojaselosteessa kerrotaan, miten mobiilipeli "Aeterna Ascensus" (aiemmin nimeltään "Sword Jump"; "sovellus") kerää, käyttää, luovuttaa ja suojaa tietoja pelatessasi.</p>
@@ -173,7 +175,7 @@
     <ul>
       <li>Voit pelata kirjautumatta. Sovellus luo silloin anonyymin pelaajatilin (satunnainen käyttäjätunnus ilman nimeäsi tai sähköpostiosoitettasi), jotta parhaat tuloksesi voivat näkyä maailmanlaajuisessa tulostaulukossa ja voit pelata online-kaksintaisteluja. Pelietenemisesi pysyy laitteellasi. Käyttötilastoista kerrotaan kohdassa 2.9 (ETA-alueella, Isossa-Britanniassa ja Sveitsissä vain suostumuksellasi).</li>
       <li>Google-kirjautuminen on vapaaehtoinen. Se säilyttää tuloksesi ja etenemisesi laitteesta toiseen (pilvitallennus).</li>
-      <li>Online-kaksintaisteluissa (beta) pelaajanimesi ja reaaliaikaiset pelitiedot jaetaan vastustajallesi (kohta 2.10).</li>
+      <li>Online-kaksintaisteluissa ja online-areenalla pelaajanimesi ja reaaliaikaiset pelitiedot jaetaan muille pelaajille (kohta 2.10).</li>
       <li>Sovellus näyttää vapaaehtoisia palkkiomainoksia (Google AdMob) ja tarjoaa vapaaehtoisia sovelluksensisäisiä ostoja (Google Play Billing, hallinnoi RevenueCat). Nämä palvelut käsittelevät alla kuvattuja teknisiä tietoja.</li>
       <li>Voit poistaa tilisi, pilvitietosi ja tulostaulukkomerkintäsi milloin tahansa sovelluksessa: <em>Asetukset &rarr; Delete account &amp; data</em> (Google-kirjautuneena) tai <em>Delete my online data</em> (anonyymi tili), ks. kohta 8.</li>
     </ul>
@@ -221,8 +223,10 @@
     <li>Lisätietoa: <a href="https://support.google.com/analytics/answer/6004245?hl=fi" target="_blank" rel="noopener">Google Analytics: tietojesi suojaaminen</a></li>
   </ul>
 
-  <h3>2.10 Online-kaksintaistelut (beta)</h3>
-  <p>Jos pelaat online-kaksintaistelun, sovellus lähettää vastustajallesi valitsemasi pelaajanimen, hahmosi ulkonäön ja varusteet, voimalukemat sekä reaaliaikaiset pelitiedot (sijainti, liikkeet, terveys). Vastustajan haku ja ottelupaikat käyttävät Google Firebase Realtime Databasea; pelitiedot kulkevat laitteiden välisen suoran yhteyden (WebRTC) kautta tai, jos suora yhteys ei onnistu, Cloudflaren välityspalvelun (TURN) kautta. <strong>Suorassa yhteydessä laitteesi IP-osoite näkyy vastustajan laitteelle</strong>, kuten verkkopeleissä yleensä. Haku- ja ottelupaikan tiedot ovat väliaikaisia ja poistetaan ottelun jälkeen. Voitot ja häviöt tallennetaan laitteellesi (ja Google-kirjautuneena pilvitallennukseesi); pokaalimääräsi lisätään myös tulostaulukkomerkintääsi (kohta 2.2). Kun sovellus on auki, se tallentaa käyttäjätunnuksesi ja aikaleiman Realtime Databaseen, jotta paikalla olevien pelaajien määrä voidaan laskea; merkintä poistetaan, kun poistut sovelluksesta, ja se vanhenee muutamassa minuutissa. Online-kaksintaisteluissa ei ole chattia.</p>
+  <h3>2.10 Verkkopeli: kaksintaistelut ja online-areena</h3>
+  <p><strong>Online-kaksintaistelut.</strong> Jos pelaat online-kaksintaistelun, sovellus lähettää vastustajallesi valitsemasi pelaajanimen, hahmosi ulkonäön ja varusteet, voimalukemat sekä reaaliaikaiset pelitiedot (sijainti, liikkeet, terveys). Vastustajan haku ja ottelupaikat käyttävät Google Firebase Realtime Databasea. Pelitiedot kulkevat aina Cloudflaren välityspalvelun (TURN) kautta, joten <strong>vastustajasi ei näe IP-osoitettasi</strong>; Cloudflare käsittelee sitä yhteyden välittämiseksi. Välityspalvelun käyttöä varten sovellus lähettää pelaajatilisi (kohta 2.1) kirjautumistunnisteen palvelimellemme Cloudflaressa; välityksen käytöstä kirjataan käyttäjätunnuksesi ja välitetyn datan määrä, ja käytämme tätä vain kulujen hallintaan ja väärinkäytösten estämiseen (estomerkinnät vanhenevat 3 päivässä). Haku- ja ottelupaikan tiedot ovat väliaikaisia ja poistetaan ottelun jälkeen. Voitot ja häviöt tallennetaan laitteellesi (ja Google-kirjautuneena pilvitallennukseesi); pokaalimääräsi lisätään myös tulostaulukkomerkintääsi (kohta 2.2).</p>
+  <p><strong>Online-areena (Death Match, Fair fight ja Co-op).</strong> Jos menet online-areenalle, sovellus muodostaa yhteyden pelipalvelimeemme, joka toimii Cloudflaressa (Workers ja Durable Objects). Sovellus lähettää pelaajatilisi kirjautumistunnisteen (käyttäjätunnuksesi varmistamiseksi), valitsemasi pelaajanimen, hahmosi ulkonäön ja varusteet, voimalukemat sekä reaaliaikaiset pelitiedot (sijainti, liikkeet, terveys, tyrmäykset ja areenalla kerätyt kolikot). Palvelin välittää nämä tiedot muille saman huoneen pelaajille. Palvelin käsittelee IP-osoitettasi yhteyden välittämiseksi ja väärinkäytösten rajoittamiseksi (esimerkiksi yhdestä IP-osoitteesta tulevien yhteyksien määrä); pelitietoja se säilyttää vain niin kauan kuin huone on auki. Co-op-huoneiden koodit ovat väliaikaisia.</p>
+  <p>Kun sovellus on auki, se tallentaa käyttäjätunnuksesi ja aikaleiman Realtime Databaseen, jotta paikalla olevien pelaajien määrä voidaan laskea; merkintä poistetaan, kun poistut sovelluksesta, ja se vanhenee muutamassa minuutissa. Verkkopelissä ei ole chattia.</p>
 
   <h3>2.11 Kaatumisraportit (Firebase Crashlytics)</h3>
   <p>Jos sovellus kaatuu tai siinä tapahtuu virhe, se lähettää Google Firebase Crashlyticsin kautta kaatumisraportin: virheen ja sen pinon jäljen, laitteesi mallin, Androidin ja Android System WebView'n versiot, muisti-, suoritin- ja näyttötiedot, sovelluksen version, kaatumishetken pelitilan sekä sitä edeltäneet pelin tapahtumat (esimerkiksi juoksun tai kaksintaistelun alku) ja satunnaisen asennustunnisteen. Kaatumisraportit eivät sisällä nimeäsi, sähköpostiosoitettasi eikä pelaajatilisi tunnusta. Käytämme niitä vain virheiden löytämiseen ja korjaamiseen.</p>
@@ -236,7 +240,7 @@
   <p>Emme myy henkilötietojasi.</p>
 
   <h2>4. Kenelle tietoja luovutetaan</h2>
-  <p>Vain palveluntarjoajille, jotka auttavat sovelluksen ylläpidossa: Google (Firebase Authentication, Firestore, Realtime Database, Analytics ja Crashlytics, AdMob, Google Play), Cloudflare (online-kaksintaistelujen välityspalvelu) ja RevenueCat. Tulostaulukon merkinnät näkyvät muille pelaajille kohdan 2.2 mukaisesti, ja online-kaksintaistelussa vastustajasi saa kohdassa 2.10 kuvatut tiedot. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
+  <p>Vain palveluntarjoajille, jotka auttavat sovelluksen ylläpidossa: Google (Firebase Authentication, Firestore, Realtime Database, Analytics ja Crashlytics, AdMob, Google Play), Cloudflare (online-kaksintaistelujen välityspalvelu ja online-areenan pelipalvelin) ja RevenueCat. Tulostaulukon merkinnät näkyvät muille pelaajille kohdan 2.2 mukaisesti, ja verkkopelissä muut pelaajat saavat kohdassa 2.10 kuvatut tiedot. Emme luovuta tietojasi muille, paitsi jos laki sitä edellyttää.</p>
 
   <h2>5. Siirrot EU:n ulkopuolelle</h2>
   <p>Google, Cloudflare ja RevenueCat voivat käsitellä tietoja palvelimilla oman maasi ulkopuolella, myös Yhdysvalloissa. Ne käyttävät suojatoimia, kuten EU:n vakiosopimuslausekkeita tai EU:n ja Yhdysvaltojen tietosuojakehystä (Data Privacy Framework).</p>
@@ -245,7 +249,7 @@
   <ul>
     <li>Vain laitteellasi olevat tiedot säilyvät, kunnes poistat sovelluksen tai tyhjennät sen tiedot.</li>
     <li>Pelaajatilisi (anonyymi tai Google), pilvitallennuksesi ja tulostaulukkomerkintäsi säilyvät, kunnes poistat ne (kohta 8).</li>
-    <li>Online-kaksintaistelun haku- ja ottelupaikan tiedot poistetaan ottelun jälkeen.</li>
+    <li>Online-kaksintaistelun haku- ja ottelupaikan tiedot poistetaan ottelun jälkeen. Online-areenan huoneet säilyttävät pelitietoja vain niin kauan kuin huone on auki.</li>
     <li>Käyttötilastoja (Google Analytics for Firebase) säilytetään käyttäjä- tai laitetasolla enintään 14 kuukautta; sen jälkeen jäljelle jää vain koottuja raportteja.</li>
     <li>Kaatumisraportteja (Firebase Crashlytics) säilytetään enintään 90 päivää.</li>
     <li>Googlen ja RevenueCatin hallussa olevia mainos- ja ostotietoja säilytetään niiden omien käytäntöjen ja lakisääteisten velvoitteiden (esim. kirjanpito) mukaisesti.</li>
