@@ -316,6 +316,12 @@ def swordjump_rules():
 def pooppilot_privacy():
     return render_template("pooppilot_privacy.html")
 
+# Adam's Adventure 3D -mobiilipelin tietosuojaseloste (2026-11-18), sama malli: AdMob-palkkiomainokset ja yhteinen
+# verkkomaailma (Cloudflare-pelipalvelin, tiedot vain yhteyden ajan). Linkki Play Consoleen.
+@app.route("/privacy/adams3d")
+def adams3d_privacy():
+    return render_template("adams3d_privacy.html")
+
 # AdMob app-ads.txt (2026-10-06): Aeterna Ascensuksen kauppasivun "developer website" on tämä domain, joten AdMob
 # hakee tiedoston tämän domainin juuresta (onrender.com on Public Suffix Listillä -> aiact.onrender.com on oma juuri).
 # Rivi = Googlen AdMob-julkaisijatunnus + Googlen sertifiointitunnus (TAG-ID f08c47fec0942fa0).
