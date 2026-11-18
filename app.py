@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, Response
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, Response, abort
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -318,9 +318,19 @@ def pooppilot_privacy():
 
 # Adam's Adventure 3D -mobiilipelin tietosuojaseloste (2026-11-18), sama malli: AdMob-palkkiomainokset ja yhteinen
 # verkkomaailma (Cloudflare-pelipalvelin, tiedot vain yhteyden ajan). Linkki Play Consoleen.
-@app.route("/privacy/adams3d")
+@app.route("/privacy/adams3d", strict_slashes=False)
 def adams3d_privacy():
     return render_template("adams3d_privacy.html")
+
+# Play Consolen tarkistus palautti "page not found" (2026-11-18): myös kirjainkoon muunnelmat ohjataan oikeaan osoitteeseen
+@app.route("/privacy/<name>", strict_slashes=False)
+def privacy_alias(name):
+    low = name.lower()
+    if low in ("adams3d", "adams-adventure-3d", "adamsadventure3d", "adams_adventure_3d"):
+        return redirect("/privacy/adams3d", code=301)
+    if low in ("pooppilot", "swordjump") and name != low:
+        return redirect("/privacy/" + low, code=301)
+    abort(404)
 
 # AdMob app-ads.txt (2026-10-06): Aeterna Ascensuksen kauppasivun "developer website" on tämä domain, joten AdMob
 # hakee tiedoston tämän domainin juuresta (onrender.com on Public Suffix Listillä -> aiact.onrender.com on oma juuri).
